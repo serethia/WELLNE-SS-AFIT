@@ -1,0 +1,71 @@
+<template>
+    <div class="container">
+      <h2>회원 정보</h2>
+      <fieldset class="text-center">
+        <label for="id">아이디</label>
+        <input
+          readonly
+          type="text"
+          id="id"
+          v-model="userDetails.id"
+          class="view"
+        /><br />
+        <label for="password">비밀번호</label>
+        <input
+          type="password"
+          id="password"
+          v-model="userDetails.password"
+          class="view"
+        /><br />
+        <label for="name">이름</label>
+        <input
+          type="text"
+          id="name"
+          v-model="userDetails.name"
+          class="view"
+        /><br />
+        <label for="email">이메일</label>
+        <input
+          type="email"
+          id="email"
+          v-model="userDetails.email"
+          class="view"
+        /><br />
+        <label for="age">나이</label>
+        <input
+          type="number"
+          id="age"
+          v-model="userDetails.age"
+          class="view"
+        /><br />
+        <button class="btn" @click="updateTheUser">수정</button>
+        <button class="btn" @click="removeUser">삭제</button>
+      </fieldset>
+    </div>
+  </template>
+  
+  <script setup>
+  import { ref, onBeforeMount } from "vue";
+  import { useUserStore } from "@/stores/userStore";
+  import { useRoute } from "vue-router";
+  
+  const userStore = useUserStore();
+  const route = useRoute();
+  
+  const userDetails = ref({});
+  
+  const updateTheUser = () => {
+    userStore.updateUser(userDetails.value);
+  };
+  
+  const removeUser = () => {
+    userStore.deleteUser(userDetails.value.id);
+  };
+  
+  onBeforeMount(() => {
+    const userId = route.params.id; // URL에서 id 파라미터를 가져옵니다.
+    userStore.setUser(userId);
+    userDetails.value = userStore.user;
+  });
+  </script>
+  
