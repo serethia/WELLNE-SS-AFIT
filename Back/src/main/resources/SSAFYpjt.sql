@@ -102,7 +102,17 @@ INSERT INTO video (video_title, video_url, video_like, video_dislike) VALUES
 ("[다이어트 보조제] 가르시니아, 콜레우스 포스콜리, 잔티젠 : 약사가 추천하는 성분은?", "https://youtu.be/g-OnWMUxRvI", 0, 0),
 ("뒷면 읽어주는 언니들! 왜 우리는 닭가슴살을 먹는가?", "https://youtu.be/1yTCxWzMqWc", 0, 0),
 ("여름 맞이 다이어트하다 돌 생겨요! 급찐급빠, 디톡스 원푸드 다이어트 !!주의사항!!", "https://youtu.be/Chv65X8cbV0", 0, 0),
-("여름철 다이어트 Q&A, 운동전문가와 의사가 직접 답해드립니다", "https://youtu.be/b5c9UA_A46w", 0, 0);
+("여름철 다이어트 Q&A, 운동전문가와 의사가 직접 답해드립니다", "https://youtu.be/b5c9UA_A46w", 0, 0),
+("튼튼한 무릎을 만들어주는 운동", "https://youtu.be/xhstrFJe-_E", 0, 0),
+("튼튼한 허리를 만들어주는 운동", "https://youtu.be/JdFzOlJ1sto", 0, 0),
+("어깨를 튼튼하게 만들어주는 운동", "https://youtu.be/fadA4cEwjuE", 0, 0),
+("폼롤러를 이용한 코어운동", "https://youtu.be/Oq1oxExnPzA", 0, 0),
+("필라테스 서클을 이용한 하체 운동", "https://youtu.be/b4tLJ2ZXogQ", 0, 0),
+("필라테스볼을 이용한 상체 운동", "https://youtu.be/S3HnGDE1_fs", 0, 0);
+
+
+
+
   
 INSERT INTO user (user_id, user_pwd, user_name, nickname, email, category, role) VALUES
 ("ssa1234", "!qwerqwer", "신성연", "ssa1234", "ssa1234@naver.com", "운동", 0),
