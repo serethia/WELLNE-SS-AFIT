@@ -5,7 +5,7 @@ import DietView from '@/views/DietView.vue'
 import AdviceView from '@/views/AdviceView.vue'
 
 import LoginForm from "@/components/LoginForm.vue";
-import User from "../views/UserView.vue";
+import User from "@/views/UserView.vue";
 import UserList from "@/components/user/UserList.vue";
 import UserRegist from "@/components/user/UserRegist.vue";
 import UserDetail from "@/components/user/UserDetail.vue";
@@ -13,22 +13,22 @@ import UserDetail from "@/components/user/UserDetail.vue";
 const routes = [
   {
     path: '/',
-    name: 'home',
+    name: 'Home',
     component: HomeView
   },
   {
     path: '/exercise',
-    name: 'exercise',
+    name: 'Exercise',
     component: ExerciseView
   },
   {
     path: '/diet',
-    name: 'diet',
+    name: 'Diet',
     component: DietView
   },
   {
     path: '/advice',
-    name: 'advice',
+    name: 'Advice',
     component: AdviceView
   },
   {
