@@ -1,6 +1,7 @@
 <template>
     <div>
-        <h1>다이어트/식단</h1>
+        
+        
     </div>
   </template>
   
@@ -11,4 +12,3 @@
   <style scoped>
   
   </style>
-  

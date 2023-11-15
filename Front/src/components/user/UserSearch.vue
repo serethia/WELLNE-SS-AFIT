@@ -35,7 +35,7 @@
               <tr v-for="(user, index) in searchResults" :key="index">
                 <td>{{ index + 1 }}</td>
                 <td>
-                  <RouterLink class="user-link" :to="`/${user.id}`">{{
+                  <RouterLink class="user-link" :to="`/user/${user.id}`">{{
                     user.id
                   }}</RouterLink>
                 </td>

@@ -1,72 +1,142 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import router from "@/router";
+import axios from 'axios';
+
+
+const URL = 'http://localhost:8080/userapi/user'
+
 
 export const useUserStore = defineStore("user", () => {
+
+  // 로그인 여부 확인용 T/F 변수 선언
+  const isLoggedIn = ref(false);  // 로그인 성공 시 true로, 로그아웃 시 다시 false로
+  
   const users = ref([]);
   const searchUsers = ref([]);
+
   const user = ref(null);
   const loginUser = ref(null);
 
   const userCnt = ref(0);
   const searchUserCnt = ref(0);
 
-  const createUser = (inputUser) => {
-    if (!loginUser.value) {
-      users.value.push(inputUser)
-      router.push({ name: "Login" })
-    } else {
-      alert("로그아웃 후 회원가입 해주세요")
-    }
+
+  // 회원가입
+  const createUser = (user) => {
+    axios.post(URL, user,
+        {
+            headers: {
+                "access-token": sessionStorage.getItem('access-token')  // 세션에서 해당 토큰 가져오기 (헤더)
+            }
+        })
+        .then((res) => {
+            users.value.push(res.data);
+            userCnt.value = users.value.length;
+            router.push({name: 'UserList'});
+        })
   };
 
-  const deleteUser = (userId) => {
-    const idx = users.value.findIndex((u) => u.id === userId)
-  
-    if (idx !== -1) {
-      users.value.splice(idx, 1)
-    }
 
-    router.push({ name: "List" })
+  // 회원 삭제
+  const deleteUser = (userid) => {
+    axios.delete(`${URL}/${userid}`,
+      {
+          headers: {
+              "access-token": sessionStorage.getItem('access-token')
+          }
+      })
+      .then(() => {
+          router.push({name: 'UserList'});
+      })
   };
 
+
+  // 로그아웃
   const setLogout = () => {
-    loginUser.value = null
-    router.push({ name: "Login" })
+    isLoggedIn.value = false;  
+    sessionStorage.removeItem('access-token');  // 세션의 토큰 삭제
+    router.push({name: 'Home'});
   };
 
-  const setUser = (userId) => {
-    user.value = users.value.find((u) => u.id === userId)
+
+  // 특정 회원 조회
+  const setUser = (userid) => {
+    axios.get(`${URL}/${userid}`,
+    {
+        headers: {
+            "access-token": sessionStorage.getItem('access-token')
+        }
+    })
+        .then((res) => {
+            user.value = res.data;
+        })
   };
 
-  const searchName = (query) => {
-    searchUsers.value = users.value.filter((u) => u.name.includes(query))
-    searchUserCnt.value = searchUsers.value.length
+
+  // 회원 이름 검색
+  const searchName = (username) => {
+    axios.get(`${URL}/search`, {params:{key: "name" , word: username}}, 
+    {
+        headers: {
+            "access-token": sessionStorage.getItem('access-token')
+        }
+    })
+        .then((res) => {
+            searchUsers.value = res.data;
+            searchUserCnt.value = searchUsers.value.length;
+        })
+        .catch(() => {
+            alert("검색 대상을 찾지 못했습니다.");
+        })
   };
 
-  const updateUser = (updateUser) => {
-      const idx = users.value.findIndex((u) => u.id === updateUser.id)
-  
-      if (idx !== -1) {
-        users.value.splice(idx, 1, updateUser)
-      }
 
-      router.push({ name: "List" })
-    };
-
-  const setLoginUser = (inputUser) => {
-    if (users.value.some((u) => u.id === inputUser.id && u.password === inputUser.password)) {
-      loginUser.value = inputUser
-      router.push({ name: "Home" })
-    } else {
-      alert("로그인 실패")
-    }
+  // 회원 정보 수정
+  const updateUser = () => {
+    axios.put(URL, user.value, 
+      {
+            headers:{
+            "access-token": sessionStorage.getItem('access-token')
+        }
+     })
+        .then(() => {
+            setUsers();
+            router.push({name: 'UserList'});
+        })
   };
 
-  return {
-    users, searchUsers, user, user, loginUser, userCnt, searchUserCnt,
-    createUser, deleteUser, setLogout, setUser, searchName, updateUser, setLoginUser
+
+  // 토큰 + 로그인
+  const setLoginUser = (loginuser) => {
+    axios.post(`${URL}/login`, loginuser)
+        .then((res) => {
+            sessionStorage.setItem('access-token', res.data);  // 토큰에 response 데이터 저장
+            const token = res.data.split('.');  // token을 '.'을 기준으로 따로 3등분해서 배열로 저장
+            isLoggedIn.value= true;
+            router.push({name: 'Home'});
+        })
+        .catch(() => {
+          alert("로그인 실패!");
+        })
   };
+
+
+  // 모든 회원 조회
+  const setUsers = () => {
+    axios.get(URL,
+        {
+            headers: {
+                "access-token": sessionStorage.getItem('access-token')
+            }
+        })
+        .then((res) => {
+            users.value = res.data;
+        })
+  };
+
+
+  return {isLoggedIn, users, searchUsers, user, loginUser, userCnt, searchUserCnt, 
+    createUser, deleteUser, setLogout, setUser, searchName, updateUser, setLoginUser, setUsers};
+
 }, { persist: true });
-
-//axios로 가져오기

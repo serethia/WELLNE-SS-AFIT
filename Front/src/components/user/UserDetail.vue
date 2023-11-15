@@ -48,24 +48,23 @@
   import { ref, onBeforeMount } from "vue";
   import { useUserStore } from "@/stores/userStore";
   import { useRoute } from "vue-router";
+  import { storeToRefs } from "pinia";
   
+  const user = storeToRefs(useUserStore());
   const userStore = useUserStore();
   const route = useRoute();
   
-  const userDetails = ref({});
-  
   const updateTheUser = () => {
-    userStore.updateUser(userDetails.value);
+    userStore.updateUser();
   };
   
   const removeUser = () => {
-    userStore.deleteUser(userDetails.value.id);
+    userStore.deleteUser(user.value.id);
   };
   
   onBeforeMount(() => {
-    const userId = route.params.id; // URL에서 id 파라미터를 가져옵니다.
+    const userId = route.params.id;
     userStore.setUser(userId);
-    userDetails.value = userStore.user;
   });
   </script>
   

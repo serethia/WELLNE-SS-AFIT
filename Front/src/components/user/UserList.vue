@@ -40,15 +40,15 @@
   </template>
   
   <script setup>
-  import { onMounted } from "vue";
+  import { onMounted, computed } from "vue";
   import { useUserStore } from "@/stores/userStore";
   
   const userStore = useUserStore();
   
-  const usersList = userStore.users;
-  const userCount = usersList.length;
+  const usersList = computed(() => userStore.users);
+  const userCount = computed(() => usersList.value.length);
   
   onMounted(() => { 
-    
+    userStore.setUsers();
   });
   </script>

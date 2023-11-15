@@ -22,7 +22,6 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
 import { useUserStore } from "@/stores/userStore";
 
 const userStore = useUserStore();
@@ -30,10 +29,6 @@ const userStore = useUserStore();
 const logout = () => {
   userStore.setLogout();
 };
-
-const getUser = computed(() => (userStore.loginUser ? true : false));
-
-
 </script>
 
 <style  scoped>
