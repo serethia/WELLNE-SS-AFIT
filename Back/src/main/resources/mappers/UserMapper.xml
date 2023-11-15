@@ -28,7 +28,7 @@
 	
 	<update id="updateUser" parameterType="User">
 		UPDATE user
-		SET user_id = #{user_id}, user_pwd = #{user_pwd}, user_name = #{userName}, nickname = # {nickname}, email = #{email}, category = #{category}, role = #{role}
+		SET user_id = #{userId}, user_pwd = #{userPwd}, user_name = #{userName}, nickname = #{nickname}, email = #{email}, category = #{category}, role = #{role}
 		WHERE user_id = #{userId}
 			
 	</update>
@@ -59,7 +59,7 @@
 		    FROM user WHERE user_name LIKE CONCAT('%', #{userName}, '%')
 	</select>
 	
-	<select id="selectByCondition" parameterType="SearchCondition" resultType="User">
+	<select id="searchByCondition" parameterType="SearchCondition" resultType="User">
 		SELECT 
 			user_id as userId,
 		    user_pwd as userPwd,
@@ -71,7 +71,7 @@
 		    role
 		    FROM user
 		<if test="key!='none'">
-			WHERE ${key} LIKE CONCAT('%' #{word} '%')
+			WHERE ${key} LIKE CONCAT('%', #{word}, '%')
 		</if>
 		<if test="orderBy!='none'">
 			ORDER BY ${orderBy} ${orderByDir}
