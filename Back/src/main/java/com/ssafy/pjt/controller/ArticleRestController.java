@@ -19,7 +19,7 @@ import com.ssafy.pjt.model.service.ArticleService;
 @RequestMapping("/articleapi")
 @RestController
 @CrossOrigin("*")
-public class ArticleController {
+public class ArticleRestController {
 	
 	@Autowired
 	private ArticleService aService;

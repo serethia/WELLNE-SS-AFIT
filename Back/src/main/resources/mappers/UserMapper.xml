@@ -21,6 +21,20 @@
 		VALUES (#{userId}, #{userPwd}, #{userName}, #{nickname}, #{email}, now(), #{category}, #{role});
 	</insert>
 	
+	<delete id="deleteUser" parameterType="String">
+		DELETE FROM user
+		WHERE user_id = #{userId}
+	</delete>
+	
+	<update id="updateUser" parameterType="User">
+		UPDATE user
+		SET user_id = #{user_id}
+		
+		*********수정중입니다...*******
+		
+		
+	</update>
+	
 	<select id="selectById" parameterType="String" resultType="User">
 		SELECT 
 			user_id as userId,
