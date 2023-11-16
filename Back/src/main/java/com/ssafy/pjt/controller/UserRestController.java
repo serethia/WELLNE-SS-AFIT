@@ -68,11 +68,15 @@ public class UserRestController {
 //	}
 	
 	
+	
+	
 	@GetMapping("/user/{id}")
 	@ApiOperation(value = "{id}에 해당하는 사용자 정보를 반환한다.", response = User.class)
 	public ResponseEntity<?> selectById(@PathVariable String id) {
+
 		try {
 			User user = uService.getUserById(id);
+			System.out.println(user);
 			if (user != null) {
 				return new ResponseEntity<User>(user, HttpStatus.OK);
 			} else {
@@ -87,7 +91,7 @@ public class UserRestController {
 	@GetMapping("/user/search")
 	@ApiOperation(value = "SearchCondition 에 부합하는 조건을 가진 사용자 목록을 반환한다.", response = User.class)
 	public ResponseEntity<?> searchByconditon(SearchCondition con) {
-		System.out.println(con);
+		
 		try {
 			List<User> users = uService.getByCondition(con);
 			if (users != null && users.size() > 0) {
@@ -99,9 +103,6 @@ public class UserRestController {
 			return exceptionHandling(e);
 		}
 	}
-	
-	
-	
 	
 	
 	
@@ -118,9 +119,10 @@ public class UserRestController {
 //	}
 	
 	
-	@PostMapping("/user/login")
+	@PostMapping("/login")
 	@ApiOperation(value = "DB에 일치하는 사용자 정보가 있는지 확인한다.", response = Integer.class)
 	public ResponseEntity<?> login(@RequestBody User user) throws UnsupportedEncodingException {
+		System.out.println("user login");
 		System.out.println(user.getUserId());
 		System.out.println(user.getUserPwd());
 		
@@ -146,9 +148,6 @@ public class UserRestController {
 
 	}
 
-
-	
-	
 	
 //	public String login(@RequestBody User user) {
 //		User loginUser = uService.getUserById(user.getUserId());
@@ -171,7 +170,7 @@ public class UserRestController {
 	    return new ResponseEntity<>(result, status);
 	}
 	
-	@PostMapping("/user")
+	@PostMapping("/signup")
 	@ApiOperation(value = "사용자 정보를 삽입한다.", response = Integer.class)
 	public ResponseEntity<?> insertUser(@RequestBody User user) {
 		try {
@@ -186,6 +185,7 @@ public class UserRestController {
 	@PutMapping("/user")
 	@ApiOperation(value = "사용자 정보를 수정한다.", response = Integer.class)
 	public ResponseEntity<?> updateUser(@RequestBody User user) {
+		System.out.println("put /user");
 		System.out.println(user);
 		try {
 			int result = uService.modifyUser(user);

@@ -32,13 +32,27 @@ public class WebConfig implements WebMvcConfigurer {
 	
 	}
 	
+	//현재
+	// GET /user
+	// GET /user/{id}
+	// GET /user/login
+	// POST /user
+	// PUT /user
 	
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		
-		registry.addInterceptor(jwtInterceptor).addPathPatterns("/**").excludePathPatterns("/userapi/user/login",
-               "/userapi/user", "/userapi/user/search", "/swagger-resources/**", "/swagger-ui/**", "/v2/api-docs");
-	}
+	// POST /signup => 회원가입
+	// POST /login => 로그인
+	// GET  /user
+	// GET  /user/{id}
+	
+	
+	
+	
+//	@Override
+//	public void addInterceptors(InterceptorRegistry registry) {
+//		
+//		registry.addInterceptor(jwtInterceptor).addPathPatterns("/**").excludePathPatterns("/userapi/login",
+//               "/userapi/signup", "/swagger-resources/**", "/swagger-ui/**", "/v2/api-docs");
+//	}
 	
 
 }
