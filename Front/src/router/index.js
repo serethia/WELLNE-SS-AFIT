@@ -1,116 +1,80 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import AdviceView from "@/views/AdviceView.vue";
-import DietView from "@/views/DietView.vue";
-import ExerciseView from "@/views/ExerciseView.vue";
-import HomeView from "@/views/HomeView.vue";
-import UserView from "@/views/UserView.vue";
+import ArticleView from "@/views/ArticleView.vue";  // 기사 + 영상 + 댓글 view
+import MyView from "@/views/MyView.vue";  // 마이페이지 view
+import UserView from "@/views/UserView.vue";  // 관리자만 보이도록 설정: 회원 정보 조회용 view
 
-import ExerciseCreate from "@/components/exercise/ExerciseCreate.vue";
-import ExerciseDetail from "@/components/exercise/ExerciseDetail.vue";
-import ExerciseList from "@/components/exercise/ExerciseList.vue";
-import ExerciseUpdate from "@/components/exercise/ExerciseUpdate.vue";
+// 카테고리별로 다르게 기사를 보여줄 때는 태그를 이용해 보여주고 숨기기
+import ArticleCreate from "@/components/article/ArticleCreate.vue";
+import ArticleDetail from "@/components/article/ArticleDetail.vue";
+import ArticleList from "@/components/article/ArticleList.vue";
+import ArticleUpdate from "@/components/article/ArticleUpdate.vue";
 
-import DietCreate from "@/components/diet/DietCreate.vue";
-import DietDetail from "@/components/diet/DietDetail.vue";
-import DietList from "@/components/diet/DietList.vue";
-import DietUpdate from "@/components/diet/DietUpdate.vue";
+// ArticleView의 기사 component 하단에 댓글 component 추가
+import CommentCreate from "@/components/comment/CommentCreate.vue";
+import CommentDetail from "@/components/comment/CommentDetail.vue";
+import CommentList from "@/components/comment/CommentList.vue";
+import CommentUpdate from "@/components/comment/CommentUpdate.vue";
 
-import AdviceCreate from "@/components/advice/AdviceCreate.vue";
-import AdviceDetail from "@/components/advice/AdviceDetail.vue";
-import AdviceList from "@/components/advice/AdviceList.vue";
-import AdviceUpdate from "@/components/advice/AdviceUpdate.vue";
+// 마이페이지
+import MyBookmarkList from "@/components/my/MyBookmarkList.vue";
+import MyFollowingList from "@/components/my/MyFollowingList.vue";
+import MyProfile from "@/components/my/MyProfile.vue";
 
+// 로그인 형식
 import LoginForm from "@/components/LoginForm.vue";
+
+// 관리자만 볼 수 있는 회원 정보 조회
 import UserList from "@/components/user/UserList.vue";
 import UserRegist from "@/components/user/UserRegist.vue";
 import UserDetail from "@/components/user/UserDetail.vue";
 
-// 추후 components를 하나로 줄여서 카테고리 분류 버튼을 사용할 지 진행에 따라 다시 의논해볼 예정
-
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: HomeView
-  },
-  {
-    path: '/exercise',
-    name: 'Exercise',
-    component: ExerciseView,
+    name: 'My',
+    component: MyView,
     children: [
       {
-        path: "",
-        name: "ExerciseList",
-        component: ExerciseList,
+        path: '',
+        name: 'MyBookmarkList',
+        component: MyBookmarkList,
       },
       {
-        path: "create",
-        name: "ExerciseCreate",
-        component: ExerciseCreate,
+        path: '',
+        name: 'MyFollowingList',
+        component: MyFollowingList,
       },
       {
-        path: ":id",
-        name: "ExerciseDetail",
-        component: ExerciseDetail,
-      },
-      {
-        path: "update",
-        name: "ExerciseUpdate",
-        component: ExerciseUpdate,
+        path: '',
+        name: 'MyProfile',
+        component: MyProfile,
       },
     ],
   },
   {
-    path: '/diet',
-    name: 'Diet',
-    component: DietView,
+    path: '/article',
+    name: 'Article',
+    component: ArticleView,
     children: [
       {
-        path: "",
-        name: "DietList",
-        component: DietList,
+        path: '',
+        name: 'ArticleList',
+        component: ArticleList,
       },
       {
-        path: "create",
-        name: "DietCreate",
-        component: DietCreate,
+        path: 'create',
+        name: 'ArticleCreate',
+        component: ArticleCreate,
       },
       {
-        path: ":id",
-        name: "DietDetail",
-        component: DietDetail,
+        path: ':id',
+        name: 'ArticleDetail',
+        component: ArticleDetail,
       },
       {
-        path: "update",
-        name: "DietUpdate",
-        component: DietUpdate,
-      },
-    ],
-  },
-  {
-    path: '/advice',
-    name: 'Advice',
-    component: AdviceView,
-    children: [
-      {
-        path: "",
-        name: "AdviceList",
-        component: AdviceList,
-      },
-      {
-        path: "create",
-        name: "AdviceCreate",
-        component: AdviceCreate,
-      },
-      {
-        path: ":id",
-        name: "AdviceDetail",
-        component: AdviceDetail,
-      },
-      {
-        path: "update",
-        name: "AdviceUpdate",
-        component: AdviceUpdate,
+        path: 'update',
+        name: 'ArticleUpdate',
+        component: ArticleUpdate,
       },
     ],
   },

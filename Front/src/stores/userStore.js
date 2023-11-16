@@ -4,7 +4,7 @@ import router from "@/router";
 import axios from 'axios';
 
 
-const URL = 'http://localhost:8080/userapi/user'
+const URL = 'http://localhost:8080/userapi'
 
 
 export const useUserStore = defineStore("user", () => {
@@ -24,7 +24,7 @@ export const useUserStore = defineStore("user", () => {
 
   // 회원가입
   const createUser = (user) => {
-    axios.post(URL, user,
+    axios.post(`${URL}/signup`, user,
         {
             headers: {
                 "access-token": sessionStorage.getItem('access-token')  // 세션에서 해당 토큰 가져오기 (헤더)
@@ -40,7 +40,7 @@ export const useUserStore = defineStore("user", () => {
 
   // 회원 삭제
   const deleteUser = (userid) => {
-    axios.delete(`${URL}/${userid}`,
+    axios.delete(`${URL}/user/${userid}`,
       {
           headers: {
               "access-token": sessionStorage.getItem('access-token')
@@ -62,7 +62,7 @@ export const useUserStore = defineStore("user", () => {
 
   // 특정 회원 조회
   const setUser = (userid) => {
-    axios.get(`${URL}/${userid}`,
+    axios.get(`${URL}/user/${userid}`,
     {
         headers: {
             "access-token": sessionStorage.getItem('access-token')
@@ -76,7 +76,7 @@ export const useUserStore = defineStore("user", () => {
 
   // 회원 이름 검색
   const searchName = (username) => {
-    axios.get(`${URL}/search`, {params:{key: "name" , word: username}}, 
+    axios.get(`${URL}/user/search`, {params:{key: "name" , word: username}}, 
     {
         headers: {
             "access-token": sessionStorage.getItem('access-token')
@@ -94,7 +94,7 @@ export const useUserStore = defineStore("user", () => {
 
   // 회원 정보 수정
   const updateUser = () => {
-    axios.put(URL, user.value, 
+    axios.put(`${URL}/user`, user.value, 
       {
             headers:{
             "access-token": sessionStorage.getItem('access-token')
@@ -124,7 +124,7 @@ export const useUserStore = defineStore("user", () => {
 
   // 모든 회원 조회
   const setUsers = () => {
-    axios.get(URL,
+    axios.get(`${URL}/user`,
         {
             headers: {
                 "access-token": sessionStorage.getItem('access-token')

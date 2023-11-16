@@ -3,10 +3,10 @@
         <header>
             <nav>
                 <div class="nav-main">
-                    <RouterLink to="/">홈</RouterLink>&nbsp; &nbsp; &nbsp; &nbsp; 
-                    <RouterLink to="/exercise">운동</RouterLink>&nbsp; &nbsp; &nbsp; &nbsp; 
-                    <RouterLink to="/diet">다이어트</RouterLink>&nbsp; &nbsp; &nbsp; &nbsp; 
-                    <RouterLink to="/advice">건강칼럼</RouterLink>
+                    <!-- 파라미터로  category를 넘겨서 watch로 내용만 갈아끼우기?? -->
+                    <RouterLink to="/">운동</RouterLink>&nbsp; &nbsp; &nbsp; &nbsp; 
+                    <RouterLink to="/">다이어트</RouterLink>&nbsp; &nbsp; &nbsp; &nbsp; 
+                    <RouterLink to="/">건강칼럼</RouterLink>
                 </div>
                 <div class="nav-user">
                     <a href="#" v-if="getUser" @click="logout">로그아웃</a>
