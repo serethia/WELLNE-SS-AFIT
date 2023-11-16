@@ -6,6 +6,7 @@
     </div>
     <br />
     <UserSearch />
+    <RouterView />
   </div>
 </template>
 

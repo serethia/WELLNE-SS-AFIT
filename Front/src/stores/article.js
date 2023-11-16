@@ -33,4 +33,5 @@ export const useArticleStore = defineStore('article', ()=>{
 
     // return {productList, computeFavorites, clickFavorite}
     
-}, {persist: true})
+}, { persist: {
+    storage: sessionStorage }})

@@ -33,7 +33,6 @@ public class JwtInterceptor implements HandlerInterceptor{
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             {
-        
         //
         if(request.getMethod().equals("OPTIONS"))
             return true;
@@ -46,14 +45,14 @@ public class JwtInterceptor implements HandlerInterceptor{
         	return false;
         }
         
-        
-        
+       
         if(token != null) {
         	// 토큰의 유효성 검사 => 예외발생시킬 수 있는 코드 => 예외처리를 해줘야 함
         	// 토큰이 유효하지 않은 경우 예외 발생
         	try {
 				Jwts.parser().setSigningKey("SERVER_SECRET_KEY".getBytes("UTF-8")).parseClaimsJws(token);
 			} catch (Exception e) {
+				e.printStackTrace();
 				// 예외가 발생 => 유효하지 않은 토큰
 				return false;
 			}

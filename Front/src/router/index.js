@@ -28,7 +28,15 @@ import UserList from "@/components/user/UserList.vue";
 import UserRegist from "@/components/user/UserRegist.vue";
 import UserDetail from "@/components/user/UserDetail.vue";
 
+
+import CategoryView from "@/views/CategoryView.vue"
+
 const routes = [
+  {
+    path: '/category/:category',
+    name: 'Category',
+    component: CategoryView
+  },
   {
     path: '/',
     name: 'My',
