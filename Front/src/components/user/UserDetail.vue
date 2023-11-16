@@ -7,7 +7,7 @@
           readonly
           type="text"
           id="id"
-          :value="user.userId"
+          v-model="user.userId"
           class="view"
         /><br />
         <label for="password">비밀번호</label>
@@ -21,7 +21,7 @@
         <input
           type="text"
           id="name"
-          v-model="user.name"
+          v-model="user.userName"
           class="view"
         /><br />
         <label for="email">이메일</label>
@@ -50,7 +50,7 @@
   import { useRoute } from "vue-router";
   import { storeToRefs } from "pinia";
   
-  const user = storeToRefs(useUserStore());
+  const { user } = storeToRefs(useUserStore());
   const userStore = useUserStore();
   const route = useRoute();
   
@@ -59,7 +59,7 @@
   };
   
   const removeUser = () => {
-    userStore.deleteUser(user.value.id);
+    userStore.deleteUser(user.value.userId);
   };
   
   onBeforeMount(() => {

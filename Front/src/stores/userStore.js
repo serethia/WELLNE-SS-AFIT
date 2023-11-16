@@ -70,6 +70,7 @@ export const useUserStore = defineStore("user", () => {
     })
         .then((res) => {
             user.value = res.data;
+            console.log(user.value);
         })
   };
 
