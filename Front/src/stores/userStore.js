@@ -56,7 +56,7 @@ export const useUserStore = defineStore("user", () => {
   const setLogout = () => {
     isLoggedIn.value = false;  
     sessionStorage.removeItem('access-token');  // 세션의 토큰 삭제
-    router.push({name: 'Home'});
+    router.push({name: 'My'});
   };
 
 
@@ -114,7 +114,7 @@ export const useUserStore = defineStore("user", () => {
             sessionStorage.setItem('access-token', res.data);  // 토큰에 response 데이터 저장
             const token = res.data.split('.');  // token을 '.'을 기준으로 따로 3등분해서 배열로 저장
             isLoggedIn.value= true;
-            router.push({name: 'Home'});
+            router.push({name: 'My'});
         })
         .catch(() => {
           alert("로그인 실패!");

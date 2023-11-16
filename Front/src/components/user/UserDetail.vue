@@ -7,35 +7,35 @@
           readonly
           type="text"
           id="id"
-          v-model="userDetails.id"
+          :value="user.userId"
           class="view"
         /><br />
         <label for="password">비밀번호</label>
         <input
           type="password"
           id="password"
-          v-model="userDetails.password"
+          v-model="user.userPwd"
           class="view"
         /><br />
         <label for="name">이름</label>
         <input
           type="text"
           id="name"
-          v-model="userDetails.name"
+          v-model="user.name"
           class="view"
         /><br />
         <label for="email">이메일</label>
         <input
           type="email"
           id="email"
-          v-model="userDetails.email"
+          v-model="user.email"
           class="view"
         /><br />
-        <label for="age">나이</label>
+        <label for="nickname">별명</label>
         <input
-          type="number"
-          id="age"
-          v-model="userDetails.age"
+          type="text"
+          id="nickname"
+          v-model="user.nickname"
           class="view"
         /><br />
         <button class="btn" @click="updateTheUser">수정</button>

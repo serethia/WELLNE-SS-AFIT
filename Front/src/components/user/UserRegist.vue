@@ -12,8 +12,8 @@
         <input type="text" id="name" v-model="name" class="view" /><br />
         <label for="email">이메일</label>
         <input type="email" id="email" v-model="email" class="view" /><br />
-        <label for="age">나이</label>
-        <input type="number" id="age" v-model="age" class="view" /><br />
+        <label for="nickname">별명</label>
+        <input type="text" id="nickname" v-model="nickname" class="view" /><br />
         <button class="btn" @click="regist">등록</button>
       </fieldset>
     </div>
@@ -30,7 +30,7 @@
   const password2 = ref("");
   const name = ref("");
   const email = ref("");
-  const age = ref(0);
+  const nickname = ref("");
 
   const users = computed(() => userStore.users);
 
@@ -55,7 +55,7 @@
       password.value === "" ||
       name.value === "" ||
       email.value === "" || 
-      age.value === ""
+      nickname.value === ""
     ) {
       alert("모든 내용을 입력해주세요.");
       return;
@@ -85,11 +85,11 @@
     }
 
     const user = {
-      id: id.value,
-      password: password.value,
-      name: name.value,
+      userId: id.value,
+      userPwd: password.value,
+      userName: name.value,
       email: email.value,
-      age: age.value,
+      nickname: nickname.value,
       img: "#",
     };
   

@@ -22,8 +22,8 @@
   
   const login = () => {
     const user = {
-      id: id.value,
-      password: password.value,
+      userId: id.value,
+      userPwd: password.value,
     };
   
     userStore.setLoginUser(user);

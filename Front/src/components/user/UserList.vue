@@ -17,20 +17,20 @@
               <th>아이디</th>
               <th>이름</th>
               <th>이메일</th>
-              <th>나이</th>
+              <th>별명</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(user, index) in usersList" :key="index">
               <td>{{ index + 1 }}</td>
               <td>
-                <RouterLink class="user-link" :to="`/user/${user.id}`">{{
-                  user.id
+                <RouterLink class="user-link" :to="`/user/${user.userId}`">{{
+                  user.userId
                 }}</RouterLink>
               </td>
-              <td>{{ user.name }}</td>
+              <td>{{ user.userName }}</td>
               <td>{{ user.email }}</td>
-              <td>{{ user.age }} 세</td>
+              <td>{{ user.nickname }}</td>
             </tr>
           </tbody>
         </table>

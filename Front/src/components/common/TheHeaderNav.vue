@@ -4,17 +4,19 @@
             <nav>
                 <div class="nav-main">
                     <!-- 파라미터로  category를 넘겨서 watch로 내용만 갈아끼우기?? -->
-                    <RouterLink to="/">운동</RouterLink>&nbsp; &nbsp; &nbsp; &nbsp; 
-                    <RouterLink to="/">다이어트</RouterLink>&nbsp; &nbsp; &nbsp; &nbsp; 
-                    <RouterLink to="/">건강칼럼</RouterLink>
+                <!-- <router-link :to="{name: 'category', params: {category: 'exercise'}}">운동</router-link>&nbsp; &nbsp; &nbsp; &nbsp; -->
+                <!-- <router-link :to="{name: 'category', params: {category: 'diet'}}">다이어트</router-link>&nbsp; &nbsp; &nbsp; &nbsp; -->
+                <!-- <router-link :to="{name: 'category', params: {category: 'advice'}}">건강칼럼</router-link> -->
                 </div>
                 <div class="nav-user">
-                    <a href="#" v-if="getUser" @click="logout">로그아웃</a>
-                    <RouterLink to="/login" v-else>로그인</RouterLink>
+                    <a href="#" v-if="userStore.isLoggedIn" @click="logout">로그아웃</a>
+                    <router-link to="/login" v-else>로그인</router-link>
                     <span class="nav-separator">|</span>
-                    <RouterLink to="/user/regist">회원가입</RouterLink>
+                    <router-link to="/user/regist">회원가입</router-link>
                     <span class="nav-separator">|</span>
-                    <RouterLink to="/user">사용자목록</RouterLink>
+                    <router-link to="/">마이페이지</router-link>
+                    <span class="nav-separator">|</span>
+                    <router-link to="/user">사용자목록</router-link>
                 </div>
             </nav>
         </header>
