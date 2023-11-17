@@ -4,7 +4,7 @@
             <label>검색 기준 :</label>
             <select v-model="searchInfo.key">
                 <option value='none'>없음</option>
-                <option value="writer">글쓰니</option>
+                <option value="user_id">글쓰니</option>
                 <option value="title">제목</option>
                 <option value="content">내용</option>
             </select>
@@ -37,9 +37,9 @@
   
 <script setup>
 import { ref } from 'vue';
-import { useArticleStore } from '@/stores/article'
+import { useArticleStore } from '@/stores/articleStore'
 
-const store = useArticleStore()
+const articleStore = useArticleStore()
 const searchInfo = ref({
     key: 'none',
     word: '',
@@ -47,7 +47,7 @@ const searchInfo = ref({
     orderByDir: 'asc'
 })
 const searchArticleList = function () {
-    store.searchArticleList(searchInfo.value)
+    articleStore.searchArticleList(searchInfo.value)
 }
 </script>
   

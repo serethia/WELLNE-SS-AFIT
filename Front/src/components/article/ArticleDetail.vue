@@ -7,15 +7,15 @@
         <div>{{ store.article.regDate }}</div>
         <div>{{ store.article.viewCnt }}</div>
         <div>{{ store.article.content }}</div>
-
-        <button @click="deleteArticle">삭제</button>
+        
         <button @click="updateArticle">수정</button>
+        <button @click="deleteArticle">삭제</button>
     </div>
 </template>
 
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
-import { useArticleStore } from "@/stores/article";
+import { useArticleStore } from "@/stores/articleStore";
 import { onMounted } from "vue";
 import axios from 'axios'
 
@@ -24,7 +24,8 @@ const store = useArticleStore()
 const route = useRoute();
 const router = useRouter();
 onMounted(() => {
-    store.getArticle(route.params.id)
+    console.log(route.params.category)
+    // store.getArticle(route.params.id)
 })
 const deleteArticle = function () {
     axios.delete(`http://localhost:8080/articleapi/article/${route.params.id}`)
@@ -40,4 +41,4 @@ const updateArticle = function () {
 
 </script>
 
-<style scoped></style>
+

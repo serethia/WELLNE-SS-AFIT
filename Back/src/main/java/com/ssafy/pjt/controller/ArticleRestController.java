@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.pjt.model.dto.Article;
@@ -29,10 +30,19 @@ public class ArticleRestController {
 	
 	@GetMapping("/article")
 	@ApiOperation(value = "등록된 모든 기사 정보를 반환한다.", response = Article.class)
-	public List<Article> getArticle(){
-		List<Article> list = aService.getArticles();
+	public List<Article> getArticle(@RequestParam String category){
+		
+		String categoryStr ="";
+		
+		if (category.equals("exercise"))
+			categoryStr="운동";
+		
+		System.out.println("등록된 모든 기사 정보 반환");
+		List<Article> list = aService.getArticlesByCategory(categoryStr);
+		System.out.println(list);
 		return list;
 	}
+	
 	
 	@PostMapping("/article")
 	@ApiOperation(value = "기사 정보를 작성한다.", response = Integer.class)

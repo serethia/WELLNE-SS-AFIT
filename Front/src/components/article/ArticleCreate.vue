@@ -17,7 +17,7 @@
             </div>
 
 
-            <!-- <div>
+            <div>
                 <label for="video">비디오 URL : </label>
                 <input type="url" id="video" v-model="board.video">
             </div>
@@ -31,10 +31,8 @@
             <div>
                 <label for="category">카테고리 : </label>
                 <input type="text" id="category" v-model="board.writer">
-            </div> -->
+            </div>
             
-
-
 
 
             <div>
@@ -46,16 +44,16 @@
 
 <script setup>
 import { ref } from "vue";
-import { useArticleStore } from "@/stores/article";
+import { useArticleStore } from "@/stores/articleStore";
 
 const store = useArticleStore()
 const article = ref({
     title: '',
     writer: '',
     content: '',
-    // video: '',
-    // media: '',
-    // category: ''
+    video: '',
+    media: '',
+    category: ''
 
 })
 

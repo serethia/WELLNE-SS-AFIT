@@ -39,4 +39,9 @@ public class ArticleServiceImpl implements ArticleService {
 		return dao.deleteArticle(articleId);		
 	}
 
+	@Override
+	public List<Article> getArticlesByCategory(String category) {
+		return dao.selectAllArticlesByCategory(category);
+	}
+
 }

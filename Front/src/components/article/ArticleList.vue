@@ -10,29 +10,29 @@
                 <th>조회수</th>
                 <th>등록</th>
             </tr>
-            <tr v-for="board in store.boardList" :key="board.id">
-                <td>{{ board.id }}</td>
+            <tr v-for="article in articleStore.articleList" :key="article.article_id">
+                <td>{{ article.articleId }}</td>
                 <td>
-                    <RouterLink :to="`/board/${board.id}`">{{ board.title }}</RouterLink>
+                    <RouterLink :to="`/article/${article.articleId}`">{{ article.articleTitle }}</RouterLink>
                 </td>
-                <td>{{ board.writer }}</td>
-                <td>{{ board.viewCnt }}</td>
-                <td>{{ board.regDate }}</td>
+                <td>{{ article.userId }}</td>
+                <td>{{ article.viewCnt }}</td>
+                <td>{{ article.createdAt }}</td>
             </tr>
         </table>
 
-        <BoardSearchInput />
+        <ArticleSearchInput />
     </div>
 </template>
 
 <script setup>
-import { useBoardStore } from "@/stores/board";
+import { useArticleStore } from "@/stores/articleStore";
 import { onMounted } from "vue";
-import BoardSearchInput from "./BoardSearchInput.vue";
-const store = useBoardStore()
+import ArticleSearchInput from "./ArticleSearchInput.vue";
+const articleStore = useArticleStore()
 
 onMounted(() => {
-    store.getBoardList()
+    articleStore.getArticleList()
 })
 
 </script>
