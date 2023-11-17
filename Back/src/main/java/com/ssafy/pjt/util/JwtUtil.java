@@ -9,7 +9,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
 public class JwtUtil {
-    
     private static final String SALT = "SSAFIT";
     
     public String createToken(String key, String value) throws UnsupportedEncodingException {

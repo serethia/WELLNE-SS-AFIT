@@ -1,0 +1,18 @@
+POST http://localhost:8080/userapi/login
+Content-Type: application/json
+
+{"userId": "admin", "userPwd": "admin1"}
+
+
+###
+
+GET http://localhost:8080/userapi/user
+access-token: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6ImFkbWluIiwiZXhwIjoxNzAwMjEwMTczfQ.F_Iw4d3nQk-YiKDm4lu9lo5g81lHyxYJ9_RTSA00mHY
+
+
+// role = 0 - 일반 유저, 1 - 기자 , 2 - 관리자
+
+
+###
+GET http://localhost:8080/userapi/user/user4
+access-token: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6ImFkbWluIiwiZXhwIjoxNzAwMjEwMTczfQ.F_Iw4d3nQk-YiKDm4lu9lo5g81lHyxYJ9_RTSA00mHY
