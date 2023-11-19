@@ -30,12 +30,18 @@ public class ArticleRestController {
 	
 	@GetMapping("/article")
 	@ApiOperation(value = "등록된 모든 기사 정보를 반환한다.", response = Article.class)
-	public List<Article> getArticle(@RequestParam String category){
+	public List<Article> getArticlesByCategory(@RequestParam String category){
 		
 		String categoryStr ="";
 		
-		if (category.equals("exercise"))
+		if (category.equals("exercise")) {
 			categoryStr="운동";
+		} else if (category.equals("diet")) {
+			categoryStr="다이어트";
+		} else if (category.equals("advice")) {
+			categoryStr="전문가조언";
+		}
+		
 		
 		System.out.println("등록된 모든 기사 정보 반환");
 		List<Article> list = aService.getArticlesByCategory(categoryStr);

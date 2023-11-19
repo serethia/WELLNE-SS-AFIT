@@ -63,7 +63,16 @@ export const useArticleStore = defineStore('article', ()=>{
   const article = ref([])
   const getArticle = function (articleId) {
     console.log('aaab')
-    axios.get(`${REST_ARTICLE_API}/article/${articleId}`)
+
+    const storeObj = JSON.parse(sessionStorage.getItem('user'));
+    accessToken.value = storeObj.accessToken;
+
+    axios.get(`${REST_ARTICLE_API}/article/${articleId}`,
+    {
+      headers: {
+          "access-token": accessToken.value  // 세션에서 해당 토큰 가져오기 (헤더)
+      }
+    })
       .then((response) => {
       article.value = response.data
     })

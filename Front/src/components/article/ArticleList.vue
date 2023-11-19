@@ -27,14 +27,30 @@
 
 <script setup>
 import { useArticleStore } from "@/stores/articleStore";
-import { onMounted } from "vue";
+import { onMounted, watch, ref } from "vue";
+import { useRouter } from 'vue-router';
 import ArticleSearchInput from "./ArticleSearchInput.vue";
-const articleStore = useArticleStore()
+
+const articleStore = useArticleStore();
+const router = useRouter();
+const category = ref(''); 
+
+
+
+
+
+watch(() => router.currentRoute.value.params.category, (newCategory) => {
+    category.value = newCategory;
+    articleStore.getArticleListByCategory(newCategory);
+});
 
 onMounted(() => {
-    articleStore.getArticleList()
-})
+    const initialCategory = router.currentRoute.value.params.category;
+    category.value = initialCategory;
+    articleStore.getArticleListByCategory(initialCategory);
+});
+
+
+
 
 </script>
-
-<style scoped></style>
