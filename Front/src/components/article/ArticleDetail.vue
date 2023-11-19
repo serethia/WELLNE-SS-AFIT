@@ -1,13 +1,13 @@
 <template>
     <div>
-        <p>기사 정보들 쭉 나열하기</p>
+        <p>코드 합치면 수정하기</p>
         <CommentList />
     </div>
   </template>
   
   <script setup>
-    import { onMounted, ref } from "vue";
-    import { useArticleStore } from "@/stores/articleStore";
+    // import { onMounted, ref } from "vue";
+    // import { useArticleStore } from "@/stores/articleStore";
     import CommentList from "@/components/comment/CommentList.vue";
 
 

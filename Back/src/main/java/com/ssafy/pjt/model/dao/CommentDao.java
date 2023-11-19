@@ -13,5 +13,12 @@ public interface CommentDao {
 	int updateComment(Comment comment);
 
 	int deleteComment(int commentId);
-
+	
+	int plusCommentLikes(int commentId);
+	
+	int minusCommentLikes(int commentId);
+	
+	int plusCommentDislikes(int commentId);
+	
+	int minusCommentDislikes(int commentId);
 }

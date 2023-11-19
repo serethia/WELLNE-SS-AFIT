@@ -34,4 +34,24 @@ public class CommentServiceImpl implements CommentService {
 		return cDao.deleteComment(commentId);
 	}
 
+	@Override
+	public int increaseCommentLikes(int commentId) {
+		return cDao.plusCommentLikes(commentId);
+	}
+
+	@Override
+	public int decreaseCommentLikes(int commentId) {
+		return cDao.minusCommentLikes(commentId);
+	}
+
+	@Override
+	public int increaseCommentDislikes(int commentId) {
+		return cDao.plusCommentDislikes(commentId);
+	}
+
+	@Override
+	public int decreaseCommentDislikes(int commentId) {
+		return cDao.minusCommentDislikes(commentId);
+	}
+
 }

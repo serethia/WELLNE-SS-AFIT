@@ -16,5 +16,13 @@ public interface CommentService {
 		
 	 // 댓글 삭제
 	 int eraseComment(int commentId);
-	
+	 
+	 // 댓글 좋아요 +/-
+	 int increaseCommentLikes(int commentId);
+	 int decreaseCommentLikes(int commentId);
+	 
+	 // 댓글 싫어요 +/-
+	 int increaseCommentDislikes(int commentId);
+	 int decreaseCommentDislikes(int commentId);
+	 
 }

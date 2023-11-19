@@ -59,4 +59,28 @@ public class CommentRestController {
 		return result;
 	}
 	
+	@PutMapping("/article/{articleId}/comments/{commentId}/pluslike")
+	public int increaseLike(@PathVariable int articleId, @PathVariable int commentId) {
+		int result = cService.increaseCommentLikes(commentId);
+		return result;
+	}
+	
+	@PutMapping("/article/{articleId}/comments/{commentId}/minuslike")
+	public int decreaseLike(@PathVariable int articleId, @PathVariable int commentId) {
+		int result = cService.decreaseCommentLikes(commentId);
+		return result;
+	}
+	
+	@PutMapping("/article/{articleId}/comments/{commentId}/plusdislike")
+	public int increaseDisLike(@PathVariable int articleId, @PathVariable int commentId) {
+		int result = cService.increaseCommentDislikes(commentId);
+		return result;
+	}
+	
+	@PutMapping("/article/{articleId}/comments/{commentId}/minusdislike")
+	public int decreaseDisLike(@PathVariable int articleId, @PathVariable int commentId) {
+		int result = cService.decreaseCommentDislikes(commentId);
+		return result;
+	}
+	
 }
