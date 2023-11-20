@@ -33,6 +33,9 @@
 import { ref, computed, onMounted } from "vue";
 import { useCommentStore } from "@/stores/commentStore";
 import { useUserStore } from "@/stores/userStore";
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
 
 const commentStore = useCommentStore();
 const userStore = useUserStore();
@@ -44,6 +47,7 @@ const loginUser = computed(() => userStore.loginUser);
 const newComment = ref('');
 
 onMounted(() => {
+    console.log(route.params);
     if(comments.value.length > 0){
     const articleId = comments.value[0]?.articleId;
     commentStore.showComments(articleId);
