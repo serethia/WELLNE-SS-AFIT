@@ -40,10 +40,14 @@
 </template>
 
 <script setup>
-import { useArticleStore } from "@/stores/articleStore";
+import { useRoute } from 'vue-router';
 import { ref, onBeforeMount } from "vue";
-const store = useArticleStore();
+import { useArticleStore } from "@/stores/articleStore";
+import { useUserStore } from "@/stores/userStore";
 
+const articleStore = useArticleStore()
+const userStore = useUserStore()
+const route = useRoute();
 
 const title = ref("");
 const writer = ref("");
@@ -56,15 +60,19 @@ const category = ref("");
 
 
 const updateArticle = function () {
+    const articleId = route.params.articleId;
+    console.log("ttttest")
+    console.log(route.params.articleId)
+
     const article = {
       articleTitle: title.value,
       articleContent: content.value,
-      userId: userStore.loginUserId,
+      userId: userStore.loginUserId.value,
       videoUrl: video.value,
       mediaName: media.value,
       category: category.value,
     };
-    store.updateArticle()
+    articleStore.updateArticle(articleId, article)
 }
 </script>
 
