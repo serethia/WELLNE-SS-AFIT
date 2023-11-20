@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import router from "@/router";
-import axios from 'axios';
+import axios from "axios";
 
 
 const URL = 'http://localhost:8080/userapi'
@@ -17,6 +17,7 @@ export const useUserStore = defineStore("user", () => {
 
   const user = ref(null);
   const loginUser = ref(null);
+  const loginUserId = ref('');
 
   const userCnt = ref(0);
   const searchUserCnt = ref(0);
@@ -37,7 +38,7 @@ export const useUserStore = defineStore("user", () => {
         .then((res) => {
             users.value.push(res.data);
             userCnt.value = users.value.length;
-            router.push({name: 'UserList'});
+            router.push({name: 'userList'});
         })
   };
 
@@ -51,7 +52,7 @@ export const useUserStore = defineStore("user", () => {
           }
       })
       .then(() => {
-          router.push({name: 'UserList'});
+          router.push({name: 'userList'});
       })
   };
 
@@ -59,9 +60,8 @@ export const useUserStore = defineStore("user", () => {
   // 로그아웃
   const setLogout = () => {
     isLoggedIn.value = false;  
-    //sessionStorage.removeItem('access-token');  // 세션의 토큰 삭제
     accessToken.value = "";
-    router.push({name: 'My'});
+    router.push({name: 'my'});
   };
 
 
@@ -87,12 +87,8 @@ export const useUserStore = defineStore("user", () => {
         .then((res) => {
             searchUsers.value = res.data;
             searchUserCnt.value = searchUsers.value.length;
-            console.log(searchUserCnt);
-            console.log(res.data);
-            console.log("검색성공");
         })
         .catch(() => {
-            console.log("검색안됨");
             alert("검색 대상을 찾지 못했습니다.");
         })
   };
@@ -108,7 +104,7 @@ export const useUserStore = defineStore("user", () => {
      })
         .then(() => {
             setUsers();
-            router.push({name: 'UserList'});
+            router.push({name: 'userList'});
         })
   };
 
@@ -117,11 +113,15 @@ export const useUserStore = defineStore("user", () => {
   const setLoginUser = (loginuser) => {
     axios.post(`${URL}/login`, loginuser)
         .then((res) => {
-            //sessionStorage.setItem('access-token', res.data);  // 토큰에 response 데이터 저장
             accessToken.value = res.data;
-            const token = res.data.split('.');  // token을 '.'을 기준으로 따로 3등분해서 배열로 저장
+            // const token = res.data.split('.');  // token을 '.'을 기준으로 따로 3등분해서 배열로 저장
             isLoggedIn.value= true;
-            router.push({name: 'My'});
+            router.push({name: 'my'});
+            let token = res.data;
+            let data = token.split('.')[1];
+            let jsonStr = atob(data);
+            let userObj = JSON.parse(jsonStr);
+            loginUserId.value = userObj.id;
         })
         .catch(() => {
           alert("로그인 실패!");
@@ -144,7 +144,7 @@ export const useUserStore = defineStore("user", () => {
 
 
   return {accessToken, isLoggedIn, users, searchUsers, user, loginUser, userCnt, searchUserCnt, 
-    createUser, deleteUser, setLogout, setUser, searchName, updateUser, setLoginUser, setUsers};
+    createUser, deleteUser, setLogout, setUser, searchName, updateUser, setLoginUser, setUsers, loginUserId};
 
 }, { persist: {
     storage: sessionStorage }});

@@ -3,11 +3,9 @@
         <header>
             <nav>
                 <div class="nav-main">
-                    <!-- 파라미터로  category를 넘겨서 watch로 내용만 갈아끼우기?? -->
-                <router-link :to="{name: 'Category', params: {category: 'exercise'}}">운동</router-link>&nbsp; &nbsp; &nbsp; &nbsp;
-                <router-link :to="{name: 'Category', params: {category: 'diet'}}">다이어트</router-link>&nbsp; &nbsp; &nbsp; &nbsp;
-                <router-link :to="{name: 'Category', params: {category: 'advice'}}">건강칼럼</router-link>
-                <router-link to="/article">기사 (나중에 카테고리로 bind, params로 category 보내주기???)</router-link>
+                <router-link :class="{ 'active-link': $route.name === 'category' && $route.params.category==='exercise' }" :to="{name: 'category', params: {category: 'exercise'}}">운동</router-link>&nbsp; &nbsp; &nbsp; &nbsp;
+                <router-link :class="{ 'active-link': $route.name === 'category' && $route.params.category==='diet' }" :to="{name: 'category', params: {category: 'diet'}}">건강식품</router-link>&nbsp; &nbsp; &nbsp; &nbsp;
+                <router-link :class="{ 'active-link': $route.name === 'category' && $route.params.category==='advice' }" :to="{name: 'category', params: {category: 'advice'}}">전문가칼럼</router-link>
                 </div>
                 <div class="nav-user">
                     <a href="#" v-if="userStore.isLoggedIn" @click="logout">로그아웃</a>
@@ -66,5 +64,10 @@ nav a {
 
 nav a.router-link-exact-active {
     color: #42b983
+}
+
+/* 카테고리 버튼 색이 개별적으로 변하지 않는 건 아직 파라미터가 store의 메소드로 전달되지 않아서이기도 한 듯 */
+nav a.active-link {
+  color: #42b983; 
 }
 </style>
