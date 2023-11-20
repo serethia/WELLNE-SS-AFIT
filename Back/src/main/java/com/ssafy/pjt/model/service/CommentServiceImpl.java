@@ -51,18 +51,18 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public int decreaseCommentLikes(int commentId) {
-		return cDao.minusCommentLikes(commentId);
+	public int decreaseCommentLikes(Map<String,Object> map) {
+		return cDao.minusCommentLikes(map);
 	}
 
 	@Override
-	public int increaseCommentDislikes(int commentId) {
-		return cDao.plusCommentDislikes(commentId);
+	public int increaseCommentDislikes(Map<String,Object> map) {
+		return cDao.plusCommentDislikes(map);
 	}
 
 	@Override
-	public int decreaseCommentDislikes(int commentId) {
-		return cDao.minusCommentDislikes(commentId);
+	public int decreaseCommentDislikes(Map<String,Object> map) {
+		return cDao.minusCommentDislikes(map);
 	}
 
 }

@@ -21,9 +21,9 @@ public interface CommentDao {
 	
 	int plusCommentLikes(Map<String,Object> map);
 	
-	int minusCommentLikes(int commentId);
+	int minusCommentLikes(Map<String,Object> map);
 	
-	int plusCommentDislikes(int commentId);
+	int plusCommentDislikes(Map<String,Object> map);
 	
-	int minusCommentDislikes(int commentId);
+	int minusCommentDislikes(Map<String,Object> map);
 }

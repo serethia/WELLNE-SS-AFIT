@@ -26,10 +26,10 @@ public interface CommentService {
 	 
 	 // 댓글 좋아요 +/-
 	 int increaseCommentLikes(Map<String, Object> map);
-	 int decreaseCommentLikes(int commentId);
+	 int decreaseCommentLikes(Map<String,Object> map);
 	 
 	 // 댓글 싫어요 +/-
-	 int increaseCommentDislikes(int commentId);
-	 int decreaseCommentDislikes(int commentId);
+	 int increaseCommentDislikes(Map<String,Object> map);
+	 int decreaseCommentDislikes(Map<String,Object> map);
 	 
 }

@@ -55,25 +55,16 @@
 		INSERT INTO comment_like (user_id, comment_id) VALUES (#{userId}, #{commentId})
 	</insert>
 	
-	<update id="minusCommentLikes" parameterType="int">
-		UPDATE comment
-		SET
-		comment_like = comment_like - 1
-		WHERE comment_id = #{commentId}
+	<update id="minusCommentLikes" parameterType="map">
+		DELETE FROM comment_like WHERE (user_id, comment_id) = (#{userId}, #{commentId})
 	</update>
 	
-	<update id="plusCommentDislikes" parameterType="int">
-		UPDATE comment
-		SET
-		comment_dislike = comment_dislike + 1
-		WHERE comment_id = #{commentId}
+	<update id="plusCommentDislikes" parameterType="map">
+		INSERT INTO comment_dislike (user_id, comment_id) VALUES (#{userId}, #{commentId})
 	</update>
 	
-	<update id="minusCommentDislikes" parameterType="int">
-		UPDATE comment
-		SET
-		comment_dislike = comment_dislike - 1
-		WHERE comment_id = #{commentId}
+	<update id="minusCommentDislikes" parameterType="map">
+		DELETE FROM comment_dislike WHERE (user_id, comment_id) = (#{userId}, #{commentId})
 	</update>
 	
 </mapper>

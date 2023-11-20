@@ -14,24 +14,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `category` VARCHAR(45) NULL,
   `role` INT DEFAULT 0, -- role = 0 - 일반 유저, 1 - 기자 , 2 - 관리자
-  -- `article_writer` TINYINT NULL DEFAULT 0,
   PRIMARY KEY (`user_id`))
 ENGINE = InnoDB;
-
--- -----------------------------------------------------
--- Table `video`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `video` (
---   `video_id` INT NOT NULL AUTO_INCREMENT,
-  `video_title` VARCHAR(200) NOT NULL,
-  `video_url` VARCHAR(500) NOT NULL,
-  `video_view_cnt` INT NULL,
-  `video_like` INT NULL,
-  `video_dislike` INT NULL,
-  PRIMARY KEY (`video_url`))
-ENGINE = InnoDB;
-
-
 
 -- -----------------------------------------------------
 -- Table `article`
@@ -40,7 +24,6 @@ CREATE TABLE IF NOT EXISTS `article` (
   `article_id` INT NOT NULL AUTO_INCREMENT,
   `article_title` VARCHAR(200) NOT NULL,
   `article_content` VARCHAR(4000) NOT NULL,
---  `board_id` INT NULL,
   `view_cnt` INT NULL,
   `user_id` VARCHAR(45) NOT NULL,
   `video_url` VARCHAR(500) NOT NULL,
@@ -49,11 +32,8 @@ CREATE TABLE IF NOT EXISTS `article` (
   `media_name` VARCHAR(100) NOT NULL,
   `category` VARCHAR(45) NOT NULL,
 --   `user_seq` INT NULL,
---   `premium` TINYINT NULL DEFAULT 0,
-  PRIMARY KEY (`article_id`), FOREIGN KEY(`user_id`) REFERENCES `user` (`user_id`), FOREIGN KEY(`video_url`) REFERENCES `video` (`video_url`))
+  PRIMARY KEY (`article_id`), FOREIGN KEY(`user_id`) REFERENCES `user` (`user_id`))
 ENGINE = InnoDB;
-
-
 
 -- -----------------------------------------------------
 -- Table `comment`
@@ -62,10 +42,12 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `comment_id` INT NOT NULL AUTO_INCREMENT,
   `comment_content` VARCHAR(200) NOT NULL,
   `user_id` VARCHAR(45) NOT NULL,
+ `nickname` VARCHAR(45) NOT NULL,
   `article_id` INT NOT NULL,
 --   `lft` INT NULL,
 --   `rgt` INT NULL,
 --   `depth` INT NULL,
+
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `modified_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `comment_like` INT NULL,
@@ -74,46 +56,20 @@ CREATE TABLE IF NOT EXISTS `comment` (
   
 ENGINE = InnoDB;
 
+CREATE TABLE IF NOT EXISTS `comment_like` (
+	`comment_like` INT NOT NULL AUTO_INCREMENT,
+	`comment_id` INT NOT NULL,
+    `user_id` VARCHAR(45) NOT NULL,
+	PRIMARY KEY (`comment_like`))
+    ENGINE = InnoDB;
+    
+    CREATE TABLE IF NOT EXISTS `comment_dislike` (
+    `comment_dislike` INT NOT NULL AUTO_INCREMENT,
+	`comment_id` INT NOT NULL,
+    `user_id` VARCHAR(45) NOT NULL,
+	PRIMARY KEY (`comment_dislike`))
+    ENGINE = InnoDB;
 
-
-
--- -----------------------------------------------------
--- Table `media`   아마 언론사도 만들어야 할 지도? 구독 기능? 찜하기 기능?
--- -----------------------------------------------------
--- CREATE TABLE IF NOT EXISTS `comment` (
---   
--- ENGINE = InnoDB;
-
-
--- video_title` VARCHAR(200) NOT NULL,
---   `video_url` VARCHAR(500) NOT NULL,
---   `video_view_cnt` INT NULL,
---   `video_like` INT NULL,
---   `video_dislike` 
-
-
-INSERT INTO video (video_title, video_url, video_like, video_dislike) VALUES
-("아침 공복 운동", "https://youtu.be/qWaC9lKOEU8", 0, 0),
-("물개 운동", "https://youtu.be/lURqZ2yj5fo", 0, 0),
-("거북목 운동", "https://youtu.be/x45u1s36RG8", 0, 0),
-("어떤 운동을 해야 살이 빠질까?", "https://youtu.be/eouBd8WFD4s", 0, 0),
-("체형교정을 위한 운동법", "https://youtu.be/iPUChyO0QFw", 0, 0),
-("당신이 속고 있는 저탄고지 다이어트의 진실 with 내과 전문의 박현경 원장님", "https://youtu.be/V723AcVzSPE", 0, 0),
-("[다이어트 보조제] 가르시니아, 콜레우스 포스콜리, 잔티젠 : 약사가 추천하는 성분은?", "https://youtu.be/g-OnWMUxRvI", 0, 0),
-("뒷면 읽어주는 언니들! 왜 우리는 닭가슴살을 먹는가?", "https://youtu.be/1yTCxWzMqWc", 0, 0),
-("여름 맞이 다이어트하다 돌 생겨요! 급찐급빠, 디톡스 원푸드 다이어트 !!주의사항!!", "https://youtu.be/Chv65X8cbV0", 0, 0),
-("여름철 다이어트 Q&A, 운동전문가와 의사가 직접 답해드립니다", "https://youtu.be/b5c9UA_A46w", 0, 0),
-("튼튼한 무릎을 만들어주는 운동", "https://youtu.be/xhstrFJe-_E", 0, 0),
-("튼튼한 허리를 만들어주는 운동", "https://youtu.be/JdFzOlJ1sto", 0, 0),
-("어깨를 튼튼하게 만들어주는 운동", "https://youtu.be/fadA4cEwjuE", 0, 0),
-("폼롤러를 이용한 코어운동", "https://youtu.be/Oq1oxExnPzA", 0, 0),
-("필라테스 서클을 이용한 하체 운동", "https://youtu.be/b4tLJ2ZXogQ", 0, 0),
-("필라테스볼을 이용한 상체 운동", "https://youtu.be/S3HnGDE1_fs", 0, 0);
-
-
-
-
-  
 INSERT INTO user (user_id, user_pwd, user_name, nickname, email, category, role) VALUES
 ("ssa1234", "!qwerqwer", "신성연", "ssa1234", "ssa1234@naver.com", "운동", 0),
 ("fy1234", "@qwerqwer", "유성현", "fy1234", "fy1234@naver.com", "다이어트", 0),
@@ -135,8 +91,6 @@ INSERT INTO user (user_id, user_pwd, user_name, nickname, email, category, role)
 ("expert2", "expertpass2", "김영환", "김영", "nutrition@example.com", "전문가조언", 1),
 ("expert3", "expertpass3", "안용훈", "안용", "fitnesscoach@example.com", "전문가조언", 1),
 ("admin2", "adminpass2", "양현수", "어드민2", "admin2@example.com", "", 0);
-
-
 
 INSERT INTO article (article_title, article_content, user_id, video_url, media_name, category) VALUES 
 ("체지방 태우는 아침 공복운동, 간 건강엔 최악?", "출근 전 헬스장이나 수영장에 들려 공복 상태로 유산소 운동을 하는 일명 ‘갓생’. 갓생이란 ‘신’을 의미하는 ‘갓(God)’과 ‘삶’을 뜻하는 ‘생(生)’을 합친 합성어로, 부지런하고 타인에게 모범이 되는 삶을 뜻한다. 피로를 무릅쓰고 공복으로 강행하는 아침 운동이 건강상으로도 좋은 습관일까.
@@ -449,22 +403,38 @@ UDCA는 간에서 콜레스테롤이 담즙산으로 전환되는 것을 촉진�
 ③ 몸의 옆쪽이 늘어남을 인지해 주시고 엉덩이가 들리지 않도록 주의합니다.", "expert3", "https://youtu.be/S3HnGDE1_fs", "하이닥", "운동");
 
 
-INSERT INTO `comment` (`comment_content`, `user_id`, `article_id`, `comment_like`, `comment_dislike`)
+INSERT INTO `comment` (`comment_content`, `user_id`, `nickname`, `article_id`)
 VALUES
-  ('좋은 기사네요!', 'ssa1234', 1, 10, 2),
-  ('몇 가지 의견이 다르네.', 'fy1234', 1, 5, 8),
-  ('잘 읽었습니다!', 'um1234', 3, 15, 3),
-  ('이 기사는 더 많은 내용이 필요해요.', 'se1234', 4, 3, 7),
-  ('잘 쓰여졌습니다.', 'an1234', 5, 12, 4),
-  
-  ('흥미로운 관점입니다.', 'admin', 1, 8, 6),
-  ('제 의견은 다릅니다.', 'iron1234', 2, 6, 9),
-  ('잘 하고 있어요!', 'iii111', 3, 18, 1),
-  ('새로운 것을 배웠습니다.', 'yeah3333', 4, 9, 5),
-  ('인상 깊지 않습니다.', 'news55', 5, 4, 11);
+  ('좋은 기사네요!', 'ssa1234', 'ssa1234', 1),
+  ('몇 가지 의견이 다르네.', 'fy1234', 'fy1234', 1),
+  ('잘 읽었습니다!', 'um1234', 'um1234', 3),
+  ('이 기사는 더 많은 내용이 필요해요.', 'se1234', 'se1234', 4),
+  ('잘 쓰여졌습니다.', 'an1234', 'an1234', 5),
+  ('흥미로운 관점입니다.', 'admin', '관리인', 1),
+  ('제 의견은 다릅니다.', 'iron1234', '아이언', 2),
+  ('잘 하고 있어요!', 'iii111', '아이아이', 3),
+  ('새로운 것을 배웠습니다.', 'yeah3333', '예아', 4),
+  ('인상 깊지 않습니다.', 'news55', '최고의기자왕이될거야', 5);
 
+INSERT INTO `comment_like` (`user_id`, `comment_id`)
+VALUES
+('ssa1234', 1),
+('admin', 2),
+('iii111', 1),
+('news55', 1),
+('um1234', 3);
 
+INSERT INTO `comment_dislike` (`user_id`, `comment_id`)
+VALUES
+('ssa1234', 4),
+('admin', 3),
+('iii111', 3),
+('news55', 1),
+('um1234', 2);
 
+SELECT * FROM comment;
+SELECT * FROM comment_like;
+SELECT * FROM comment_dislike;
 
 SELECT A.article_title, B.user_name AS name
 FROM article AS A

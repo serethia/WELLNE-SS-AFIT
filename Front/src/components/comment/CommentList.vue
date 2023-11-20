@@ -9,15 +9,19 @@
                 <li v-for="comment in comments" :key="comment.commentId" style="text-align: left;">
                     {{ comment.nickname }} : {{ comment.commentContent }}
                     
+                    <!-- <button v-if="isLoggedIn && comment.userId === loginUserId" @click="updateComment(comment.commentId)">수정</button>
+                    <button v-if="isLoggedIn && comment.userId === loginUserId" @click="deleteComment(comment.commentId)">삭제</button> -->
                     <button v-if="isLoggedIn && comment.userId === loginUserId" @click="updateComment(comment.commentId)">수정</button>
                     <button v-if="isLoggedIn && comment.userId === loginUserId" @click="deleteComment(comment.commentId)">삭제</button>
-                    
+
                     <span style="justify: end;">
-                    <!-- <button @click="toggleLike(comment.articleId, comment.commentId)" :disabled="isLiked(comment.commentId)">좋아요</button>-->
-                    &nbsp;&nbsp;<button @click="toggleLike(comment.commentId)" :disabled="isLiked">좋아요</button>&nbsp;
+                    <!-- <button @click="toggleLike(comment.articleId, comment.commentId)" :disabled="isLiked(comment.commentId)">좋아요</button> -->
+                    &nbsp;&nbsp;<button @click="toggleLike(comment.commentId)" :disabled="isLiked(comment.commentId)">좋아요</button>&nbsp;
+                    <!-- <button @click="onClick(comment.commentId, 'like')" :disabled="isLiked(comment.commentId)">좋아요</button> -->
                     <span>{{ comment.commentLikeCnt }}</span>
-                    <!--<button @click="toggleDislike(comment.articleId, comment.commentId)" :disabled="isDisliked(comment.commentId)">싫어요</button>-->
-                    &nbsp;<button @click="toggleDislike(comment.commentId)" :disabled="isDisliked">싫어요</button>&nbsp;
+                    <!-- <button @click="toggleDislike(comment.articleId, comment.commentId)" :disabled="isDisliked(comment.commentId)">싫어요</button> -->
+                    &nbsp;<button @click="toggleDislike(comment.commentId)" :disabled="isDisliked(comment.commentId)">싫어요</button>&nbsp;
+                    <!-- <button @click="onClick(comment.commentId, 'dislike')" :disabled="isDisliked(comment.commentId)">싫어요</button> -->
                     <span>{{ comment.commentDislikeCnt }}</span>
                     </span>
                 </li>
@@ -40,30 +44,43 @@ import { useUserStore } from "@/stores/userStore";
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
-
 const commentStore = useCommentStore();
 const userStore = useUserStore();
 
 const comments = computed(() => commentStore.comments);
 const commentCnt = computed(() => comments.value.length);
+const commentLikeCnt = computed(() => commentStore.commentLikeCnt);
+const commentDislikeCnt = computed(() => commentStore.commentDislikeCnt);
 const isLoggedIn = computed(() => userStore.isLoggedIn);
 const loginUserId = computed(() => userStore.loginUserId);
 const newComment = ref('');
 const updatedComment = ref('');
-const isLiked = computed(() => commentStore.isLiked);
-const isDisliked = computed(() => commentStore.isDisliked);
+
+const isLiked = (commentId) => commentStore.isLiked(commentId);
+const isDisliked = (commentId) => commentStore.isDisliked(commentId);
+
+// const isLiked = computed((commentId) => {
+//     const likedComments = commentStore.likedComments;
+//     return likedComments.includes(commentId);
+// });
+
+// const isDisliked = computed((commentId) => {
+//     const dislikedComments = commentStore.dislikedComments; 
+//     return dislikedComments.includes(commentId);
+// });
 
 onMounted(() => {
     // if(comments.value.length > 0){
     // const articleId = comments.value[0]?.articleId;
     const articleId = route.params.id;
     commentStore.showComments(articleId);
+    // console.log(comments.value);
 })
 
 const writeComment = function () {
     const articleId = route.params.id;
     commentStore.writeComment(articleId, newComment.value);
-    newComment.value = '';
+    newComment.value = ''; // 입력란 초기화
 }
 
 const updateComment = function (commentId) {
@@ -79,12 +96,45 @@ const deleteComment = function (commentId) {
 const toggleLike = function (commentId) {
     const articleId = route.params.id;
     commentStore.toggleLike(articleId, commentId);
+    // isLiked.value = !isLiked.value;
 }
 
 const toggleDislike = function (commentId) {
     const articleId = route.params.id;
     commentStore.toggleDislike(articleId, commentId);
+    // isDisliked.value = !isDisliked.value;
 }
+
+
+const onClick = async (commentId, action) => {
+  if (action === 'update') {
+    // 수정 버튼 클릭
+    // updateComment 이벤트 호출
+    await commentStore.updateComment(commentId);
+  } else if (action === 'delete') {
+    // 삭제 버튼 클릭
+    // deleteComment 이벤트 호출
+    await commentStore.deleteComment(commentId);
+  } else if (action === 'like') {
+    // 좋아요 버튼 클릭
+    if (commentStore.isLiked(commentId)) {
+      // 이미 좋아요를 누른 상태면 취소
+      await commentStore.updateComment(commentId, { like: false });
+    } else {
+      // 좋아요를 처음 누름
+      await commentStore.updateComment(commentId, { like: true });
+    }
+  } else if (action === 'dislike') {
+    // 싫어요 버튼 클릭
+    if (commentStore.isDisliked(commentId)) {
+      // 이미 싫어요를 누른 상태면 취소
+      await commentStore.updateComment(commentId, { dislike: false });
+    } else {
+      // 싫어요를 처음 누름
+      await commentStore.updateComment(commentId, { dislike: true });
+    }
+  }
+};
 </script>
   
 <style scoped>

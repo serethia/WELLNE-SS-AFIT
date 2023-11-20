@@ -55,16 +55,15 @@
   const route = useRoute();
   
   const updateTheUser = () => {
-    userStore.updateUser();
+    userStore.updateUser(user.value);
   };
   
   const removeUser = () => {
     userStore.deleteUser(user.value.userId);
   };
-  
+
   onBeforeMount(() => {
     const userId = route.params.id;
     userStore.setUser(userId);
   });
-  </script>
-  
+  </script> 

@@ -8,43 +8,77 @@ const URL = 'http://localhost:8080/commentapi'
 
 
 export const useCommentStore = defineStore("comment", () => {
-
   
   const comments = ref([]);
-  const comment = ref('');
-  const commentCnt = ref(0);
-  const commentLikeCnt = ref(0);
-  const commentDislikeCnt = ref(0);
-  let isLiked = false;
-  let isDisliked = false;
-  let disable = false;
   const likedComments = ref([]);
   const dislikedComments = ref([]);
   const accessToken = ref('');
   const userStore = useUserStore();
 
+  const comment = ref('');
+  const commentCnt = ref(0);
+  const commentLikeCnt = ref(0);
+  const commentDislikeCnt = ref(0);
+
+  let disable = false;
+
+  const isLiked = (commentId) => {
+    return likedComments.value.includes(commentId);
+  };
+
+  const isDisliked = (commentId) => {
+    return dislikedComments.value.includes(commentId);
+  };
+
+
 
   // 댓글 등록
-  const writeComment = (articleId, newComment) => {
-    const storeObj = JSON.parse(sessionStorage.getItem('user'));
-    accessToken.value = storeObj.accessToken;
+//   const writeComment = (articleId, newComment) => {
+    // const storeObj = JSON.parse(sessionStorage.getItem('user'));
+    // accessToken.value = storeObj.accessToken;
 
-    axios.post(`${URL}/article/${articleId}/comments`, 
-        {
+    // console.log('UserId: ', userStore.loginUserId);
+
+    // axios.post(`${URL}/article/${articleId}/comments`, 
+    //     {
+    //         commentContent: newComment,
+    //         nickname: userStore.loginUserNickname,
+    //         user_id: userStore.loginUserId
+    //     },
+    //     {
+    //         headers: {
+    //             "access-token": accessToken.value 
+    //         }
+    //     })
+    //      .then((res) => {
+    //         comments.value.push(res.data);
+    //         commentCnt.value = comments.value.length;
+    //         //newComment.value = ''; // 입력란 초기화 => 밖에서 작성할 것
+    //         showComments(articleId);
+    //     })
+    const writeComment = async (articleId, newComment) => {
+    try {
+        const storeObj = JSON.parse(sessionStorage.getItem('user'));
+        accessToken.value = storeObj.accessToken;
+  
+        const response = await axios.post(`${URL}/article/${articleId}/comments`, 
+          {
             commentContent: newComment,
-            nickname: userStore.loginUserNickname
-        },
-        {
+            nickname: userStore.loginUserNickname,
+            user_id: userStore.loginUserId
+          },
+          {
             headers: {
-                "access-token": accessToken.value 
+              "access-token": accessToken.value 
             }
-        })
-         .then((res) => {
-            comments.value.push(res.data);
-            commentCnt.value = comments.value.length;
-            //newComment.value = ''; // 입력란 초기화
-            showComments(articleId);
-        })
+          }
+        );
+  
+        comments.value.push(response.data);
+        commentCnt.value = comments.value.length;
+      } catch (error) {
+        console.error("Error writing comment:", error);
+      }
   };
 
 
@@ -87,102 +121,234 @@ export const useCommentStore = defineStore("comment", () => {
 
 
   // 모든 댓글 조회
-  const showComments = (articleId) => {
-    const storeObj = JSON.parse(sessionStorage.getItem('user'));
-    accessToken.value = storeObj.accessToken;
+//   const showComments = (articleId) => {
+    // const storeObj = JSON.parse(sessionStorage.getItem('user'));
+    // accessToken.value = storeObj.accessToken;
 
-    axios.get(`${URL}/article/${articleId}`,
-        {
-            headers: {
-                "access-token": accessToken.value
-            }
-        })
-         .then((res) => {
-            comments.value = res.data;
-        })
+    // axios.get(`${URL}/article/${articleId}`,
+    //     {
+    //         headers: {
+    //             "access-token": accessToken.value
+    //         }
+    //     })
+    //      .then((res) => {
+    //         comments.value = res.data;
+    //     })
+    const showComments = async (articleId) => {
+    try {
+        const storeObj = JSON.parse(sessionStorage.getItem('user'));
+        accessToken.value = storeObj.accessToken;
+  
+        const response = await axios.get(`${URL}/article/${articleId}`, {
+          headers: {
+            "access-token": accessToken.value
+          }
+        });
+  
+        comments.value = response.data;
+        commentCnt.value = comments.value.length;
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
   };
 
 
-  // 좋아요 toggle
-  const toggleLike = (articleId, commentId) => {
+//   // 좋아요 toggle
+//     const toggleLike = (articleId, commentId) => {
+//     const storeObj = JSON.parse(sessionStorage.getItem('user'));
+//     accessToken.value = storeObj.accessToken;
+
+//     if(!disable){
+//         disable = true;
+
+//         if(!isLiked){
+//             isLiked = true;
+
+//             axios.get(`${URL}/article/${articleId}/comments/${commentId}/pluslike?userId=${userStore.loginUserId}`,
+//             {
+//                 headers: {
+//                     "access-token": accessToken.value
+//                 }
+//             })
+//             .then((res) => {
+//                 const likes = res.data.commentLikeCnt;
+//                 const commentIdx = comments.value.findIndex(comment => comment.commentId === commentId);
+
+//                 if(commentIdx !== -1){
+//                     comments.value[commentIdx].commentLike = likes;
+//                     likedComments.value.push(commentId);
+//                     }
+//             })
+//             .finally(() => {
+//                 disable = false;
+//             })
+//         } else {
+//             isLiked = false;
+
+//             axios.get(`${URL}/article/${articleId}/comments/${commentId}/minuslike?userId=${userStore.loginUserId}`,
+//             {
+//                 headers: {
+//                     "access-token": accessToken.value
+//             }
+//             })
+//             .then((res) => {
+//                 const likes = res.data.commentLikeCnt;
+//                 const commentIdx = comments.value.findIndex(comment => comment.commentId === commentId);
+
+//                 if(commentIdx !== -1){
+//                     comments.value[commentIdx].commentLike = likes;
+//                     likedComments.value = likedComments.value.filter(id => id !== commentId);
+//                 }
+//             })
+//             .finally(() => {
+//                 disable = false;
+//             })
+//            }
+//         }
+//   };
+
+
+//   // 싫어요 toggle
+// //   const toggleDislike = (articleId, commentId) => {
+//     const toggleDislike = (articleId, commentId) => {
+//     const storeObj = JSON.parse(sessionStorage.getItem('user'));
+//     accessToken.value = storeObj.accessToken;
+
+//     const enable = !disable;
+//     if(enable){
+//         disable = true;
+//         if(isDisliked){
+//             isDisliked = false;
+//         } else {
+//             isDisliked = true;
+//          axios.get(`${URL}/article/${articleId}/comments/${commentId}/plusdislike?userId=${userStore.loginUserId}`,
+//         {
+//             headers: {
+//                 "access-token": accessToken.value
+//             }
+//         })
+//         .then((res) => {
+//             const dislikes = res.data.commentDislikeCnt;
+//             const commentIdx = comments.value.findIndex(comment => comment.commentId === commentId);
+//             if(commentIdx !== -1){
+//                 comments.value[commentIdx].commentDislike = dislikes;
+//                 if(isDisliked){
+//                     dislikedComments.value = dislikedComments.value.filter(id => id !== commentId);
+//                 } else {
+//                     dislikedComments.value.push(commentId);
+//                 }
+//             }
+//         })
+//         .finally(() => {
+//             disable = false;
+//         })
+//     }
+//   }
+// };
+
+const toggleLike = (articleId, commentId) => {
     const storeObj = JSON.parse(sessionStorage.getItem('user'));
     accessToken.value = storeObj.accessToken;
 
     const enable = !disable;
-    if(enable){
+    if (enable) {
         disable = true;
-        if(isLiked){
-            isLiked = false;
-        } else {
-            isLiked = true;
-            console.log('plus like request')
-            console.log(userStore.loginUserId);
-            axios.get(`${URL}/article/${articleId}/comments/${commentId}/pluslike?userId=${userStore.loginUserId}`,
-            {
-                headers: {
-                    "access-token": accessToken.value
-                }
-            })
-            .then((res) => {
-                const likes = res.data.commentLikeCnt;
-                const commentIdx = comments.value.findIndex(comment => comment.commentId === commentId);
-                if(commentIdx !== -1){
-                    comments.value[commentIdx].commentLike = likes;
-                    if(isLiked){
-                        likedComments.value = likedComments.value.filter(id => id !== commentId);
-                    } else {
-                        likedComments.value.push(commentId);
-                    }
-                }
-            })
-            .finally(() => {
-                disable = false;
-            })
-        }
-    }
-  };
 
-
-  // 싫어요 toggle
-  const toggleDislike = (articleId, commentId) => {
-    const storeObj = JSON.parse(sessionStorage.getItem('user'));
-    accessToken.value = storeObj.accessToken;
-
-    const enable = !disable;
-    if(enable){
-        disable = true;
-        if(isDisliked){
-            isDisliked = false;
-        } else {
-            isDisliked = true;
-         axios.put(`${URL}/article/${articleId}/comments/${commentId}/plusdislike`, null,
-        {
-            headers: {
-                "access-token": accessToken.value
-            }
+       if (!isLiked(commentId)) {
+      isLiked.value = true;
+      axios
+        .get(`${URL}/article/${articleId}/comments/${commentId}/pluslike?userId=${userStore.loginUserId}`, {
+          headers: {
+            "access-token": accessToken.value,
+          },
         })
         .then((res) => {
-            const dislikes = res.data.commentDislikeCnt;
-            const commentIdx = comments.value.findIndex(comment => comment.commentId === commentId);
-            if(commentIdx !== -1){
-                comments.value[commentIdx].commentDislike = dislikes;
-                if(isDisliked(commentId)){
-                    dislikedComments.value = dislikedComments.value.filter(id => id !== commentId);
-                } else {
-                    dislikedComments.value.push(commentId);
-                }
-            }
+          const likes = res.data.commentLikeCnt;
+          const commentIdx = comments.value.findIndex((comment) => comment.commentId === commentId);
+          if (commentIdx !== -1) {
+            comments.value[commentIdx].commentLike = likes;
+            likedComments.value.push(commentId);
+          }
         })
         .finally(() => {
-            disable = false;
+          disable = false;
+        });
+    } else {
+      isLiked.value = false;
+      axios
+        .get(`${URL}/article/${articleId}/comments/${commentId}/minuslike?userId=${userStore.loginUserId}`, {
+          headers: {
+            "access-token": accessToken.value,
+          },
         })
+        .then((res) => {
+          const likes = res.data.commentLikeCnt;
+          const commentIdx = comments.value.findIndex((comment) => comment.commentId === commentId);
+          if (commentIdx !== -1) {
+            comments.value[commentIdx].commentLike = likes;
+            likedComments.value = likedComments.value.filter((id) => id !== commentId);
+          }
+        })
+        .finally(() => {
+          disable = false;
+        });
     }
   }
 };
+
+// 싫어요 toggle
+const toggleDislike = (articleId, commentId) => {
+    const storeObj = JSON.parse(sessionStorage.getItem('user'));
+    accessToken.value = storeObj.accessToken;
+
+    const enable = !disable;
+    if (enable) {
+        disable = true;
+
+        if (!isDisliked(commentId)) {
+            isDisliked.value = true;
+            axios
+              .get(`${URL}/article/${articleId}/comments/${commentId}/plusdislike?userId=${userStore.loginUserId}`, {
+                headers: {
+                  "access-token": accessToken.value,
+                },
+              })
+              .then((res) => {
+                const dislikes = res.data.commentDislikeCnt;
+                const commentIdx = comments.value.findIndex((comment) => comment.commentId === commentId);
+                if (commentIdx !== -1) {
+                  comments.value[commentIdx].commentDislike = dislikes;
+                  dislikedComments.value.push(commentId);
+                }
+              })
+              .finally(() => {
+                disable = false;
+              });
+          } else {
+            isDisliked.value = false;
+            axios
+              .get(`${URL}/article/${articleId}/comments/${commentId}/minusdislike?userId=${userStore.loginUserId}`, {
+                headers: {
+                  "access-token": accessToken.value,
+                },
+              })
+              .then((res) => {
+                const dislikes = res.data.commentDislikeCnt;
+                const commentIdx = comments.value.findIndex((comment) => comment.commentId === commentId);
+                if (commentIdx !== -1) {
+                  comments.value[commentIdx].commentDislike = dislikes;
+                  dislikedComments.value = dislikedComments.value.filter((id) => id !== commentId);
+                }
+              })
+              .finally(() => {
+                disable = false;
+              });
+          }
+        }
+      };
 
 
   return {accessToken, comments, comment, commentCnt, commentLikeCnt, commentDislikeCnt, likedComments, dislikedComments,
     writeComment, deleteComment, updateComment, showComments, disable, toggleLike, isLiked, toggleDislike, isDisliked};
 
-}, { persist: {
-    storage: sessionStorage }});
+}, { persist: { storage: sessionStorage }});

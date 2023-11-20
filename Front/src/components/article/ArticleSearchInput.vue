@@ -5,10 +5,11 @@
             </router-link>
         </div>
         <br>
+        <br>
 
     <div class="search">
             <form style="width: 100%">
-                <label>검색 기준 :</label>
+                <label>검색 기준</label>
             <select v-model="searchInfo.key">
                 <option value='none'>없음</option>
                 <option value="user_id">작성자</option>
@@ -16,14 +17,14 @@
                 <option value="content">내용</option>
             </select>&nbsp; &nbsp;
             <span style="position: relative; width: 400px; height: 30px; margin: 10px auto">
-            <label>검색 내용 :</label>
-            <input type="text" placeholder="검색어 입력" v-model="searchInfo.word" style="width: 20%; border: 1px solid #bbb; border-radius: 8px; padding: 10px 12px; font-size: 14px"/>
-            <input @click="searchArticleList" type="image" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="Submit Form" style="position: absolute; width: 17px; top: 10px; right: 12px; margin: 0" />
+            <label>검색 내용</label>
+            <input type="text" placeholder="검색어 입력" v-model="searchInfo.word" style="width: 15%; border: 1px solid #bbb; border-radius: 8px; padding: 10px 12px; font-size: 14px"/>
+            <input @click="searchArticleList" type="image" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="Submit Form" style="position: absolute; width: 15px; top: 5px; right: 10px; margin: 0" />
             </span>
-        &nbsp; &nbsp;
+        &nbsp; 
 
         <span>
-            <label>정렬 기준 :</label>
+            <label>정렬 기준</label>
             <select v-model="searchInfo.orderBy">
                 <option value='none'>없음</option>
                 <option value="writer">작성자</option>
@@ -31,16 +32,16 @@
                 <option value="view_cnt">조회수</option>
             </select>
         </span>
-        &nbsp; &nbsp;
+        &nbsp; 
 
         <span>
-            <label>정렬 방향 :</label>
+            <label>정렬 방향</label>
             <select v-model="searchInfo.orderByDir">
                 <option value="asc">오름차순</option>
                 <option value="desc">내림차순</option>
             </select>
         </span>
-        &nbsp; &nbsp;
+        &nbsp;
         </form>
     </div>
 </template>

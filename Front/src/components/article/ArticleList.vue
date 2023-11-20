@@ -2,7 +2,7 @@
     <div>
         
         <table>
-            <tr>
+            <tr style="background-color: whitesmoke;">
                 <th>제목</th>
                 <th>작성자</th>
                 <th>조회수</th>

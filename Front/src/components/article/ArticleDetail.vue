@@ -21,12 +21,13 @@ import axios from 'axios'
 import CommentList from '@/components/comment/CommentList.vue';
 
 const store = useArticleStore()
-
 const route = useRoute();
 const router = useRouter();
+
 onMounted(() => {
     store.getArticle(route.params.id)
 })
+
 const deleteArticle = function () {
     axios.delete(`http://localhost:8080/articleapi/article/${route.params.id}`)
         .then(() => {
