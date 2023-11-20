@@ -5,6 +5,12 @@ import axios from 'axios'
 
 const REST_ARTICLE_API = `http://localhost:8080/articleapi`
 
+const categoryMap = {
+  '다이어트': 'diet',
+  '운동': 'exercise',
+  '전문가조언': 'advice'
+}
+
 export const useArticleStore = defineStore('article', ()=>{
   const articleList = ref([])
   const accessToken = ref('')
@@ -81,29 +87,47 @@ export const useArticleStore = defineStore('article', ()=>{
   //게시글 등록
   const createArticle = function (article) {
     console.log('aaac')
+    console.log(article)
+
+    const storeObj = JSON.parse(sessionStorage.getItem('user'));
+    accessToken.value = storeObj.accessToken;
+
     axios({
       url: `${REST_ARTICLE_API}/article`,
       method: 'POST',
       
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "access-token": accessToken.value
       },
       data: article
     })
-      .then(() => {
-        
-        router.push({ name: 'articleList'})
+      .then((res) => {
+        console.log(res.data)
+        const currentCategory = categoryMap[category.value];
+        console.log(category.value)
+        console.log("카테고리이동")
+        console.log(currentCategory)
+        router.push({ name: 'category', params: { category: currentCategory }})
       })
       .catch((err) => {
       console.log(err)
     })
   }
 
-  const updateArticle = function () {
+  const updateArticle = function (articleId) {
     console.log('aaad')
-    axios.put(`${REST_ARTICLE_API}/article`, article.value)
+    const storeObj = JSON.parse(sessionStorage.getItem('user'));
+    accessToken.value = storeObj.accessToken;
+    axios.put(`${REST_ARTICLE_API}/article/${articleId}`, article.value,
+    {
+      headers: {
+          "access-token": accessToken.value 
+      }
+    })
       .then(() => {
-      router.push({name: 'articleList'})
+        // const currentCategory = categoryMap[category.value];
+        router.push({ name: 'category', params: { category: "exercise"}})
     })
   }
 
@@ -117,6 +141,27 @@ export const useArticleStore = defineStore('article', ()=>{
     })
   }
 
+  const deleteArticle = function (articleId) {
+
+    
+
+    const storeObj = JSON.parse(sessionStorage.getItem('user'));
+    accessToken.value = storeObj.accessToken;
+
+    axios.delete(`${REST_ARTICLE_API}/article/${articleId}`,
+    {
+      headers: {
+          "access-token": accessToken.value 
+      }
+    })
+      .then((res) => {
+        
+        console.log("deletdata")
+        console.log(res.data)
+        // const currentCategory = categoryMap[category.value];
+        router.push({ name: 'category', params: { category: "exercise" }})
+      })
+  }
 
 
 
@@ -124,7 +169,8 @@ export const useArticleStore = defineStore('article', ()=>{
 
 
 
-  return { articleList, getArticleList, getArticleListByCategory, article, getArticle, createArticle, updateArticle, searchArticleList }
+
+  return { articleList, getArticleList, getArticleListByCategory, article, getArticle, createArticle, updateArticle, searchArticleList, deleteArticle }
 
     // const computeFavorites = computed(()=>{
     //     return productList.value.filter(pro => pro.isFavorite)

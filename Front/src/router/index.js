@@ -34,32 +34,32 @@ import UserDetail from "@/components/user/UserDetail.vue";
 const routes = [
   {
     path: '/category/:category',
-    name: 'Category',
+    name: 'category',
     component: CategoryView,
   },
   {
     path: '/article',
-    name: 'ArticleList',
+    name: 'articleList',
     component: ArticleList,
   },
   {
     path: '/article-create',
-    name: 'ArticleCreate',
+    name: 'articleCreate',
     component: ArticleCreate,
   },
   {
     path: '/article/:id',
-    name: 'ArticleDetail',
+    name: 'articleDetail',
     component: ArticleDetail,
   },
   {
     path: '/article-update',
-    name: 'ArticleUpdate',
+    name: 'articleUpdate',
     component: ArticleUpdate,
   },
   {
     path: '/',
-    name: 'My',
+    name: 'my',
     component: MyView,
   },
   // {
@@ -79,23 +79,23 @@ const routes = [
   // },
   {
     path: "/login",
-    name: "Login",
+    name: "login",
     component: LoginForm,
   },
   
   {
     path: "/user/:id",
-    name: "UserDetail",
+    name: "userDetail",
     component: UserDetail,
   },
   {
     path: "/user",
-    name: "UserList",
+    name: "userList",
     component: UserList,
   },
   {
     path: "/user/regist",
-    name: "UserRegist",
+    name: "userRegist",
     component: UserRegist,
   },
 ];

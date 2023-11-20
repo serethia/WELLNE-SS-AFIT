@@ -28,11 +28,9 @@ const router = useRouter();
 onMounted(() => {
     store.getArticle(route.params.id)
 })
+
 const deleteArticle = function () {
-    axios.delete(`http://localhost:8080/articleapi/article/${route.params.id}`)
-        .then(() => {
-            router.push({ name: 'articleList' })
-        })
+    store.deleteArticle(route.params.id)
 }
 
 const updateArticle = function () {

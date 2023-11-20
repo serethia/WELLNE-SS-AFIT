@@ -3,9 +3,9 @@
         <header>
             <nav>
                 <div class="nav-main">
-                <router-link :class="{ 'active-link': $route.name === 'Category' && $route.params.category==='exercise' }" :to="{name: 'Category', params: {category: 'exercise'}}">운동</router-link>&nbsp; &nbsp; &nbsp; &nbsp;
-                <router-link :class="{ 'active-link': $route.name === 'Category' && $route.params.category==='diet' }" :to="{name: 'Category', params: {category: 'diet'}}">건강식품</router-link>&nbsp; &nbsp; &nbsp; &nbsp;
-                <router-link :class="{ 'active-link': $route.name === 'Category' && $route.params.category==='advice' }" :to="{name: 'Category', params: {category: 'advice'}}">전문가칼럼</router-link>
+                <router-link :class="{ 'active-link': $route.name === 'category' && $route.params.category==='exercise' }" :to="{name: 'category', params: {category: 'exercise'}}">운동</router-link>&nbsp; &nbsp; &nbsp; &nbsp;
+                <router-link :class="{ 'active-link': $route.name === 'category' && $route.params.category==='diet' }" :to="{name: 'category', params: {category: 'diet'}}">건강식품</router-link>&nbsp; &nbsp; &nbsp; &nbsp;
+                <router-link :class="{ 'active-link': $route.name === 'category' && $route.params.category==='advice' }" :to="{name: 'category', params: {category: 'advice'}}">전문가칼럼</router-link>
                 </div>
                 <div class="nav-user">
                     <a href="#" v-if="userStore.isLoggedIn" @click="logout">로그아웃</a>
