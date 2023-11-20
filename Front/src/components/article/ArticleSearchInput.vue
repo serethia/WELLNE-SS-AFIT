@@ -9,10 +9,14 @@
                 <option value="content">내용</option>
             </select>
         </div>
+        &nbsp; &nbsp;
+
         <div>
             <label>검색 내용 :</label>
             <input type="text" v-model="searchInfo.word" />
         </div>
+        &nbsp; &nbsp;
+
         <div>
             <label>정렬 기준 :</label>
             <select v-model="searchInfo.orderBy">
@@ -22,6 +26,8 @@
                 <option value="view_cnt">조회수</option>
             </select>
         </div>
+        &nbsp; &nbsp;
+
         <div>
             <label>정렬 방향 :</label>
             <select v-model="searchInfo.orderByDir">
@@ -29,9 +35,21 @@
                 <option value="desc">내림차순</option>
             </select>
         </div>
+        &nbsp; &nbsp;
+
         <div>
             <button @click="searchArticleList">검색</button>
         </div>
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+
+
+        <div>
+            <router-link to="/article-create">
+            <button>작성</button>
+            </router-link>
+        </div>
+    
+    
     </div>
 </template>
   

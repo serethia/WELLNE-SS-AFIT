@@ -19,18 +19,18 @@
 
             <div>
                 <label for="video">비디오 URL : </label>
-                <input type="url" id="video" v-model="board.video">
+                <input type="url" id="video" v-model="article.video">
             </div>
 
             <div>
-                <label for="media">미디어 : </label>
-                <input type="text" id="media" v-model="board.media">
+                <label for="media">언론사 : </label>
+                <input type="text" id="media" v-model="article.media">
             </div>
 
 
             <div>
                 <label for="category">카테고리 : </label>
-                <input type="text" id="category" v-model="board.writer">
+                <input type="text" id="category" v-model="article.writer">
             </div>
             
 
@@ -49,8 +49,8 @@ import { useArticleStore } from "@/stores/articleStore";
 const store = useArticleStore()
 const article = ref({
     title: '',
-    writer: '',
     content: '',
+    writer: '',
     video: '',
     media: '',
     category: ''
@@ -63,18 +63,3 @@ const createArticle = function () {
 </script>
 
 <style scoped></style>
-
-<!-- <template>
-    <div>
-        <h1>기사 상세세세세세 </h1>
-        
-    </div>
-  </template>
-  
-  <script setup>
-    
-  </script>
-  
-  <style scoped>
-  
-  </style> -->

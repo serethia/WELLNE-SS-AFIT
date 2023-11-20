@@ -1,11 +1,10 @@
 <template>
     <div>
-        <h4>게시글 상세</h4>
         <hr>
-        <div>{{ store.article.articleTitle }}</div>
-        <div>{{ store.article.articleContent }}</div>
+        <h1>{{ store.article.articleTitle }}</h1>
         <div v-if="isYouTubeVideo" v-html="renderYouTubeVideo(store.article.videoUrl)"></div>
         <div v-else>{{ store.article.videoUrl }}</div>
+        <div>{{ store.article.articleContent }}</div>
         <div>{{ store.article.userName }}</div>
         <div>{{ store.article.viewCnt }}</div>
         <div>{{ store.article.createdAt }}</div>
