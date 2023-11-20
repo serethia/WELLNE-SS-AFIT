@@ -4,7 +4,7 @@ import MyView from "@/views/MyView.vue";  // 마이페이지 view
 import UserView from "@/views/UserView.vue";  // 관리자만 보이도록 설정_회원 정보 조회용 view
 
 // 카테고리별로 다르게 기사를 보여줄 때는 태그를 이용해 보여주고 숨기기
-// ArticleDetail 안에 댓글 component
+// ArticleDetail 안에서 댓글 component 보여주기
 import ArticleCreate from "@/components/article/ArticleCreate.vue";
 import ArticleDetail from "@/components/article/ArticleDetail.vue";
 import ArticleList from "@/components/article/ArticleList.vue";
@@ -18,7 +18,6 @@ import UserList from "@/components/user/UserList.vue";
 import UserRegist from "@/components/user/UserRegist.vue";
 import UserDetail from "@/components/user/UserDetail.vue";
 
-// RouterView와 개별 view를 구분할 것! (children !== component)
 const routes = [
   {
     path: '/category/:category',
@@ -54,11 +53,6 @@ const routes = [
     path: "/login",
     name: "Login",
     component: LoginForm,
-  },
-  {
-    path: "/user",
-    name: "User",
-    component: UserView,
   },
   {
     path: "/user/:id",

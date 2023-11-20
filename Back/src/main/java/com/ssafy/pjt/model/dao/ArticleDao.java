@@ -9,6 +9,8 @@ public interface ArticleDao {
 	//기사 목록 보기
 	List<Article> selectAllArticles();
 	
+	List<Article> selectAllArticlesByCategory(String category);
+	
 	//기사 등록
 	int insertArticle(Article article);
 	

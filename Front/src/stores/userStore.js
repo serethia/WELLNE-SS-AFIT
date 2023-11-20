@@ -2,6 +2,7 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import router from "@/router";
 import axios from "axios";
+import { Base64 } from 'js-base64';
 
 
 const URL = 'http://localhost:8080/userapi'
@@ -16,12 +17,14 @@ export const useUserStore = defineStore("user", () => {
   const searchUsers = ref([]);
 
   const user = ref(null);
-  const loginUser = ref(null);
+//   const loginUser = ref(null);
 
   const userCnt = ref(0);
   const searchUserCnt = ref(0);
 
   const accessToken = ref("");
+  const loginUserId = ref("");
+  const loginUserNickname = ref("");
 
 
 
@@ -115,9 +118,17 @@ export const useUserStore = defineStore("user", () => {
             accessToken.value = res.data;
             // const token = res.data.split('.');  // token을 '.'을 기준으로 따로 3등분해서 배열로 저장
             isLoggedIn.value= true;
+            // loginUser.value = res.data;
+            axios.defaults.headers.common['access-token'] = res.data; // 토큰 전역 설정
+            let token = res.data;
+            let payload = token.split('.')[1];
+            let obj = Base64.decode(payload);
+            loginUserId.value = obj.id;
+            loginUserNickname.value = obj.nickname;
+            console.log(obj);
             router.push({name: 'My'});
         })
-        .catch(() => {
+        .catch((e) => {
           alert("로그인 실패!");
         })
   };
@@ -137,7 +148,7 @@ export const useUserStore = defineStore("user", () => {
   };
 
 
-  return {accessToken, isLoggedIn, users, searchUsers, user, loginUser, userCnt, searchUserCnt, 
+  return {accessToken, isLoggedIn, users, searchUsers, user, loginUserId, loginUserNickname, userCnt, searchUserCnt, 
     createUser, deleteUser, setLogout, setUser, searchName, updateUser, setLoginUser, setUsers};
 
 }, { persist: {

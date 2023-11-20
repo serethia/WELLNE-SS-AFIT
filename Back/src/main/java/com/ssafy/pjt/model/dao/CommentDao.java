@@ -1,6 +1,7 @@
 package com.ssafy.pjt.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ssafy.pjt.model.dto.Comment;
 
@@ -14,7 +15,11 @@ public interface CommentDao {
 
 	int deleteComment(int commentId);
 	
-	int plusCommentLikes(int commentId);
+	int getCommentLikes(int commentId);
+	
+	int getCommentDislikes(int commentId);
+	
+	int plusCommentLikes(Map<String,Object> map);
 	
 	int minusCommentLikes(int commentId);
 	

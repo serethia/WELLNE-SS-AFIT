@@ -7,8 +7,8 @@ public class Comment {
 	private int articleId;
 	private String createdAt;
 	private String modifiedAt;
-	private int commentLike;
-	private int commentDislike;
+	private int commentLikeCnt;
+	private int commentDislikeCnt;
 	// lft, rgt, depth 필요한가?? 대댓글.. 일단 보류!
 	private int lft;
 	private int rgt;
@@ -73,20 +73,20 @@ public class Comment {
 		this.modifiedAt = modifiedAt;
 	}
 
-	public int getCommentLike() {
-		return commentLike;
+	public int getCommentLikeCnt() {
+		return commentLikeCnt;
 	}
 
-	public void setCommentLike(int commentLike) {
-		this.commentLike = commentLike;
+	public void setCommentLikeCnt(int commentLikeCnt) {
+		this.commentLikeCnt = commentLikeCnt;
 	}
 
-	public int getCommentDislike() {
-		return commentDislike;
+	public int getCommentDislikeCnt() {
+		return commentDislikeCnt;
 	}
 
-	public void setCommentDislike(int commentDislike) {
-		this.commentDislike = commentDislike;
+	public void setCommentDislikeCnt(int commentDislikeCnt) {
+		this.commentDislikeCnt = commentDislikeCnt;
 	}
 	
 //	public int getLft() {
@@ -126,7 +126,7 @@ public class Comment {
 	public String toString() {
 		return "Comment [commentId=" + commentId + ", commentContent=" + commentContent + ", userId=" + userId
 				+ ", articleId=" + articleId + ", createdAt=" + createdAt + ", modifiedAt=" + modifiedAt
-				+ ", commentLike=" + commentLike + ", commentDislike=" + commentDislike + ", lft=" + lft + ", rgt="
+				+ ", commentLikeCnt=" + commentLikeCnt + ", commentDislikeCnt=" + commentDislikeCnt + ", lft=" + lft + ", rgt="
 				+ rgt + ", depth=" + depth + ", nickname=" + nickname + "]";
 	}
 

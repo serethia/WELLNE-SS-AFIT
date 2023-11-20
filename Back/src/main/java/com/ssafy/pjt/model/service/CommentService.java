@@ -1,6 +1,7 @@
 package com.ssafy.pjt.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ssafy.pjt.model.dto.Comment;
 
@@ -17,8 +18,14 @@ public interface CommentService {
 	 // 댓글 삭제
 	 int eraseComment(int commentId);
 	 
+	 // 좋아요 수
+	 int showCommentLikes(int commentId);
+	 
+	 // 싫어요 수
+	 int showCommentDislikes(int commentId);
+	 
 	 // 댓글 좋아요 +/-
-	 int increaseCommentLikes(int commentId);
+	 int increaseCommentLikes(Map<String, Object> map);
 	 int decreaseCommentLikes(int commentId);
 	 
 	 // 댓글 싫어요 +/-

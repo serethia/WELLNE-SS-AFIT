@@ -100,6 +100,7 @@ public class UserRestController {
 			// DB에 일치하는 유저가 있다면 유저 객체 자체를 보낸다. => 토큰을 만들어서 보낸다.		
 			String token = Jwts.builder()
 					.claim("id", dbUser.getUserId())
+					.claim("nickname", dbUser.getNickname())
 					.setExpiration(new Date(System.currentTimeMillis() + 1000*60*60))
 					.signWith(SignatureAlgorithm.HS256, "SERVER_SECRET_KEY".getBytes("UTF-8"))
 					.compact();

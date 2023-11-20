@@ -1,0 +1,14 @@
+POST http://localhost:8080/userapi/login
+Content-Type: application/json
+
+{"userId": "admin", "userPwd": "admin1"}
+
+###
+
+GET http://localhost:8080/commentapi/article/1/comments/1/likes
+access-token: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6ImFkbWluIiwibmlja25hbWUiOiLqtIDrpqzsnbgiLCJleHAiOjE3MDA0NjMyMDB9.3JkbINxpEwCapfaqM8JUfq73Zxqb-iS4q3838Z3m8g0
+
+###
+
+GET http://localhost:8080/commentapi/article/1/comments/3/dislikes
+access-token: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6ImFkbWluIiwibmlja25hbWUiOiLqtIDrpqzsnbgiLCJleHAiOjE3MDA0NjMyMDB9.3JkbINxpEwCapfaqM8JUfq73Zxqb-iS4q3838Z3m8g0

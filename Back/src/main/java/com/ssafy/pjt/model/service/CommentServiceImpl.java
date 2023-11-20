@@ -1,6 +1,7 @@
 package com.ssafy.pjt.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,10 +34,20 @@ public class CommentServiceImpl implements CommentService {
 	public int eraseComment(int commentId) {
 		return cDao.deleteComment(commentId);
 	}
+	
+	@Override
+	public int showCommentLikes(int commentId) {
+		return cDao.getCommentLikes(commentId);
+	}
 
 	@Override
-	public int increaseCommentLikes(int commentId) {
-		return cDao.plusCommentLikes(commentId);
+	public int showCommentDislikes(int commentId) {
+		return cDao.getCommentDislikes(commentId);
+	}
+
+	@Override
+	public int increaseCommentLikes(Map<String, Object> map) {
+		return cDao.plusCommentLikes(map);
 	}
 
 	@Override

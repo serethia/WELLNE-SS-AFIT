@@ -1,6 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import axios from "axios";
+import { useUserStore } from "@/stores/userStore.js";
 
 
 const URL = 'http://localhost:8080/commentapi'
@@ -12,27 +13,36 @@ export const useCommentStore = defineStore("comment", () => {
   const comments = ref([]);
   const comment = ref('');
   const commentCnt = ref(0);
-  const likeCnt = ref(0);
-  const dislikeCnt = ref(0);
+  const commentLikeCnt = ref(0);
+  const commentDislikeCnt = ref(0);
+  let isLiked = false;
+  let isDisliked = false;
   let disable = false;
   const likedComments = ref([]);
   const dislikedComments = ref([]);
-
   const accessToken = ref('');
+  const userStore = useUserStore();
 
 
   // 댓글 등록
   const writeComment = (articleId, newComment) => {
-    axios.post(`${URL}/article/${articleId}/comments`, {commentContent: newComment},
+    const storeObj = JSON.parse(sessionStorage.getItem('user'));
+    accessToken.value = storeObj.accessToken;
+
+    axios.post(`${URL}/article/${articleId}/comments`, 
+        {
+            commentContent: newComment,
+            nickname: userStore.loginUserNickname
+        },
         {
             headers: {
-                "access-token": accessToken.value  // 세션에서 해당 토큰 가져오기 (헤더)
+                "access-token": accessToken.value 
             }
         })
          .then((res) => {
             comments.value.push(res.data);
             commentCnt.value = comments.value.length;
-            newComment.value = ''; // 입력란 초기화
+            //newComment.value = ''; // 입력란 초기화
             showComments(articleId);
         })
   };
@@ -40,6 +50,9 @@ export const useCommentStore = defineStore("comment", () => {
 
   // 댓글 삭제
   const deleteComment = (articleId, commentId) => {
+    const storeObj = JSON.parse(sessionStorage.getItem('user'));
+    accessToken.value = storeObj.accessToken;
+
     axios.delete(`${URL}/article/${articleId}/comments/${commentId}`,
         {
             headers: {
@@ -55,7 +68,13 @@ export const useCommentStore = defineStore("comment", () => {
 
   // 댓글 수정
   const updateComment = (articleId, commentId, updatedComment) => {
-    axios.put(`${URL}/article/${articleId}/comments/${commentId}`, {commentContent: updatedComment}, 
+    const storeObj = JSON.parse(sessionStorage.getItem('user'));
+    accessToken.value = storeObj.accessToken;
+
+    axios.put(`${URL}/article/${articleId}/comments/${commentId}`, 
+        {
+            commentContent: updatedComment
+        }, 
         {
             headers:{
                 "access-token": accessToken.value
@@ -69,6 +88,9 @@ export const useCommentStore = defineStore("comment", () => {
 
   // 모든 댓글 조회
   const showComments = (articleId) => {
+    const storeObj = JSON.parse(sessionStorage.getItem('user'));
+    accessToken.value = storeObj.accessToken;
+
     axios.get(`${URL}/article/${articleId}`,
         {
             headers: {
@@ -83,21 +105,30 @@ export const useCommentStore = defineStore("comment", () => {
 
   // 좋아요 toggle
   const toggleLike = (articleId, commentId) => {
+    const storeObj = JSON.parse(sessionStorage.getItem('user'));
+    accessToken.value = storeObj.accessToken;
+
     const enable = !disable;
     if(enable){
         disable = true;
-        axios.put(`${URL}/article/${articleId}/comments/${commentId}/pluslike`, null,
+        if(isLiked){
+            isLiked = false;
+        } else {
+            isLiked = true;
+            console.log('plus like request')
+            console.log(userStore.loginUserId);
+            axios.get(`${URL}/article/${articleId}/comments/${commentId}/pluslike?userId=${userStore.loginUserId}`,
             {
                 headers: {
                     "access-token": accessToken.value
                 }
             })
             .then((res) => {
-                const likes = res.data.likeCnt;
+                const likes = res.data.commentLikeCnt;
                 const commentIdx = comments.value.findIndex(comment => comment.commentId === commentId);
                 if(commentIdx !== -1){
                     comments.value[commentIdx].commentLike = likes;
-                    if(isLiked(commentId)){
+                    if(isLiked){
                         likedComments.value = likedComments.value.filter(id => id !== commentId);
                     } else {
                         likedComments.value.push(commentId);
@@ -107,26 +138,31 @@ export const useCommentStore = defineStore("comment", () => {
             .finally(() => {
                 disable = false;
             })
+        }
     }
   };
-
-  const isLiked = commentId => {
-    return likedComments.value.includes(commentId);
-  }
 
 
   // 싫어요 toggle
   const toggleDislike = (articleId, commentId) => {
+    const storeObj = JSON.parse(sessionStorage.getItem('user'));
+    accessToken.value = storeObj.accessToken;
+
     const enable = !disable;
     if(enable){
-    axios.put(`${URL}/article/${articleId}/comments/${commentId}/pluslike`, null,
+        disable = true;
+        if(isDisliked){
+            isDisliked = false;
+        } else {
+            isDisliked = true;
+         axios.put(`${URL}/article/${articleId}/comments/${commentId}/plusdislike`, null,
         {
             headers: {
                 "access-token": accessToken.value
             }
         })
         .then((res) => {
-            const dislikes = res.data.dislikeCnt;
+            const dislikes = res.data.commentDislikeCnt;
             const commentIdx = comments.value.findIndex(comment => comment.commentId === commentId);
             if(commentIdx !== -1){
                 comments.value[commentIdx].commentDislike = dislikes;
@@ -141,16 +177,12 @@ export const useCommentStore = defineStore("comment", () => {
             disable = false;
         })
     }
-  };
-
-  const isDisliked = commentId => {
-    return dislikedComments.value.includes(commentId);
   }
+};
 
 
-
-  return {accessToken, comments, comment, commentCnt, likeCnt, dislikeCnt, likedComments, dislikedComments,
-    writeComment, deleteComment, updateComment, showComments, toggleLike, isLiked, toggleDislike, isDisliked};
+  return {accessToken, comments, comment, commentCnt, commentLikeCnt, commentDislikeCnt, likedComments, dislikedComments,
+    writeComment, deleteComment, updateComment, showComments, disable, toggleLike, isLiked, toggleDislike, isDisliked};
 
 }, { persist: {
     storage: sessionStorage }});

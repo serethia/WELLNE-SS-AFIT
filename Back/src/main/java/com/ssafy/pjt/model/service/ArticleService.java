@@ -8,6 +8,8 @@ public interface ArticleService {
 
 	List<Article> getArticles();
 	
+	List<Article> getArticlesByCategory(String category);
+	
 	int writeArticle(Article article);
 	
 	Article getArticle(int articleId);
