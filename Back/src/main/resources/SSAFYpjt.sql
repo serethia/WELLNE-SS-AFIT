@@ -24,14 +24,13 @@ CREATE TABLE IF NOT EXISTS `article` (
   `article_id` INT NOT NULL AUTO_INCREMENT,
   `article_title` VARCHAR(200) NOT NULL,
   `article_content` VARCHAR(4000) NOT NULL,
-  `view_cnt` INT NULL,
+  `view_cnt` INT DEFAULT 0,
   `user_id` VARCHAR(45) NOT NULL,
   `video_url` VARCHAR(500) NOT NULL,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `modified_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `media_name` VARCHAR(100) NOT NULL,
   `category` VARCHAR(45) NOT NULL,
---   `user_seq` INT NULL,
   PRIMARY KEY (`article_id`), FOREIGN KEY(`user_id`) REFERENCES `user` (`user_id`))
 ENGINE = InnoDB;
 
@@ -42,34 +41,57 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `comment_id` INT NOT NULL AUTO_INCREMENT,
   `comment_content` VARCHAR(200) NOT NULL,
   `user_id` VARCHAR(45) NOT NULL,
- `nickname` VARCHAR(45) NOT NULL,
   `article_id` INT NOT NULL,
 --   `lft` INT NULL,
 --   `rgt` INT NULL,
 --   `depth` INT NULL,
-
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `modified_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  `comment_like` INT NULL,
-  `comment_dislike` INT NULL,
   PRIMARY KEY (`comment_id`), FOREIGN KEY(`user_id`) REFERENCES `user`(`user_id`), FOREIGN KEY(`article_id`) REFERENCES `article`(`article_id`))
-  
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `comment_like`
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `comment_like` (
-	`comment_like` INT NOT NULL AUTO_INCREMENT,
-	`comment_id` INT NOT NULL,
-    `user_id` VARCHAR(45) NOT NULL,
-	PRIMARY KEY (`comment_like`))
-    ENGINE = InnoDB;
-    
-    CREATE TABLE IF NOT EXISTS `comment_dislike` (
-    `comment_dislike` INT NOT NULL AUTO_INCREMENT,
-	`comment_id` INT NOT NULL,
-    `user_id` VARCHAR(45) NOT NULL,
-	PRIMARY KEY (`comment_dislike`))
-    ENGINE = InnoDB;
+`like_id` INT NOT NULL AUTO_INCREMENT,
+`user_id` VARCHAR(45) NOT NULL,
+`comment_id` INT NOT NULL,
+PRIMARY KEY (`like_id`))
+ENGINE = InnoDB;
 
+SELECT * FROM comment_like;
+
+-- -----------------------------------------------------
+-- Table `comment_dislike`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `comment_dislike` (
+`dislike_id` INT NOT NULL AUTO_INCREMENT,
+`user_id` VARCHAR(45) NOT NULL,
+`comment_id` INT NOT NULL,
+PRIMARY KEY (`dislike_id`))
+ENGINE = InnoDB;
+
+
+
+INSERT INTO video (video_title, video_url, video_like, video_dislike) VALUES
+("아침 공복 운동", "https://youtu.be/qWaC9lKOEU8", 0, 0),
+("물개 운동", "https://youtu.be/lURqZ2yj5fo", 0, 0),
+("거북목 운동", "https://youtu.be/x45u1s36RG8", 0, 0),
+("어떤 운동을 해야 살이 빠질까?", "https://youtu.be/eouBd8WFD4s", 0, 0),
+("체형교정을 위한 운동법", "https://youtu.be/iPUChyO0QFw", 0, 0),
+("당신이 속고 있는 저탄고지 다이어트의 진실 with 내과 전문의 박현경 원장님", "https://youtu.be/V723AcVzSPE", 0, 0),
+("[다이어트 보조제] 가르시니아, 콜레우스 포스콜리, 잔티젠 : 약사가 추천하는 성분은?", "https://youtu.be/g-OnWMUxRvI", 0, 0),
+("뒷면 읽어주는 언니들! 왜 우리는 닭가슴살을 먹는가?", "https://youtu.be/1yTCxWzMqWc", 0, 0),
+("여름 맞이 다이어트하다 돌 생겨요! 급찐급빠, 디톡스 원푸드 다이어트 !!주의사항!!", "https://youtu.be/Chv65X8cbV0", 0, 0),
+("여름철 다이어트 Q&A, 운동전문가와 의사가 직접 답해드립니다", "https://youtu.be/b5c9UA_A46w", 0, 0),
+("튼튼한 무릎을 만들어주는 운동", "https://youtu.be/xhstrFJe-_E", 0, 0),
+("튼튼한 허리를 만들어주는 운동", "https://youtu.be/JdFzOlJ1sto", 0, 0),
+("어깨를 튼튼하게 만들어주는 운동", "https://youtu.be/fadA4cEwjuE", 0, 0),
+("폼롤러를 이용한 코어운동", "https://youtu.be/Oq1oxExnPzA", 0, 0),
+("필라테스 서클을 이용한 하체 운동", "https://youtu.be/b4tLJ2ZXogQ", 0, 0),
+("필라테스볼을 이용한 상체 운동", "https://youtu.be/S3HnGDE1_fs", 0, 0);
+  
 INSERT INTO user (user_id, user_pwd, user_name, nickname, email, category, role) VALUES
 ("ssa1234", "!qwerqwer", "신성연", "ssa1234", "ssa1234@naver.com", "운동", 0),
 ("fy1234", "@qwerqwer", "유성현", "fy1234", "fy1234@naver.com", "다이어트", 0),
@@ -402,41 +424,38 @@ UDCA는 간에서 콜레스테롤이 담즙산으로 전환되는 것을 촉진�
 ② 공을 손으로 누르면서 반대쪽 팔을 넘겨주세요.
 ③ 몸의 옆쪽이 늘어남을 인지해 주시고 엉덩이가 들리지 않도록 주의합니다.", "expert3", "https://youtu.be/S3HnGDE1_fs", "하이닥", "운동");
 
-
-INSERT INTO `comment` (`comment_content`, `user_id`, `nickname`, `article_id`)
+INSERT INTO `comment` (`comment_content`, `user_id`, `article_id`)
 VALUES
-  ('좋은 기사네요!', 'ssa1234', 'ssa1234', 1),
-  ('몇 가지 의견이 다르네.', 'fy1234', 'fy1234', 1),
-  ('잘 읽었습니다!', 'um1234', 'um1234', 3),
-  ('이 기사는 더 많은 내용이 필요해요.', 'se1234', 'se1234', 4),
-  ('잘 쓰여졌습니다.', 'an1234', 'an1234', 5),
-  ('흥미로운 관점입니다.', 'admin', '관리인', 1),
-  ('제 의견은 다릅니다.', 'iron1234', '아이언', 2),
-  ('잘 하고 있어요!', 'iii111', '아이아이', 3),
-  ('새로운 것을 배웠습니다.', 'yeah3333', '예아', 4),
-  ('인상 깊지 않습니다.', 'news55', '최고의기자왕이될거야', 5);
+  ('좋은 기사네요!', 'ssa1234', 1),
+  ('몇 가지 의견이 다르네.', 'fy1234', 1),
+  ('잘 읽었습니다!', 'um1234', 3),
+  ('이 기사는 더 많은 내용이 필요해요.', 'se1234', 4),
+  ('잘 쓰여졌습니다.', 'an1234', 5),
+  ('흥미로운 관점입니다.', 'admin', 1),
+  ('제 의견은 다릅니다.', 'iron1234', 2),
+  ('잘 하고 있어요!', 'iii111', 3),
+  ('새로운 것을 배웠습니다.', 'yeah3333', 4),
+  ('인상 깊지 않습니다.', 'news55', 5);
 
 INSERT INTO `comment_like` (`user_id`, `comment_id`)
 VALUES
-('ssa1234', 1),
-('admin', 2),
-('iii111', 1),
-('news55', 1),
-('um1234', 3);
-
+	('ssa1234', 1),
+    ('admin', 2),
+    ('iii111', 1),
+    ('news55', 1),
+    ('an1234', 2);
+    
 INSERT INTO `comment_dislike` (`user_id`, `comment_id`)
 VALUES
-('ssa1234', 4),
-('admin', 3),
-('iii111', 3),
-('news55', 1),
-('um1234', 2);
+	('ssa1234', 4),
+    ('admin', 3),
+    ('iii111', 4),
+    ('news55', 4),
+    ('an1234', 3);
 
-SELECT * FROM comment;
-SELECT * FROM comment_like;
-SELECT * FROM comment_dislike;
+
 
 SELECT A.article_title, B.user_name AS name
 FROM article AS A
 JOIN user AS B
-ON A.user_id = B.user_id
+ON A.user_id = B.user_id;

@@ -133,7 +133,6 @@ export const useUserStore = defineStore("user", () => {
       // Base64.decode(): Base64로 인코딩된 문자열 => json문자열(한글도 안깨지도록)
       // Base64: import { Base64 } from 'js-base64';
       // npm i js-base64
-
       const payload = token.split('.')[1];
       const obj = JSON.parse(Base64.decode(payload));
   
@@ -149,123 +148,6 @@ export const useUserStore = defineStore("user", () => {
       return { success: false, error: error.message };
     }
   };
-
-//   const setLoginUser = (loginuser) => {
-//     axios.post(`${URL}/login`, loginuser)
-//         .then((res) => {
-//             console.log("되고 있나?");
-//             console.log(res.data);
-//             accessToken.value = res.data;
-//             axios.defaults.headers.common['access-token'] = res.data; // 토큰 전역 설정
-//             const payload = JSON.parse(Base64.decode(res.data.split('.')[1]));
-//             loginUserId.value = payload.id;
-//             loginUserNickname.value = payload.nickname;
-//             isLoggedIn.value = true;
-//             console.log(loginUserId.value);  // 수정된 부분
-//             console.log(loginUserNickname.value);  // 수정된 부분
-//             router.push({ name: 'My' });
-//         })
-//         .catch(() => {
-//             alert("로그인 실패!");
-//         });
-// };
-
-
-//   const setLoginUser = async (loginuser) => {
-
-//     axios.post(`${URL}/login`, loginuser)
-//     .then((res) => {
-//         console.log("되고 있나?");
-//         console.log(res.data);
-//         accessToken.value = res.data;
-//         axios.defaults.headers.common['access-token'] = res.data; // 토큰 전역 설정
-//         return res.data;
-//     })
-//     .then((token) => {
-//         console.log("되고 있나?2");
-//         console.log(token);
-//         const payload = JSON.parse(Base64.decode(token.split('.')[1]));
-//         loginUserId.value = payload.id;
-//         loginUserNickname.value = payload.nickname;
-//         isLoggedIn.value = true;
-//         console.log(loginUserId);
-//         console.log(loginUserNickname);
-//         router.push({name: 'My'});
-//     })
-//     .catch(() => {
-//         alert("로그인 실패!");
-//     })
-
-
-
-    // try{
-    //     const res = await axios.post(`${URL}/login`, loginuser);
-    //     const token = res.data;
-    //     accessToken.value = token;
-    //     axios.defaults.headers.common['access-token'] = token; // 토큰 전역 설정
-        
-    //     const payload = token.split('.')[1];
-    //     const obj = JSON.parse(Base64.decode(payload));
-
-    //     loginUserId.value = obj.id;
-    //     loginUserNickname.value = obj.nickname;
-    //     isLoggedIn.value = true;
-
-    //     console.log(loginUserId); // 테스트용_undefined 문제 해결
-    //     console.log(loginUserNickname); // 테스트용_undefined 문제 해결
-
-    //     router.push({name: 'My'});
-    // }
-
-
-    // axios.post(`${URL}/login`, loginuser)
-    //     .then((res) => {
-    //         console.log("되고 있나?");
-    //         console.log(res.data);
-    //         accessToken.value = res.data;
-    //         axios.defaults.headers.common['access-token'] = res.data; // 토큰 전역 설정
-    //         return res.data;
-    //     })
-    //     .then((token) => {
-    //         console.log("되고 있나?2");
-    //         console.log(token);
-    //         const payload = JSON.parse(Base64.decode(token.split('.')[1]));
-    //         loginUserId.value = payload.id;
-    //         loginUserNickname.value = payload.nickname;
-    //         isLoggedIn.value = true;
-    //         console.log(loginUserId);
-    //         console.log(loginUserNickname);
-    //         router.push({ name: 'My' });
-    //         // console.log("되고 있나?2");
-    //         // console.log(token);
-    //         // const payload = token.split('.')[1];
-    //         // const obj = Base64.decode(payload);
-    //         // loginUserId.value = obj.id;
-    //         // loginUserNickname.value = obj.nickname;
-    //         // isLoggedIn.value = true;
-    //         // console.log(loginUserId);
-    //         // console.log(loginUserNickname);
-    //         // router.push({name: 'My'});
-    //     })
-
-
-        //     // const token = res.data.split('.');  // token을 '.'을 기준으로 따로 3등분해서 배열로 저장
-        //     isLoggedIn.value= true;
-        //     // loginUser.value = res.data;
-        //     token = res.data;
-        //     payload = token.split('.')[1];
-        //     obj = Base64.decode(payload);
-        //     loginUserId.value = obj.id;
-        //     loginUserNickname.value = obj.nickname;
-        //     console.log(obj);
-        //     router.push({name: 'My'});
-        // })
-
-
-//         .catch(() => {
-//           alert("로그인 실패!");
-//         })
-//   };
 
 
   // 모든 회원 조회

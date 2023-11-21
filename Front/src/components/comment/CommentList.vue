@@ -71,33 +71,13 @@ const userStore = useUserStore();
 const comment = computed(() => commentStore.comment);
 const comments = computed(() => commentStore.comments);
 const commentCnt = computed(() => comments.value.length);
-// const commentLikeCnt = computed(() => commentStore.commentLikeCnt);
-// const commentDislikeCnt = computed(() => commentStore.commentDislikeCnt);
 const isLoggedIn = computed(() => userStore.isLoggedIn);
 const loginUserId = computed(() => userStore.loginUserId);
 const newComment = ref('');
 const updatedComment = ref('');
-const editing = ref(false);
-
 const currentCommentId = ref(null); // 지금 수정할 Comment의 Id
 
-
-// const isLiked = (commentId) => commentStore.isLiked(commentId);
-// const isDisliked = (commentId) => commentStore.isDisliked(commentId);
-
-// const isLiked = computed((commentId) => {
-//     const likedComments = commentStore.likedComments;
-//     return likedComments.includes(commentId);
-// });
-
-// const isDisliked = computed((commentId) => {
-//     const dislikedComments = commentStore.dislikedComments; 
-//     return dislikedComments.includes(commentId);
-// });
-
 onMounted(() => {
-    // if(comments.value.length > 0){
-    // const articleId = comments.value[0]?.articleId;
     const articleId = route.params.id;
     commentStore.showComments(articleId);
 })
@@ -110,7 +90,6 @@ const writeComment = function () {
 
 const updateComment = function (commentId) {
     const articleId = route.params.id;
-    // editing.value = true; // true면 수정란 불러오기
     currentCommentId.value = commentId;
     console.log("currentCommentId", currentCommentId.value);
     let c = comments.value.find(c => c.commentId === commentId)
@@ -135,11 +114,12 @@ const saveUpdatedComment = function(commentId){
   // 프로미스가 끝나고 수행할 작업은 then()안에서 수행 가능
   commentStore.updateCommentPromise(articleId, commentId, updatedComment.value)
   .then(()=>{ // 업데이트가 완료되었으면..
-    currentCommentId.value = null;
+    currentCommentId.value = null; // 다시 초기화
   })
   
 }
 
+// 다른 코드 형태 비교:
 // const saveUpdatedCommentAsync = async function(commentId){
 //   console.log(`${commentId}를 ${updatedComment.value}로 수정합니다.`)
 //   const articleId = route.params.id;
@@ -167,45 +147,12 @@ const deleteComment = function (commentId) {
 const toggleLike = function (commentId) {
     const articleId = route.params.id;
     commentStore.toggleLike(articleId, commentId);
-
-    // isLiked.value = !isLiked.value;
 }
 
 const toggleDislike = function (commentId) {
     const articleId = route.params.id;
     commentStore.toggleDislike(articleId, commentId);
-    // isDisliked.value = !isDisliked.value;
 }
-
-// const onClick = async (commentId, action) => {
-//   if (action === 'update') {
-//     // 수정 버튼 클릭
-//     // updateComment 이벤트 호출
-//     await commentStore.updateComment(commentId);
-//   } else if (action === 'delete') {
-//     // 삭제 버튼 클릭
-//     // deleteComment 이벤트 호출
-//     await commentStore.deleteComment(commentId);
-//   } else if (action === 'like') {
-//     // 좋아요 버튼 클릭
-//     if (commentStore.isLiked(commentId)) {
-//       // 이미 좋아요를 누른 상태면 취소
-//       await commentStore.updateComment(commentId, { like: false });
-//     } else {
-//       // 좋아요를 처음 누름
-//       await commentStore.updateComment(commentId, { like: true });
-//     }
-//   } else if (action === 'dislike') {
-//     // 싫어요 버튼 클릭
-//     if (commentStore.isDisliked(commentId)) {
-//       // 이미 싫어요를 누른 상태면 취소
-//       await commentStore.updateComment(commentId, { dislike: false });
-//     } else {
-//       // 싫어요를 처음 누름
-//       await commentStore.updateComment(commentId, { dislike: true });
-//     }
-//   }
-// };
 </script>
   
 <style scoped>

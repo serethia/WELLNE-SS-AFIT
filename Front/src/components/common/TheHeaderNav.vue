@@ -14,10 +14,10 @@
                     <router-link to="/user/regist">회원가입</router-link>
                     <span class="nav-separator">|</span>
                     <router-link to="/">마이페이지</router-link>
-                    <span v-if="showUserList">
+                    <!-- <span v-if="showUserList"> -->
                     <span class="nav-separator">|</span>
                     <router-link to="/user">사용자목록</router-link>
-                    </span>
+                    <!-- </span> -->
                 </div>
             </nav>
         </header>
@@ -36,12 +36,12 @@ const logout = () => {
 };
 
 
-const showUserList = ref(loginUserRole.value === '2');
+// const showUserList = ref(loginUserRole.value === '2');
 
-watch(loginUserRole, (newValue) => {
-  showUserList.value = newValue.value === '2';
-  console.log("showUserList 잘 나오나 확인:", showUserList.value);
-});
+// watch(loginUserRole, (newValue) => {
+//   showUserList.value = newValue.value === '2';
+//   console.log("showUserList 잘 나오나 확인:", showUserList.value);
+// });
 
 // console.log("loginUserRole 잘 나오나 확인:", loginUserRole);
 

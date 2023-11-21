@@ -16,10 +16,10 @@
         <input type="text" id="nickname" v-model="nickname" class="view" /><br />
         <fieldset class="checkbox-container" style="width:40%;">
         <legend >관심사</legend>
-        <div class="checkbox-group">
+        <div class="checkbox-group"> <!-- 아직 체크박스 선택한 data가 회원 정보로 넘어가지 않고 있음 -->
         <div v-for="info in infos" :key="info.category" style="display:inline-flex">
           <input type="checkbox" :id="info.category" v-model="info.isSelected" class="view" />
-          <label :for="info.category" style="">{{ info.category }}</label>
+          <label :for="info.category">{{ info.category }}</label>
           <br>
         </div>
         </div>
