@@ -18,7 +18,7 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
 import { useArticleStore } from "@/stores/articleStore";
-import { onMounted, onBeforeMount } from "vue";
+import { onMounted } from "vue";
 import axios from 'axios'
 
 const store = useArticleStore()
@@ -37,10 +37,7 @@ const updateArticle = function () {
     router.push({ name: 'articleUpdate' })
 }
 
-onBeforeMount(() => {
-    const articleId = route.params.id;
-    store.getArticle(articleId);
-});
+
 
 
 // 밑으로 유튜브 관련
