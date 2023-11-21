@@ -32,14 +32,24 @@ public class CommentRestController {
 	private static final String SALT = "SSAFIT";
 	@Autowired
 	private JwtUtil jwtUtil; 
+	private String getUserId(String token) {
+		try {
+			return Jwts.parser().setSigningKey(SALT.getBytes("UTF-8")).parseClaimsJws(token).getBody().getSubject();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	@Autowired
 	private CommentService cService;
 	
-	
 	@GetMapping("/article/{articleId}")
-	public List<Comment> getComment(@PathVariable int articleId){
-		List<Comment> list = cService.showAllComments(articleId);
+	public List<Comment> getComment(@PathVariable int articleId, @RequestParam String userId){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("articleId", articleId);
+		map.put("userId", userId);
+		List<Comment> list = cService.showAllComments(map);
 		
 	// 옛날 페이지네이션 코드...	
 //		int currentPage = 1;
@@ -51,16 +61,7 @@ public class CommentRestController {
 		
 		return list;
 	}
-	
-	private String getUserId(String token) {
-		try {
-			return Jwts.parser().setSigningKey(SALT.getBytes("UTF-8")).parseClaimsJws(token).getBody().getSubject();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
+		
 	// Httpservletrequest 추가 수정해 userid 가져오기
 	@PostMapping("/article/{articleId}/comments")
 	public int write(@RequestBody Comment comment, @PathVariable int articleId, HttpServletRequest request) {
@@ -100,8 +101,6 @@ public class CommentRestController {
 	
 	@GetMapping("/article/{articleId}/comments/{commentId}/pluslike")
 	public int increaseLike(@PathVariable int articleId, @PathVariable int commentId, @RequestParam String userId) {
-		System.out.println(userId);
-		System.out.println(commentId);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("userId", userId);
 		map.put("commentId", commentId);

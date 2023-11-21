@@ -115,13 +115,24 @@ export const useUserStore = defineStore("user", () => {
 
 
   // 토큰 + 로그인
+  // setLoginUser 함수를 async로 만들었음
+  // 비동기 함수는 값을 반환하는 것이 아니라, 값을 프라미스로 감싸서 프라미스를 반환
   const setLoginUser = async (loginuser) => {
     try {
+      // axios는 항상 프라미스를 반환
+
       const res = await axios.post(`${URL}/login`, loginuser);
       const token = res.data;
       accessToken.value = token;
-      axios.defaults.headers.common['access-token'] = token; // 전역 설정
-  
+      
+      // axios.defaults.headers.common['access-token'] = token; // 전역 설정
+      
+
+      // atob() : Base64로 인코딩된 문자열 => json문자열(한글은 깨짐)
+      // Base64.decode(): Base64로 인코딩된 문자열 => json문자열(한글도 안깨지도록)
+      // Base64: import { Base64 } from 'js-base64';
+      // npm i js-base64
+
       const payload = token.split('.')[1];
       const obj = JSON.parse(Base64.decode(payload));
   

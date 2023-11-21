@@ -7,7 +7,7 @@ import com.ssafy.pjt.model.dto.Comment;
 
 public interface CommentService {
      // 댓글 목록 보기
-	 List<Comment> showAllComments(int articleId);
+	 List<Comment> showAllComments(Map<String,Object> map);
 
 	 // 댓글 등록
 	 int writeComment(Comment comment);

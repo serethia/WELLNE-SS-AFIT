@@ -7,7 +7,7 @@ import com.ssafy.pjt.model.dto.Comment;
 
 public interface CommentDao {
 	
-	List<Comment> selectAllComments(int articleId);
+	List<Comment> selectAllComments(Map<String, Object> map);
 
 	int insertComment(Comment comment);
 	

@@ -16,8 +16,8 @@ public class CommentServiceImpl implements CommentService {
 	private CommentDao cDao;
 
 	@Override
-	public List<Comment> showAllComments(int articleId) {
-		return cDao.selectAllComments(articleId);
+	public List<Comment> showAllComments(Map<String,Object> map) {
+		return cDao.selectAllComments(map);
 	}
 
 	@Override

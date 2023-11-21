@@ -15,15 +15,24 @@
                     <button v-if="isLoggedIn && comment.userId === loginUserId" @click="deleteComment(comment.commentId)">삭제</button>
 
                     <span style="justify: end;">
-                    <!-- <button @click="toggleLike(comment.articleId, comment.commentId)" :disabled="isLiked(comment.commentId)">좋아요</button> -->
-                    &nbsp;&nbsp;<button @click="toggleLike(comment.commentId)" :disabled="isLiked(comment.commentId)">좋아요</button>&nbsp;
-                    <!-- <button @click="onClick(comment.commentId, 'like')" :disabled="isLiked(comment.commentId)">좋아요</button> -->
+                      <!-- 
+                        button 엘리먼트에 disable 속성을 하면 다시 누를수가 없으므로... 
+                        btn-disable class(CSS)를 만들고 스타일을 적용. 
+                      -->                    
+                    &nbsp;&nbsp;<button @click="toggleLike(comment.commentId)" :class="{'button-disabled': comment.userCommentLikeCnt >= 1}">좋아요</button>&nbsp;        
                     <span>{{ comment.commentLikeCnt }}</span>
-                    <!-- <button @click="toggleDislike(comment.articleId, comment.commentId)" :disabled="isDisliked(comment.commentId)">싫어요</button> -->
-                    &nbsp;<button @click="toggleDislike(comment.commentId)" :disabled="isDisliked(comment.commentId)">싫어요</button>&nbsp;
-                    <!-- <button @click="onClick(comment.commentId, 'dislike')" :disabled="isDisliked(comment.commentId)">싫어요</button> -->
+                    &nbsp;<button @click="toggleDislike(comment.commentId)" :class="{'button-disabled': comment.userCommentDislikeCnt >= 1}">싫어요</button>&nbsp;
                     <span>{{ comment.commentDislikeCnt }}</span>
                     </span>
+                    <!-- <button @click="toggleLike(comment.articleId, comment.commentId)" :disabled="isLiked(comment.commentId)">좋아요</button> -->
+                    <!-- &nbsp;&nbsp;<button @click="toggleLike(comment.commentId)" :disabled="comment.userCommentLikeCnt >= 1">좋아요</button>&nbsp; -->
+                    <!-- <button @click="onClick(comment.commentId, 'like')" :disabled="isLiked(comment.commentId)">좋아요</button> -->
+                    <!-- <span>{{ comment.commentLikeCnt }}</span> -->
+                    <!-- <button @click="toggleDislike(comment.articleId, comment.commentId)" :disabled="isDisliked(comment.commentId)">싫어요</button> -->
+                    <!-- &nbsp;<button @click="toggleDislike(comment.commentId)" :disabled="comment.userCommentDislikeCnt >= 1">싫어요</button>&nbsp; -->
+                    <!-- <button @click="onClick(comment.commentId, 'dislike')" :disabled="isDisliked(comment.commentId)">싫어요</button> -->
+                    <!-- <span>{{ comment.commentDislikeCnt }}</span> -->
+                    <!-- </span> -->
                 </li>
             </ul>
         </div>
@@ -74,7 +83,6 @@ onMounted(() => {
     // const articleId = comments.value[0]?.articleId;
     const articleId = route.params.id;
     commentStore.showComments(articleId);
-    // console.log(comments.value);
 })
 
 const writeComment = function () {
@@ -85,7 +93,7 @@ const writeComment = function () {
 
 const updateComment = function (commentId) {
     const articleId = route.params.id;
-    commentStore.updateComment(articleId, commentId, updatedComment);
+    commentStore.updateComment(articleId, commentId, updatedComment.value);
 }
 
 const deleteComment = function (commentId) {
@@ -105,36 +113,35 @@ const toggleDislike = function (commentId) {
     // isDisliked.value = !isDisliked.value;
 }
 
-
-const onClick = async (commentId, action) => {
-  if (action === 'update') {
-    // 수정 버튼 클릭
-    // updateComment 이벤트 호출
-    await commentStore.updateComment(commentId);
-  } else if (action === 'delete') {
-    // 삭제 버튼 클릭
-    // deleteComment 이벤트 호출
-    await commentStore.deleteComment(commentId);
-  } else if (action === 'like') {
-    // 좋아요 버튼 클릭
-    if (commentStore.isLiked(commentId)) {
-      // 이미 좋아요를 누른 상태면 취소
-      await commentStore.updateComment(commentId, { like: false });
-    } else {
-      // 좋아요를 처음 누름
-      await commentStore.updateComment(commentId, { like: true });
-    }
-  } else if (action === 'dislike') {
-    // 싫어요 버튼 클릭
-    if (commentStore.isDisliked(commentId)) {
-      // 이미 싫어요를 누른 상태면 취소
-      await commentStore.updateComment(commentId, { dislike: false });
-    } else {
-      // 싫어요를 처음 누름
-      await commentStore.updateComment(commentId, { dislike: true });
-    }
-  }
-};
+// const onClick = async (commentId, action) => {
+//   if (action === 'update') {
+//     // 수정 버튼 클릭
+//     // updateComment 이벤트 호출
+//     await commentStore.updateComment(commentId);
+//   } else if (action === 'delete') {
+//     // 삭제 버튼 클릭
+//     // deleteComment 이벤트 호출
+//     await commentStore.deleteComment(commentId);
+//   } else if (action === 'like') {
+//     // 좋아요 버튼 클릭
+//     if (commentStore.isLiked(commentId)) {
+//       // 이미 좋아요를 누른 상태면 취소
+//       await commentStore.updateComment(commentId, { like: false });
+//     } else {
+//       // 좋아요를 처음 누름
+//       await commentStore.updateComment(commentId, { like: true });
+//     }
+//   } else if (action === 'dislike') {
+//     // 싫어요 버튼 클릭
+//     if (commentStore.isDisliked(commentId)) {
+//       // 이미 싫어요를 누른 상태면 취소
+//       await commentStore.updateComment(commentId, { dislike: false });
+//     } else {
+//       // 싫어요를 처음 누름
+//       await commentStore.updateComment(commentId, { dislike: true });
+//     }
+//   }
+// };
 </script>
   
 <style scoped>
@@ -176,5 +183,11 @@ const onClick = async (commentId, action) => {
   transform: translateY(4px);
 }
 
+/* 직접 비활성화 대신 비활성화된 버튼 디자인을 흉내낸 스타일 */
+.button-disabled {
+  background-color: rgba(239, 239, 239, 0.3);
+  border: 1px solid rgba(118, 118, 118, 0.3);
+  color: rgba(16, 16, 16, 0.3);
+}
 </style>
   

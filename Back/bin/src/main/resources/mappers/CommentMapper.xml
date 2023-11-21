@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.pjt.model.dao.CommentDao">
 
-	<select id="selectAllComments" parameterType="map" resultType="Comment">
+	<select id="selectAllComments" resultType="Comment">
 		SELECT
 		c.comment_id as commentId,
 		c.comment_content as commentContent,
@@ -14,12 +14,10 @@
 		c.modified_at as modifiedAt,
 		u.nickname,
 		(SELECT COUNT(*) FROM comment_like l WHERE l.comment_id= c.comment_id) as commentLikeCnt,
-		(SELECT COUNT(*) FROM comment_dislike d WHERE d.comment_id= c.comment_id) as commentDislikeCnt,
-	    (SELECT COUNT(*) FROM comment_like l WHERE l.comment_id= c.comment_id AND l.user_id = #{userId}) as userCommentLikeCnt,
-	    (SELECT COUNT(*) FROM comment_dislike d WHERE d.comment_id= c.comment_id AND d.user_id = #{userId}) as userCommentDislikeCnt
+        (SELECT COUNT(*) FROM comment_dislike d WHERE d.comment_id= c.comment_id) as commentDislikeCnt
 		FROM comment c
 		JOIN user u ON c.user_id = u.user_id
-		WHERE c.article_id = #{articleId};
+		WHERE c.article_id = #{articleId}
 	</select>
 
 	<insert id="insertComment" parameterType="Comment">

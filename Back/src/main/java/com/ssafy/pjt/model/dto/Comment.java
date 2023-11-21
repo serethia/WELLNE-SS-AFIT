@@ -7,8 +7,10 @@ public class Comment {
 	private int articleId;
 	private String createdAt;
 	private String modifiedAt;
-	private int commentLikeCnt;
-	private int commentDislikeCnt;
+	private int commentLikeCnt; // 전체 좋아요 수
+	private int commentDislikeCnt; // 전체 싫어요 수
+	private int userCommentLikeCnt; // 현재 로그인한 유저가 좋아요 클릭 수 : 0- 클릭 아직 안함 => 활성화, 1- 클릭함 => 비활성화 
+	private int userCommentDislikeCnt; // 현재 로그인한 유저가 싫어요 수
 	// lft, rgt, depth 필요한가?? 대댓글.. 일단 보류!
 	private int lft;
 	private int rgt;
@@ -113,6 +115,22 @@ public class Comment {
 //		this.depth = depth;
 //	}
 	
+	public int getUserCommentLikeCnt() {
+		return userCommentLikeCnt;
+	}
+
+	public void setUserCommentLikeCnt(int userCommentLikeCnt) {
+		this.userCommentLikeCnt = userCommentLikeCnt;
+	}
+
+	public int getUserCommentDislikeCnt() {
+		return userCommentDislikeCnt;
+	}
+
+	public void setUserCommentDislikeCnt(int userCommentDislikeCnt) {
+		this.userCommentDislikeCnt = userCommentDislikeCnt;
+	}
+
 	public String getNickname() {
 		return nickname;
 	}
@@ -121,13 +139,15 @@ public class Comment {
 		this.nickname = nickname;
 	}
 
-	// lft, rgt, depth 필요한가??
 	@Override
 	public String toString() {
 		return "Comment [commentId=" + commentId + ", commentContent=" + commentContent + ", userId=" + userId
 				+ ", articleId=" + articleId + ", createdAt=" + createdAt + ", modifiedAt=" + modifiedAt
-				+ ", commentLikeCnt=" + commentLikeCnt + ", commentDislikeCnt=" + commentDislikeCnt + ", lft=" + lft + ", rgt="
-				+ rgt + ", depth=" + depth + ", nickname=" + nickname + "]";
+				+ ", commentLikeCnt=" + commentLikeCnt + ", commentDislikeCnt=" + commentDislikeCnt
+				+ ", userCommentLikeCnt=" + userCommentLikeCnt + ", userCommentDislikeCnt=" + userCommentDislikeCnt
+				+ ", lft=" + lft + ", rgt=" + rgt + ", depth=" + depth + ", nickname=" + nickname + "]";
 	}
+
+
 
 }
