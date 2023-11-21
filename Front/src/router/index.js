@@ -13,6 +13,9 @@ import ArticleUpdate from "@/components/article/ArticleUpdate.vue";
 // 로그인 형식
 import LoginForm from "@/components/LoginForm.vue";
 
+// 마이페이지 정보
+import MyProfile from "@/components/my/MyProfile.vue";
+
 // 관리자만 볼 수 있는 회원 정보 조회
 import UserList from "@/components/user/UserList.vue";
 import UserRegist from "@/components/user/UserRegist.vue";
@@ -48,6 +51,11 @@ const routes = [
     path: '/',
     name: 'my',
     component: MyView,
+  },
+  {
+    path: '/my-profile',
+    name: 'myProfile',
+    component: MyProfile,
   },
   {
     path: "/login",

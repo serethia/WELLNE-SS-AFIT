@@ -68,16 +68,30 @@ export const useUserStore = defineStore("user", () => {
 
 
   // 특정 회원 조회
+  // const setUser = (userid) => {
+  //   axios.get(`${URL}/user/${userid}`,
+  //   {
+  //       headers: {
+  //           "access-token": accessToken.value
+  //       }
+  //   })
+  //       .then((res) => {
+  //           user.value = { ...res.data };
+  //       })
+  // };
   const setUser = (userid) => {
-    axios.get(`${URL}/user/${userid}`,
-    {
-        headers: {
-            "access-token": accessToken.value
-        }
+    axios.get(`${URL}/user/${userid}`, {
+      headers: {
+        "access-token": accessToken.value
+      }
     })
-        .then((res) => {
-            user.value = { ...res.data };
-        })
+    .then((res) => {
+      console.log("Fetched user data:", res.data);
+      user.value = { ...res.data };
+    })
+    .catch((error) => {
+      console.error("Error fetching user data:", error);
+    });
   };
 
 

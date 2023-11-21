@@ -33,6 +33,7 @@
                 <th>이름</th>
                 <th>이메일</th>
                 <th>별명</th>
+                <th>관심사</th>
               </tr>
             </thead>
             <tbody>
@@ -46,6 +47,7 @@
                 <td>{{ user.userName }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.nickname }}</td>
+                <td>{{ user.category }}</td>
               </tr>
             </tbody>
           </table>

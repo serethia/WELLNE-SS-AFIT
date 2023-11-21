@@ -16,7 +16,7 @@
         <input type="text" id="nickname" v-model="nickname" class="view" /><br />
         <fieldset class="checkbox-container" style="width:40%;">
         <legend >관심사</legend>
-        <div class="checkbox-group"> <!-- 아직 체크박스 선택한 data가 회원 정보로 넘어가지 않고 있음 -->
+        <div class="checkbox-group"> <!-- 체크박스 선택한 data가 회원 정보로 넘어가야 -->
         <div v-for="info in infos" :key="info.category" style="display:inline-flex">
           <input type="checkbox" :id="info.category" v-model="info.isSelected" class="view" />
           <label :for="info.category">{{ info.category }}</label>
@@ -36,12 +36,13 @@
   
   // 체크박스 구현
   /* isSelected: 체크 박스 체크 여부 */
-  const selectedcategory = ref([]);
+  // const selectedcategory = ref([]);
   const infos = ref([
     {category: "운동", isSelected: false},
     {category: "다이어트", isSelected: false},
     {category: "전문가조언", isSelected: false},
   ]);
+  const selectedCategories = infos.value.filter(info => info.isSelected).map(info => info.category);
     
   const id = ref("");
   const password = ref("");
@@ -109,7 +110,7 @@
       email: email.value,
       nickname: nickname.value,
       img: "#",
-      // category: selectedcategory.value
+      category: selectedCategories  // 카테고리 추가
       };
   
     userStore.createUser(user);
