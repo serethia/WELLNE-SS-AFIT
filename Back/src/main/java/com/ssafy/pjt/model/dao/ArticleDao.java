@@ -3,6 +3,7 @@ package com.ssafy.pjt.model.dao;
 import java.util.List;
 
 import com.ssafy.pjt.model.dto.Article;
+import com.ssafy.pjt.model.dto.SearchArticleCondition;
 
 public interface ArticleDao {
 	
@@ -26,4 +27,6 @@ public interface ArticleDao {
 	//조회수 증가
 	void updateViewCnt(int articleId);
 	
+	// 기사 검색
+	List<Article> search(SearchArticleCondition condition);
 }

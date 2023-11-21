@@ -3,6 +3,7 @@ package com.ssafy.pjt.model.service;
 import java.util.List;
 
 import com.ssafy.pjt.model.dto.Article;
+import com.ssafy.pjt.model.dto.SearchArticleCondition;
 
 public interface ArticleService {
 
@@ -17,4 +18,6 @@ public interface ArticleService {
 	int modifyArticle(Article article);
 	
 	int removeArticle(int articleId);
+	
+	List<Article> search(SearchArticleCondition condition);
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.pjt.model.dto.Article;
+import com.ssafy.pjt.model.dto.SearchArticleCondition;
 import com.ssafy.pjt.model.dto.User;
 import com.ssafy.pjt.model.service.ArticleService;
 
@@ -45,9 +46,35 @@ public class ArticleRestController {
 		
 		System.out.println("등록된 모든 기사 정보 반환");
 		List<Article> list = aService.getArticlesByCategory(categoryStr);
-		System.out.println(list);
+		
 		return list;
 	}
+	
+	@GetMapping("/search")
+	@ApiOperation(value = "등록된 모든 기사 정보를 반환한다.", response = Article.class)
+	public List<Article> getArticlesByCategorySearch(SearchArticleCondition searchCondition){
+		
+		System.out.println(searchCondition);
+		
+		String category = searchCondition.getCategory();
+		
+		String categoryStr ="";
+		
+		if (category.equals("exercise")) {
+			categoryStr="운동";
+		} else if (category.equals("diet")) {
+			categoryStr="다이어트";
+		} else if (category.equals("advice")) {
+			categoryStr="전문가조언";
+		}
+
+		searchCondition.setCategory(categoryStr);
+		
+		List<Article> list = aService.search(searchCondition);
+		
+		return list;
+	}
+	
 	
 	
 	@PostMapping("/article")

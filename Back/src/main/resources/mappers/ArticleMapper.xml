@@ -87,4 +87,36 @@
 
 
 
+	<select id="search" resultType="Article" parameterType="SearchArticleCondition">
+		SELECT
+		a.article_id as articleId,
+		a.article_title as articleTitle,
+		a.article_content as articleContent,
+		a.view_cnt as viewCnt,
+		a.user_id as userId,
+		a.video_url as videoUrl,
+		a.created_at as createdAt,
+		a.modified_at as modifiedAt,
+		a.media_name as mediaName,
+		a.category,
+		u.user_name as userName
+		FROM article a, user u
+		WHERE a.user_id = u.user_id and a.category = #{category}
+		<!-- 검색 조건 (동적쿼리)-->
+		<if test="key == 'user_id'">
+			AND u.${key} LIKE concat('%', #{word}, '%')
+		</if>
+		<if test="key == 'title'">
+			AND a.article_${key} LIKE concat('%', #{word}, '%')
+		</if>
+		<if test="key == 'content'">
+			AND a.article_${key} LIKE concat('%', #{word}, '%')
+		</if>
+		<!-- 어떤 기준으로 어떤 방향으로 정렬 -->
+		<if test="orderBy != 'none'">
+			ORDER BY ${orderBy} ${orderByDir}
+		</if>
+	</select>
+
+
 </mapper>
