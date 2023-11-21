@@ -19,7 +19,6 @@
 import { useRoute, useRouter } from 'vue-router'
 import { useArticleStore } from "@/stores/articleStore";
 import { onMounted } from "vue";
-import axios from 'axios'
 
 const store = useArticleStore()
 

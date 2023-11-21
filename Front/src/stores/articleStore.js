@@ -15,30 +15,35 @@ export const useArticleStore = defineStore('article', ()=>{
   const articleList = ref([])
   const accessToken = ref('')
 
-  const getArticleList = function () {
+  // const getArticleList = function () {
 
-    const storeObj = JSON.parse(sessionStorage.getItem('user'));
-    accessToken.value = storeObj.accessToken;
+  //   const storeObj = JSON.parse(sessionStorage.getItem('user'));
+  //   accessToken.value = storeObj.accessToken;
 
-    console.log('토큰 정보')
-    console.log(accessToken.value);
+  //   console.log('토큰 정보')
+  //   console.log(accessToken.value);
 
-    console.log('위 토큰으로 axios get 요청을 합니다.')
+  //   console.log('위 토큰으로 axios get 요청을 합니다.')
 
-    axios.get(`${REST_ARTICLE_API}/article`,
-    {
-      headers: {
-          "access-token": accessToken.value  // 세션에서 해당 토큰 가져오기 (헤더)
-      }
-   })
-    .then((response) => {
-      console.log(response.data)
-      articleList.value = response.data
-      })
-      .catch((e)=>{
-        console.log('article list 가져오기 실패')
-      })
-  }
+  //   axios.get(`${REST_ARTICLE_API}/article`,
+  //   {
+  //     headers: {
+  //         "access-token": accessToken.value  // 세션에서 해당 토큰 가져오기 (헤더)
+  //     }
+  //  })
+  //   .then((response) => {
+  //     console.log(response.data)
+  //     articleList.value = response.data
+  //     })
+  //     .catch((e)=>{
+  //       console.log('article list 가져오기 실패')
+  //     })
+  // }
+
+
+
+
+  // 카테고리 별 리스트 불러오기
   const getArticleListByCategory = function (category) {
 
     const storeObj = JSON.parse(sessionStorage.getItem('user'));
@@ -65,7 +70,7 @@ export const useArticleStore = defineStore('article', ()=>{
   }
 
 
-  //게시글 한개
+  //기사 한개 불러오기
   const article = ref([])
   const getArticle = function (articleId) {
     console.log('aaab')
@@ -84,7 +89,7 @@ export const useArticleStore = defineStore('article', ()=>{
     })
   }
 
-  //게시글 등록
+  //기사 등록
   const createArticle = function (article) {
     console.log('aaac')
     console.log(article)
@@ -115,6 +120,8 @@ export const useArticleStore = defineStore('article', ()=>{
     })
   }
 
+
+  //기사 수정
   const updateArticle = function ( articleId ) {
     console.log('aaad')
     const storeObj = JSON.parse(sessionStorage.getItem('user'));
@@ -134,6 +141,8 @@ export const useArticleStore = defineStore('article', ()=>{
     })
   }
 
+
+  //기사 검색
   const searchArticleList = function (searchCondition) {
     console.log('aaae')
     axios.get(`${REST_ARTICLE_API}/article`, {
@@ -142,29 +151,47 @@ export const useArticleStore = defineStore('article', ()=>{
       .then((res) => {
         articleList.value = res.data
     })
+    .catch((err) => {
+      console.log(err)
+    })
   }
 
+  //기사 삭제
   const deleteArticle = function (articleId) {
-
-    
-
     const storeObj = JSON.parse(sessionStorage.getItem('user'));
     accessToken.value = storeObj.accessToken;
-
-    axios.delete(`${REST_ARTICLE_API}/article/${articleId}`,
-    {
+  
+    
+    axios.get(`${REST_ARTICLE_API}/article/${articleId}`, {
       headers: {
-          "access-token": accessToken.value 
+        "access-token": accessToken.value
       }
     })
-      .then((res) => {
-        
-        console.log("deletdata")
-        console.log(res.data)
-        // const currentCategory = categoryMap[category.value];
-        router.push({ name: 'category', params: { category: "exercise" }})
+    .then((response) => {
+      const article = response.data;
+  
+      
+      axios.delete(`${REST_ARTICLE_API}/article/${articleId}`, {
+        headers: {
+          "access-token": accessToken.value
+        }
       })
-  }
+      .then((res) => {
+        console.log("delete data:", res.data);
+        console.log("article:", article);
+        
+        const category = categoryMap[article.category];
+
+        router.push({ name: 'category', params: { category: category } });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  };
 
 
 
@@ -173,7 +200,7 @@ export const useArticleStore = defineStore('article', ()=>{
 
 
 
-  return { articleList, getArticleList, getArticleListByCategory, article, getArticle, createArticle, updateArticle, searchArticleList, deleteArticle }
+  return { articleList, getArticleListByCategory, article, getArticle, createArticle, updateArticle, searchArticleList, deleteArticle }
 
     // const computeFavorites = computed(()=>{
     //     return productList.value.filter(pro => pro.isFavorite)

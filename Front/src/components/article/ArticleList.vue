@@ -4,7 +4,7 @@
         <table>
             <tr>
                 <th>제목</th>
-                <th>쓰니</th>
+                <th>작성자</th>
                 <th>조회수</th>
                 <th>등록</th>
             </tr>

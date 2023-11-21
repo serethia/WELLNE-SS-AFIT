@@ -4,7 +4,7 @@
             <label>검색 기준 :</label>
             <select v-model="searchInfo.key">
                 <option value='none'>없음</option>
-                <option value="user_id">글쓰니</option>
+                <option value="user_id">작성자</option>
                 <option value="title">제목</option>
                 <option value="content">내용</option>
             </select>
