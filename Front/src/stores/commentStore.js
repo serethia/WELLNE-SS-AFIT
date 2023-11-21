@@ -61,11 +61,11 @@ export const useCommentStore = defineStore("comment", () => {
         const storeObj = JSON.parse(sessionStorage.getItem('user'));
         accessToken.value = storeObj.accessToken;
   
-        const response = await axios.post(`${URL}/article/${articleId}/comments`, 
+        await axios.post(`${URL}/article/${articleId}/comments`, 
           {
             commentContent: newComment,
             nickname: userStore.loginUserNickname,
-            user_id: userStore.loginUserId
+            userId: userStore.loginUserId
           },
           {
             headers: {
@@ -73,9 +73,9 @@ export const useCommentStore = defineStore("comment", () => {
             }
           }
         );
-  
-        comments.value.push(response.data);
-        commentCnt.value = comments.value.length;
+        // comments.value.push(response.data);
+        // commentCnt.value = comments.value.length;        
+        showComments(articleId);
       } catch (error) {
         console.error("Error writing comment:", error);
       }
@@ -115,9 +115,46 @@ export const useCommentStore = defineStore("comment", () => {
             }
         })
          .then(() => {
+          // const index = comments.value.findIndex(c => c.commentId === comment.value.commentId);
+          // if (index !== -1) {
+          //   comments.value[index] = { ...comment.value };
+          // }
             showComments(articleId);
         })
   };
+
+  // 수정된 댓글을 저장
+  const updateCommentPromise = (articleId, commentId, updatedComment) => {
+
+    return new Promise((resolve, reject)=>{
+      const storeObj = JSON.parse(sessionStorage.getItem('user'));
+      accessToken.value = storeObj.accessToken;
+
+      axios.put(`${URL}/article/${articleId}/comments/${commentId}`, 
+          {
+              commentContent: updatedComment
+          }, 
+          {
+              headers:{
+                  "access-token": accessToken.value
+              }
+          })
+          .then(() => {
+            // const index = comments.value.findIndex(c => c.commentId === comment.value.commentId);
+            // if (index !== -1) {
+            //   comments.value[index] = { ...comment.value };
+            // }
+              showComments(articleId);
+              resolve();
+          })
+          .catch(() => {
+              reject();
+          })
+
+    })
+    
+  };
+
 
 
   // 모든 댓글 조회
@@ -439,6 +476,6 @@ const toggleDislike = (articleId, commentId) => {
 
 
   return {accessToken, comments, comment, commentCnt, commentLikeCnt, commentDislikeCnt, likedComments, dislikedComments,
-    writeComment, deleteComment, updateComment, showComments, disable, toggleLike, isLiked, toggleDislike, isDisliked};
+    writeComment, deleteComment, updateComment, updateCommentPromise, showComments, disable, toggleLike, isLiked, toggleDislike, isDisliked};
 
 }, { persist: { storage: sessionStorage }});

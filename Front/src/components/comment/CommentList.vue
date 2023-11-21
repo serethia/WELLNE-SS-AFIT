@@ -5,25 +5,37 @@
 
         <!--댓글 목록, 본인 댓글만 수정/삭제 버튼, 좋아요/싫어요 구현-->
         <div v-if="commentCnt" class="commentlist">
-            <ul>
-                <li v-for="comment in comments" :key="comment.commentId" style="text-align: left;">
-                    {{ comment.nickname }} : {{ comment.commentContent }}
+          <ul>
+            <li v-for="comment in comments" :key="comment.commentId" style="text-align: left;">
+                  <v-card-text>
+                    {{ comment.nickname }} :
                     
-                    <!-- <button v-if="isLoggedIn && comment.userId === loginUserId" @click="updateComment(comment.commentId)">수정</button>
-                    <button v-if="isLoggedIn && comment.userId === loginUserId" @click="deleteComment(comment.commentId)">삭제</button> -->
-                    <button v-if="isLoggedIn && comment.userId === loginUserId" @click="updateComment(comment.commentId)">수정</button>
-                    <button v-if="isLoggedIn && comment.userId === loginUserId" @click="deleteComment(comment.commentId)">삭제</button>
-
-                    <span style="justify: end;">
-                      <!-- 
-                        button 엘리먼트에 disable 속성을 하면 다시 누를수가 없으므로... 
-                        btn-disable class(CSS)를 만들고 스타일을 적용. 
-                      -->                    
+                    <span v-show="comment.commentId !== currentCommentId"> {{ comment.commentContent }} 
+                    
+                      <button v-if="isLoggedIn && comment.userId === loginUserId" @click="updateComment(comment.commentId)">수정</button>
+                      <button v-if="isLoggedIn && comment.userId === loginUserId" @click="deleteComment(comment.commentId)">삭제</button>
+                    </span>
+                    
+                    <span v-show="comment.commentId === currentCommentId">
+                      <input  type="text" v-model="updatedComment">
+                      <button v-if="isLoggedIn && comment.userId === loginUserId" v-btn type="submit" class="ml-2" outlined small color="#356859" @click="saveUpdatedComment(comment.commentId)"> 등록 </button>
+                      <button v-if="isLoggedIn && comment.userId === loginUserId" class="ml-2 mt-1" outlined small color="#356859" @click="currentCommentId = null"> 취소 </button>
+                    
+                    
+                    </span>
+                  </v-card-text>
+                  
+                  
+                  <!-- 
+                    button 엘리먼트에 disable 속성을 하면 다시 누를수가 없으므로... 
+                    btn-disable class(CSS)를 만들고 스타일을 적용. 
+                  -->                    
+                  <span style="justify: end;">
                     &nbsp;&nbsp;<button @click="toggleLike(comment.commentId)" :class="{'button-disabled': comment.userCommentLikeCnt >= 1}">좋아요</button>&nbsp;        
                     <span>{{ comment.commentLikeCnt }}</span>
                     &nbsp;<button @click="toggleDislike(comment.commentId)" :class="{'button-disabled': comment.userCommentDislikeCnt >= 1}">싫어요</button>&nbsp;
                     <span>{{ comment.commentDislikeCnt }}</span>
-                    </span>
+                  </span>
                     <!-- <button @click="toggleLike(comment.articleId, comment.commentId)" :disabled="isLiked(comment.commentId)">좋아요</button> -->
                     <!-- &nbsp;&nbsp;<button @click="toggleLike(comment.commentId)" :disabled="comment.userCommentLikeCnt >= 1">좋아요</button>&nbsp; -->
                     <!-- <button @click="onClick(comment.commentId, 'like')" :disabled="isLiked(comment.commentId)">좋아요</button> -->
@@ -33,18 +45,18 @@
                     <!-- <button @click="onClick(comment.commentId, 'dislike')" :disabled="isDisliked(comment.commentId)">싫어요</button> -->
                     <!-- <span>{{ comment.commentDislikeCnt }}</span> -->
                     <!-- </span> -->
-                </li>
+                  </li>
             </ul>
-        </div>
+          </div>
         <div v-else>첫 댓글을 작성해주세요.</div>
         <br>
         <!--로그인 상태에서 댓글 입력란, 작성 버튼 구현-->
         <form @submit.prevent="writeComment" v-if="isLoggedIn">
-            <textarea v-model="newComment" rows="5" placeholder="댓글을 입력하세요." style="width: 800px"></textarea>&nbsp;&nbsp;
-            <button :disabled="newComment.trim() === ''" class="button">등록</button>
+          <textarea v-model="newComment" rows="5" placeholder="댓글을 입력하세요." style="width: 800px"></textarea>&nbsp;&nbsp;
+          <button :disabled="newComment.trim() === ''" class="button">등록</button>
         </form>
-    </div>
-</template>
+      </div>
+    </template>
   
 <script setup>
 import { ref, computed, onMounted } from "vue";
@@ -56,17 +68,22 @@ const route = useRoute();
 const commentStore = useCommentStore();
 const userStore = useUserStore();
 
+const comment = computed(() => commentStore.comment);
 const comments = computed(() => commentStore.comments);
 const commentCnt = computed(() => comments.value.length);
-const commentLikeCnt = computed(() => commentStore.commentLikeCnt);
-const commentDislikeCnt = computed(() => commentStore.commentDislikeCnt);
+// const commentLikeCnt = computed(() => commentStore.commentLikeCnt);
+// const commentDislikeCnt = computed(() => commentStore.commentDislikeCnt);
 const isLoggedIn = computed(() => userStore.isLoggedIn);
 const loginUserId = computed(() => userStore.loginUserId);
 const newComment = ref('');
 const updatedComment = ref('');
+const editing = ref(false);
 
-const isLiked = (commentId) => commentStore.isLiked(commentId);
-const isDisliked = (commentId) => commentStore.isDisliked(commentId);
+const currentCommentId = ref(null); // 지금 수정할 Comment의 Id
+
+
+// const isLiked = (commentId) => commentStore.isLiked(commentId);
+// const isDisliked = (commentId) => commentStore.isDisliked(commentId);
 
 // const isLiked = computed((commentId) => {
 //     const likedComments = commentStore.likedComments;
@@ -93,8 +110,54 @@ const writeComment = function () {
 
 const updateComment = function (commentId) {
     const articleId = route.params.id;
-    commentStore.updateComment(articleId, commentId, updatedComment.value);
+    // editing.value = true; // true면 수정란 불러오기
+    currentCommentId.value = commentId;
+    console.log("currentCommentId", currentCommentId.value);
+    let c = comments.value.find(c => c.commentId === commentId)
+    console.log(c)
+    updatedComment.value = c.commentContent;
+
+    // commentStore.updateComment(articleId, commentId, updatedComment.value);
 }
+
+const saveUpdatedComment = function(commentId){
+  console.log(`${commentId}를 ${updatedComment.value}로 수정합니다.`)
+  const articleId = route.params.id;
+  
+  // 1. 프로미스가 아닌경우
+  //   updateComment : 비동기 작업
+  // commentStore.updateComment(articleId, commentId, updatedComment.value);  // 비동기 작업 시작
+  // 비동기 작업을 시작하고 바로 여기로 옴
+  // saveUpdatedComment 함수의 입장에서는 비동기 작업이 끝나든 말든 상관없이 밑의 줄의 코드를 실행
+
+  // 2.프로미스를 사용하는 경우
+  // updateCommentPromse : 비동기 작업을 수행하는 프로미스를 반환
+  // 프로미스가 끝나고 수행할 작업은 then()안에서 수행 가능
+  commentStore.updateCommentPromise(articleId, commentId, updatedComment.value)
+  .then(()=>{ // 업데이트가 완료되었으면..
+    currentCommentId.value = null;
+  })
+  
+}
+
+// const saveUpdatedCommentAsync = async function(commentId){
+//   console.log(`${commentId}를 ${updatedComment.value}로 수정합니다.`)
+//   const articleId = route.params.id;
+  
+//   // 1. 프로미스가 아닌경우
+//   //   updateComment : 비동기 작업
+//   // commentStore.updateComment(articleId, commentId, updatedComment.value);  // 비동기 작업 시작
+//   // 비동기 작업을 시작하고 바로 여기로 옴
+//   // saveUpdatedComment 함수의 입장에서는 비동기 작업이 끝나든 말든 상관없이 밑의 줄의 코드를 실행
+
+//   // 2.프로미스를 사용하는 경우
+//   // updateCommentPromse : 비동기 작업을 수행하는 프로미스를 반환
+//   // 프로미스가 끝나고 수행할 작업은 then()안에서 수행 가능
+//   await updateCommentPromise(articleId, commentId, updatedComment.value);
+//   // await는 async 안에서만 사용 가능
+//   currentCommentId.value = null;
+  
+// }
 
 const deleteComment = function (commentId) {
     const articleId = route.params.id;
@@ -104,6 +167,7 @@ const deleteComment = function (commentId) {
 const toggleLike = function (commentId) {
     const articleId = route.params.id;
     commentStore.toggleLike(articleId, commentId);
+
     // isLiked.value = !isLiked.value;
 }
 

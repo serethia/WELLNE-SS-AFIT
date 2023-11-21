@@ -112,14 +112,10 @@
       userPwd: password.value,
     };
 
-    console.log("Before login:", userStore.resultRef);
-
     try {
       // await는 async (비동기) 함수 안에서만 쓸수 있음.
       // await : 프라미스(비동기, 시간이 걸림)를 값으로 바꿔줌 - 기다림.
       const result = await userStore.setLoginUser(user);
-
-      console.log("After login:", result);
 
       if (result.success) {
         console.log("Login result:", result.data);

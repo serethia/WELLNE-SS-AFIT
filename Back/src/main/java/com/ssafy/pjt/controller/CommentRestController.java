@@ -68,7 +68,8 @@ public class CommentRestController {
 		comment.setArticleId(articleId);
 		String token = request.getHeader("access-token");
 		String userId = getUserId(token);
-		comment.setUserId(userId);
+		comment.setUserId(comment.getUserId());
+		comment.setCommentContent(comment.getCommentContent());
 		int result = cService.writeComment(comment);
 		return result;
 	}

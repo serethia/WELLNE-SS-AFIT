@@ -24,6 +24,7 @@ export const useUserStore = defineStore("user", () => {
   const accessToken = ref("");
   const loginUserId = ref("");
   const loginUserNickname = ref("");
+  const loginUserRole = ref(0);
 
 
   // 회원가입
@@ -138,6 +139,7 @@ export const useUserStore = defineStore("user", () => {
   
       loginUserId.value = obj.id;
       loginUserNickname.value = obj.nickname;
+      loginUserRole.value = obj.role;
       isLoggedIn.value = true;
 
       router.push({ name: 'My' });
@@ -280,7 +282,7 @@ export const useUserStore = defineStore("user", () => {
   };
 
 
-  return {accessToken, isLoggedIn, users, searchUsers, user, loginUserId, loginUserNickname, userCnt, searchUserCnt, 
+  return {accessToken, isLoggedIn, users, searchUsers, user, loginUserId, loginUserNickname, loginUserRole, userCnt, searchUserCnt, 
     createUser, deleteUser, setLogout, setUser, searchName, updateUser, setLoginUser, setUsers};
 
 }, { persist: {

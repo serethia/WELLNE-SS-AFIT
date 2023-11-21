@@ -14,6 +14,16 @@
         <input type="email" id="email" v-model="email" class="view" /><br />
         <label for="nickname">별명</label>
         <input type="text" id="nickname" v-model="nickname" class="view" /><br />
+        <fieldset class="checkbox-container" style="width:40%;">
+        <legend >관심사</legend>
+        <div class="checkbox-group">
+        <div v-for="info in infos" :key="info.category" style="display:inline-flex">
+          <input type="checkbox" :id="info.category" v-model="info.isSelected" class="view" />
+          <label :for="info.category" style="">{{ info.category }}</label>
+          <br>
+        </div>
+        </div>
+        </fieldset>
         <button class="btn" @click="regist">등록</button>
       </fieldset>
     </div>
@@ -22,9 +32,17 @@
   <script setup>
   import { ref, computed, onMounted } from "vue";
   import { useUserStore } from "@/stores/userStore";
-  
   const userStore = useUserStore();
   
+  // 체크박스 구현
+  /* isSelected: 체크 박스 체크 여부 */
+  const selectedcategory = ref([]);
+  const infos = ref([
+    {category: "운동", isSelected: false},
+    {category: "다이어트", isSelected: false},
+    {category: "전문가조언", isSelected: false},
+  ]);
+    
   const id = ref("");
   const password = ref("");
   const password2 = ref("");
@@ -91,8 +109,41 @@
       email: email.value,
       nickname: nickname.value,
       img: "#",
-    };
+      category: selectedcategory.value
+      };
   
     userStore.createUser(user);
   };
   </script>
+
+<style scoped>
+.checkbox-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.checkbox-container > div {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.checkbox-group > div {
+  display: inline-flex;
+  align-items: center;
+}
+
+.checkbox-group label {
+  white-space: nowrap;
+}
+
+</style>

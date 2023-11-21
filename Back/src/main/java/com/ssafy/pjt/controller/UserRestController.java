@@ -101,6 +101,7 @@ public class UserRestController {
 			String token = Jwts.builder()
 					.claim("id", dbUser.getUserId())
 					.claim("nickname", dbUser.getNickname())
+					.claim("role", dbUser.getRole())
 					.setExpiration(new Date(System.currentTimeMillis() + 1000*60*60))
 					.signWith(SignatureAlgorithm.HS256, "SERVER_SECRET_KEY".getBytes("UTF-8"))
 					.compact();
