@@ -140,7 +140,13 @@ INSERT INTO user (user_id, user_pwd, user_name, nickname, email, category, role)
 ("expert1", "expertpass1", "조용환", "환환", "expert@example.com", "전문가조언", 1),
 ("expert2", "expertpass2", "김영환", "김영", "nutrition@example.com", "전문가조언", 1),
 ("expert3", "expertpass3", "안용훈", "안용", "fitnesscoach@example.com", "전문가조언", 1),
-("admin2", "adminpass2", "양현수", "어드민2", "admin2@example.com", "", 0);
+("admin2", "adminpass2", "양현수", "어드민2", "admin2@example.com", "", 0),
+("fdfsff1", "dummyPass1", "Daniel", "다니엘", "daniel@example.com", "건강", 1),
+("daaaaa2", "dummyPass2", "Sophie", "소피", "sophie@example.com", "다이어트", 1),
+("dfffffd3", "dummyPass3", "Jacob", "제이콥", "jacob@example.com", "운동", 0),
+("dummy4", "더미패스4", "서연", "seoyeon", "seoyeon@example.com", "건강", 1),
+("12345", "더미패스5", "지훈", "jihun", "jihun@example.com", "다이어트", 1),
+("aaaaaa6", "더미패스6", "Hannah", "한나", "hannah@example.com", "운동", 0);
 
 
 
