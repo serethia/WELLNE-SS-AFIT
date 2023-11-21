@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `article` (
   `article_title` VARCHAR(200) NOT NULL,
   `article_content` VARCHAR(4000) NOT NULL,
 --  `board_id` INT NULL,
-  `view_cnt` INT NULL,
+  `view_cnt` INT DEFAULT 0,
   `user_id` VARCHAR(45) NOT NULL,
   `video_url` VARCHAR(500) NULL,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

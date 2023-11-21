@@ -26,6 +26,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	public Article getArticle(int articleId) {
+		dao.updateViewCnt(articleId);
 		return dao.selectOne(articleId);
 	}
 
