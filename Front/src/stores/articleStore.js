@@ -15,24 +15,18 @@ export const useArticleStore = defineStore('article', ()=>{
   const articleList = ref([])
   const accessToken = ref('')
 
-  // const getArticleList = function () {
 
+  // const getArticleList = function () {
   //   const storeObj = JSON.parse(sessionStorage.getItem('user'));
   //   accessToken.value = storeObj.accessToken;
-
-  //   console.log('토큰 정보')
-  //   console.log(accessToken.value);
-
-  //   console.log('위 토큰으로 axios get 요청을 합니다.')
 
   //   axios.get(`${REST_ARTICLE_API}/article`,
   //   {
   //     headers: {
-  //         "access-token": accessToken.value  // 세션에서 해당 토큰 가져오기 (헤더)
+  //         "access-token": accessToken.value 
   //     }
   //  })
   //   .then((response) => {
-  //     console.log(response.data)
   //     articleList.value = response.data
   //     })
   //     .catch((e)=>{
@@ -41,27 +35,18 @@ export const useArticleStore = defineStore('article', ()=>{
   // }
 
 
-
-
   // 카테고리 별 리스트 불러오기
   const getArticleListByCategory = function (category) {
-
     const storeObj = JSON.parse(sessionStorage.getItem('user'));
     accessToken.value = storeObj.accessToken;
-
-    console.log('토큰 정보')
-    console.log(accessToken.value);
-
-    console.log('위 토큰으로 axios get 요청을 합니다.')
 
     axios.get(`${REST_ARTICLE_API}/article?category=${category}`,
     {
       headers: {
-          "access-token": accessToken.value  // 세션에서 해당 토큰 가져오기 (헤더)
+          "access-token": accessToken.value 
       }
    })
     .then((response) => {
-      console.log(response.data)
       articleList.value = response.data
       })
       .catch((e)=>{
@@ -73,15 +58,13 @@ export const useArticleStore = defineStore('article', ()=>{
   //기사 한개 불러오기
   const article = ref([])
   const getArticle = function (articleId) {
-    console.log('aaab')
-
     const storeObj = JSON.parse(sessionStorage.getItem('user'));
     accessToken.value = storeObj.accessToken;
 
     axios.get(`${REST_ARTICLE_API}/article/${articleId}`,
     {
       headers: {
-          "access-token": accessToken.value  // 세션에서 해당 토큰 가져오기 (헤더)
+          "access-token": accessToken.value 
       }
     })
       .then((response) => {
@@ -89,30 +72,23 @@ export const useArticleStore = defineStore('article', ()=>{
     })
   }
 
+
   //기사 등록
   const createArticle = function (article) {
-    console.log('aaac')
-    console.log(article)
-
     const storeObj = JSON.parse(sessionStorage.getItem('user'));
     accessToken.value = storeObj.accessToken;
 
     axios({
       url: `${REST_ARTICLE_API}/article`,
       method: 'POST',
-      
       headers: {
         "Content-Type": "application/json",
         "access-token": accessToken.value
       },
       data: article
     })
-      .then((res) => {
-        console.log(res.data)
+      .then(() => {
         const currentCategory = categoryMap[category.value];
-        console.log(category.value)
-        console.log("카테고리이동")
-        console.log(currentCategory)
         router.push({ name: 'category', params: { category: currentCategory }})
       })
       .catch((err) => {
@@ -123,17 +99,16 @@ export const useArticleStore = defineStore('article', ()=>{
 
   //기사 수정
   const updateArticle = function ( articleId ) {
-    console.log('aaad')
     const storeObj = JSON.parse(sessionStorage.getItem('user'));
     accessToken.value = storeObj.accessToken;
+
     axios.put(`${REST_ARTICLE_API}/article/${articleId}`, article.value,
     {
       headers: {
           "access-token": accessToken.value 
       }
     })
-      .then((res) => {
-        console.log(res.data)
+      .then(() => {
         router.push({ name: 'articleDetail', params: { id: articleId }});
     })
     .catch((err) => {
@@ -144,7 +119,7 @@ export const useArticleStore = defineStore('article', ()=>{
 
   //기사 검색
   const searchArticleList = function (searchCondition) {
-    console.log('aaae')
+
     axios.get(`${REST_ARTICLE_API}/article`, {
       params: searchCondition
     })
@@ -156,11 +131,11 @@ export const useArticleStore = defineStore('article', ()=>{
     })
   }
 
+
   //기사 삭제
   const deleteArticle = function (articleId) {
     const storeObj = JSON.parse(sessionStorage.getItem('user'));
-    accessToken.value = storeObj.accessToken;
-  
+    accessToken.value = storeObj.accessToken;  
     
     axios.get(`${REST_ARTICLE_API}/article/${articleId}`, {
       headers: {
@@ -168,20 +143,15 @@ export const useArticleStore = defineStore('article', ()=>{
       }
     })
     .then((response) => {
-      const article = response.data;
-  
+      const article = response.data;  
       
       axios.delete(`${REST_ARTICLE_API}/article/${articleId}`, {
         headers: {
           "access-token": accessToken.value
         }
       })
-      .then((res) => {
-        console.log("delete data:", res.data);
-        console.log("article:", article);
-        
+      .then(() => {
         const category = categoryMap[article.category];
-
         router.push({ name: 'category', params: { category: category } });
       })
       .catch((err) => {
@@ -194,27 +164,8 @@ export const useArticleStore = defineStore('article', ()=>{
   };
 
 
-
-
-
-
   return { articleList, getArticleListByCategory, article, getArticle, createArticle, updateArticle, searchArticleList, deleteArticle }
 
-    // const computeFavorites = computed(()=>{
-    //     return productList.value.filter(pro => pro.isFavorite)
-    // })
 
-    // const clickFavorite = function(name) {
-    //     productList.value = productList.value.map((product) => {
-    //         if(name === product.name) {
-    //             product.isFavorite = !product.isFavorite
-    //         }
-    //         return product
-    //     })
-    // }
-
-
-    // return {productList, computeFavorites, clickFavorite}
-    
 }, { persist: {
     storage: sessionStorage }})

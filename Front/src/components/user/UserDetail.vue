@@ -38,6 +38,13 @@
           v-model="user.nickname"
           class="view"
         /><br />
+        <label for="category">관심사</label>
+        <input
+          type="text"
+          id="category"
+          v-model="user.category"
+          class="view"
+        /><br />
         <button class="btn" @click="updateTheUser">수정</button>
         <button class="btn" @click="removeUser">삭제</button>
       </fieldset>
@@ -45,7 +52,7 @@
   </template>
   
   <script setup>
-  import { ref, onBeforeMount } from "vue";
+  import { onBeforeMount } from "vue";
   import { useUserStore } from "@/stores/userStore";
   import { useRoute } from "vue-router";
   import { storeToRefs } from "pinia";
@@ -55,16 +62,15 @@
   const route = useRoute();
   
   const updateTheUser = () => {
-    userStore.updateUser();
+    userStore.updateUser(user.value);
   };
   
   const removeUser = () => {
     userStore.deleteUser(user.value.userId);
   };
-  
+
   onBeforeMount(() => {
     const userId = route.params.id;
     userStore.setUser(userId);
   });
-  </script>
-  
+  </script> 

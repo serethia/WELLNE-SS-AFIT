@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+      <UserSearch />   
       <h2>사용자 목록</h2>
       <h4>등록된 사용자의 수 : {{ userCount }}</h4>
       <div v-if="userCount">
@@ -18,19 +19,21 @@
               <th>이름</th>
               <th>이메일</th>
               <th>별명</th>
+              <th>관심사</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(user, index) in usersList" :key="index">
               <td>{{ index + 1 }}</td>
               <td>
-                <RouterLink class="user-link" :to="`/user/${user.userId}`">{{
+                <router-link class="user-link" :to="`/user/${user.userId}`">{{
                   user.userId
-                }}</RouterLink>
+                }}</router-link>
               </td>
               <td>{{ user.userName }}</td>
               <td>{{ user.email }}</td>
               <td>{{ user.nickname }}</td>
+              <td>{{ user.category }}</td>
             </tr>
           </tbody>
         </table>
@@ -42,6 +45,7 @@
   <script setup>
   import { onMounted, computed } from "vue";
   import { useUserStore } from "@/stores/userStore";
+  import UserSearch from "@/components/user/UserSearch.vue";
   
   const userStore = useUserStore();
   

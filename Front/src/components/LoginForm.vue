@@ -1,4 +1,4 @@
-<template>
+  <template>
     <div class="container">
       <h2>Login</h2>
       <fieldset class="text-center">
@@ -19,14 +19,26 @@
   
   const id = ref("");
   const password = ref("");
-  
-  const login = () => {
+
+  const login = async () => {
     const user = {
       userId: id.value,
       userPwd: password.value,
     };
-  
-    userStore.setLoginUser(user);
+
+    try {
+      // await는 async (비동기) 함수 안에서만 쓸수 있음.
+      // await : 프라미스(비동기, 시간이 걸림)를 값으로 바꿔줌 - 기다림.
+      const result = await userStore.setLoginUser(user);
+
+      if (result.success) {
+        console.log("Login result:", result.data);
+      } else {
+        console.log("Login failed:", result.error);
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+    }
   };
   </script>
   

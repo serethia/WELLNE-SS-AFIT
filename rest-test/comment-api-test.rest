@@ -1,0 +1,38 @@
+GET http://localhost:8080/commentapi/article/1
+access-token: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6ImFkbWluIiwiZXhwIjoxNzAwMjA4MzEyfQ.4DN-ikwLzF-BZfILahPnP1KkXtBAZWVIb8-QoZqj-fw
+
+###
+
+POST http://localhost:8080/userapi/login
+Content-Type: application/json
+
+{"userId": "admin", "userPwd": "admin1"}
+
+###
+POST http://localhost:8080/commentapi/article/1/comments
+Content-Type: application/json
+access-token: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6ImFkbWluIiwiZXhwIjoxNzAwMjA4MzEyfQ.4DN-ikwLzF-BZfILahPnP1KkXtBAZWVIb8-QoZqj-fw
+
+{
+    "commentContent" :"정말 좋은 기사네요1111122",
+    "userId": "ssa1234",
+    "nickname": "ssa1234"
+}
+
+
+###
+
+PUT http://localhost:8080/commentapi/article/1/comments/11
+access-token: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6ImFkbWluIiwiZXhwIjoxNzAwMjA4MzEyfQ.4DN-ikwLzF-BZfILahPnP1KkXtBAZWVIb8-QoZqj-fw
+Content-Type: application/json
+
+{
+    "commentContent" :"정말정말 좋은 기사네요!!!!",
+    "userId": "ssa1234",
+    "nickname": "ssa1234"
+}
+
+###
+
+DELETE http://localhost:8080/commentapi/article/1/comments/11
+access-token: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6ImFkbWluIiwiZXhwIjoxNzAwMjA4MzEyfQ.4DN-ikwLzF-BZfILahPnP1KkXtBAZWVIb8-QoZqj-fw

@@ -2,6 +2,7 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import router from "@/router";
 import axios from "axios";
+import { Base64 } from 'js-base64';
 
 
 const URL = 'http://localhost:8080/userapi'
@@ -16,15 +17,14 @@ export const useUserStore = defineStore("user", () => {
   const searchUsers = ref([]);
 
   const user = ref(null);
-  const loginUser = ref(null);
-  const loginUserId = ref('');
-
+  
   const userCnt = ref(0);
   const searchUserCnt = ref(0);
 
   const accessToken = ref("");
-
-
+  const loginUserId = ref("");
+  const loginUserNickname = ref("");
+  const loginUserRole = ref(0);
 
 
   // 회원가입
@@ -32,7 +32,7 @@ export const useUserStore = defineStore("user", () => {
     axios.post(`${URL}/signup`, user,
         {
             headers: {
-                "access-token": accessToken.value  // 세션에서 해당 토큰 가져오기 (헤더)
+                "access-token": accessToken.value
             }
         })
         .then((res) => {
@@ -52,6 +52,8 @@ export const useUserStore = defineStore("user", () => {
           }
       })
       .then(() => {
+          users.value = users.value.filter(u => u.userId !== userid);
+          userCnt.value = users.value.length;
           router.push({name: 'userList'});
       })
   };
@@ -74,7 +76,7 @@ export const useUserStore = defineStore("user", () => {
         }
     })
         .then((res) => {
-            user.value = res.data;
+            user.value = { ...res.data };
         })
   };
 
@@ -98,34 +100,53 @@ export const useUserStore = defineStore("user", () => {
   const updateUser = () => {
     axios.put(`${URL}/user`, user.value, 
       {
-            headers:{
+        headers:{
             "access-token": accessToken.value
         }
      })
-        .then(() => {
-            setUsers();
-            router.push({name: 'userList'});
-        })
+     .then(() => {
+        // 기존 사용자 정보 업데이트
+        const index = users.value.findIndex(u => u.userId === user.value.userId);
+        if (index !== -1) {
+          users.value[index] = { ...user.value };
+        }
+        router.push({ name: 'userList' });
+      })
   };
 
 
   // 토큰 + 로그인
-  const setLoginUser = (loginuser) => {
-    axios.post(`${URL}/login`, loginuser)
-        .then((res) => {
-            accessToken.value = res.data;
-            // const token = res.data.split('.');  // token을 '.'을 기준으로 따로 3등분해서 배열로 저장
-            isLoggedIn.value= true;
-            router.push({name: 'my'});
-            let token = res.data;
-            let data = token.split('.')[1];
-            let jsonStr = atob(data);
-            let userObj = JSON.parse(jsonStr);
-            loginUserId.value = userObj.id;
-        })
-        .catch(() => {
-          alert("로그인 실패!");
-        })
+  // setLoginUser 함수를 async로 만들었음
+  // 비동기 함수는 값을 반환하는 것이 아니라, 값을 프라미스로 감싸서 프라미스를 반환
+  const setLoginUser = async (loginuser) => {
+    try {
+      // axios는 항상 프라미스를 반환
+
+      const res = await axios.post(`${URL}/login`, loginuser);
+      const token = res.data;
+      accessToken.value = token;
+      
+      // axios.defaults.headers.common['access-token'] = token; // 전역 설정
+      
+
+      // atob() : Base64로 인코딩된 문자열 => json문자열(한글은 깨짐)
+      // Base64.decode(): Base64로 인코딩된 문자열 => json문자열(한글도 안깨지도록)
+      // Base64: import { Base64 } from 'js-base64';
+      // npm i js-base64
+      const payload = token.split('.')[1];
+      const obj = JSON.parse(Base64.decode(payload));
+  
+      loginUserId.value = obj.id;
+      loginUserNickname.value = obj.nickname;
+      loginUserRole.value = obj.role;
+      isLoggedIn.value = true;
+
+      router.push({ name: 'my' });
+      return { success: true, data: token };
+    } catch (error) {
+      alert("로그인 실패!");
+      return { success: false, error: error.message };
+    }
   };
 
 
@@ -143,8 +164,9 @@ export const useUserStore = defineStore("user", () => {
   };
 
 
-  return {accessToken, isLoggedIn, users, searchUsers, user, loginUser, userCnt, searchUserCnt, 
-    createUser, deleteUser, setLogout, setUser, searchName, updateUser, setLoginUser, setUsers, loginUserId};
+  return {accessToken, isLoggedIn, users, searchUsers, user, loginUserId, loginUserNickname, loginUserRole, userCnt, searchUserCnt, 
+    createUser, deleteUser, setLogout, setUser, searchName, updateUser, setLoginUser, setUsers};
+
 
 }, { persist: {
     storage: sessionStorage }});
