@@ -35,29 +35,48 @@ SQL_QUERIES = []
 # SQL_QUERIES.append('')
 BASE_URL = 'http://www.hnews.kr'
 
+cnt = 0
+
 for list_item in list_items:
-    title = list_item.find('dl').dt.a.text.replace('"', '')
+
+    cnt += 1
+
+    title = list_item.find('dl').dt.a.text.replace('“', '').replace('”', '')
     print(title)
-    content = list_item.find('dd', class_='text').text.replace('"', '')
+    content = list_item.find('dd', class_='text').text.replace('“', '').replace('”', '')
     print(content)
+
+    userId = ""
+
+    if cnt <= 3:
+        userId = "iron1234"
+    elif cnt <= 6:
+        userId = "yeah3333"
+    else:
+        userId = "um1234"
+
+
+    category = "다이어트"
+
+
     createdAt = list_item.find('span', class_="date").text
     print(createdAt)
     mediaName = '현대건강신문'
     link = list_item.find('dl').a['href']
     print(BASE_URL+link)
-    break
+    # break
     # r2 = requests.get('https://health.chosun.com/site/data/html_dir/2023/11/09/2023110901536.html')
 
 
-    # SQL_QUERIES.append(f'("{title}", "{content}", "{writer}", "{category}", "{mediaName}")')
+    SQL_QUERIES.append(f'("{title}", "{content}", "{userId}", "{createdAt}", "{mediaName}", "{category}")')
 
-# values = ",\n".join(SQL_QUERIES)
+values = ",\n".join(SQL_QUERIES)
 
 
-# SQL = f'INSERT INTO articles (title, content, writer, category, media_name) VALUES \n{values}'
+SQL = f'INSERT INTO article (article_title, article_content, user_id, created_at, media_name, category) VALUES \n{values}'
 
-# import codecs
+import codecs
 
-# with codecs.open("articles.sql", "w", "utf-8") as f:
-#     f.write(SQL)
+with codecs.open("mytest.sql", "w", "utf-8") as f:
+    f.write(SQL)
 
