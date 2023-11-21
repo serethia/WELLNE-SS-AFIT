@@ -115,7 +115,7 @@ export const useArticleStore = defineStore('article', ()=>{
     })
   }
 
-  const updateArticle = function (articleId) {
+  const updateArticle = function (article, articleId) {
     console.log('aaad')
     const storeObj = JSON.parse(sessionStorage.getItem('user'));
     accessToken.value = storeObj.accessToken;
@@ -126,8 +126,7 @@ export const useArticleStore = defineStore('article', ()=>{
       }
     })
       .then(() => {
-        // const currentCategory = categoryMap[category.value];
-        router.push({ name: 'category', params: { category: "exercise"}})
+        router.push({ name: 'articleDetail', params: { id: articleId }})
     })
   }
 

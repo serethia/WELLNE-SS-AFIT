@@ -42,8 +42,11 @@
 <script setup>
 import { useArticleStore } from "@/stores/articleStore";
 import { ref, onBeforeMount } from "vue";
+
+
 const store = useArticleStore();
 
+const { article } = storeToRefs(useArticleStore());
 
 const title = ref("");
 const writer = ref("");
