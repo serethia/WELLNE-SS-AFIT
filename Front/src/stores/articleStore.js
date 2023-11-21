@@ -115,7 +115,7 @@ export const useArticleStore = defineStore('article', ()=>{
     })
   }
 
-  const updateArticle = function (article, articleId) {
+  const updateArticle = function ( articleId ) {
     console.log('aaad')
     const storeObj = JSON.parse(sessionStorage.getItem('user'));
     accessToken.value = storeObj.accessToken;
@@ -125,8 +125,12 @@ export const useArticleStore = defineStore('article', ()=>{
           "access-token": accessToken.value 
       }
     })
-      .then(() => {
-        router.push({ name: 'article', params: { articleId }});
+      .then((res) => {
+        console.log(res.data)
+        router.push({ name: 'articleDetail', params: { id: articleId }});
+    })
+    .catch((err) => {
+      console.log(err)
     })
   }
 

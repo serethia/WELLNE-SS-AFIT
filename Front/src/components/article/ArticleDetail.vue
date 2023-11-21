@@ -25,6 +25,7 @@ const store = useArticleStore()
 
 const route = useRoute();
 const router = useRouter();
+
 onMounted(() => {
     store.getArticle(route.params.id)
 })

@@ -5,32 +5,32 @@
             <legend>등록</legend>
             <div>
                 <label for="title">제목 : </label>
-                <input type="text" id="title" v-model="title">
+                <input type="text" id="title" v-model="articleStore.article.articleTitle">
             </div>
             <div>
-                <label for="writer">기자 : </label>
-                <input type="text" id="writer" v-model="writer">
+                <label for="writer">작성자 : </label>
+                <input type="text" id="writer" readonly v-model="articleStore.article.userId">
             </div>
             <div>
                 <label for="content">내용 : </label>
-                <textarea id="content" cols="30" rows="10" v-model="content"></textarea>
+                <textarea id="content" cols="30" rows="10" v-model="articleStore.article.articleContent"></textarea>
             </div>
 
 
             <div>
                 <label for="video">비디오 URL : </label>
-                <input type="url" id="video" v-model="video">
+                <input type="url" id="video" v-model="articleStore.article.videoUrl">
             </div>
 
             <div>
                 <label for="media">언론사 : </label>
-                <input type="text" id="media" v-model="media">
+                <input type="text" id="media" v-model="articleStore.article.mediaName">
             </div>
 
 
             <div>
                 <label for="category">카테고리 : </label>
-                <input type="text" id="category" v-model="category">
+                <input type="text" id="category" v-model="articleStore.article.category">
             </div>
             <div>
                 <button @click="updateArticle">수정</button>
@@ -40,39 +40,13 @@
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router';
-import { ref, onBeforeMount } from "vue";
 import { useArticleStore } from "@/stores/articleStore";
-import { useUserStore } from "@/stores/userStore";
+
 
 const articleStore = useArticleStore()
-const userStore = useUserStore()
-const route = useRoute();
-
-const title = ref("");
-const writer = ref("");
-const content = ref("");
-const video = ref("");
-const media = ref("");
-const category = ref("");
-
-
-
 
 const updateArticle = function () {
-    const articleId = route.params.articleId;
-    console.log("ttttest")
-    console.log(route.params.articleId)
-
-    const article = {
-      articleTitle: title.value,
-      articleContent: content.value,
-      userId: userStore.loginUserId.value,
-      videoUrl: video.value,
-      mediaName: media.value,
-      category: category.value,
-    };
-    articleStore.updateArticle(articleId, article)
+    articleStore.updateArticle(articleStore.article.articleId)
 }
 </script>
 
