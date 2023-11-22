@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.pjt.model.dao.ArticleDao;
 import com.ssafy.pjt.model.dto.Article;
+import com.ssafy.pjt.model.dto.SearchArticleCondition;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -43,6 +44,11 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public List<Article> getArticlesByCategory(String category) {
 		return dao.selectAllArticlesByCategory(category);
+	}
+
+	@Override
+	public List<Article> search(SearchArticleCondition condition) {
+		return dao.search(condition);
 	}
 
 }

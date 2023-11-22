@@ -1,6 +1,7 @@
 import {defineStore} from 'pinia'
 import {ref , computed} from 'vue'
 import router from '@/router'
+import { useRoute } from 'vue-router'
 import axios from 'axios'
 
 const REST_ARTICLE_API = `http://localhost:8080/articleapi`
@@ -14,7 +15,7 @@ const categoryMap = {
 export const useArticleStore = defineStore('article', ()=>{
   const articleList = ref([])
   const accessToken = ref('')
-
+  const route = useRoute();
 
   // const getArticleList = function () {
   //   const storeObj = JSON.parse(sessionStorage.getItem('user'));
@@ -119,11 +120,28 @@ export const useArticleStore = defineStore('article', ()=>{
 
   //기사 검색
   const searchArticleList = function (searchCondition) {
+    console.log('aaae')
+    console.log(searchCondition);
+    console.log(route.params.category);
 
-    axios.get(`${REST_ARTICLE_API}/article`, {
-      params: searchCondition
+    const storeObj = JSON.parse(sessionStorage.getItem('user'));
+    accessToken.value = storeObj.accessToken;
+
+    axios.get(`${REST_ARTICLE_API}/search`, {
+      params: {
+        category: route.params.category,
+        key: searchCondition.key,
+        word: searchCondition.word,
+        orderBy: searchCondition.orderBy,
+        orderByDir: searchCondition.orderByDir
+
+      },
+      headers: {
+        "access-token": accessToken.value
+      }
     })
       .then((res) => {
+        console.log(res.data);
         articleList.value = res.data
     })
     .catch((err) => {
@@ -162,6 +180,10 @@ export const useArticleStore = defineStore('article', ()=>{
       console.log(err);
     });
   };
+
+
+
+
 
 
   return { articleList, getArticleListByCategory, article, getArticle, createArticle, updateArticle, searchArticleList, deleteArticle }
