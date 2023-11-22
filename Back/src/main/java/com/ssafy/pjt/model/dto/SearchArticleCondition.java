@@ -4,8 +4,41 @@ public class SearchArticleCondition {
 	private String key = "none";
 	private String word;
 	private String orderBy = "none";
-	private String orderByDir;
+	private String orderByDir = "asc";
 	private String category;
+	
+	
+	public SearchArticleCondition() {
+	}
+	
+	
+	public SearchArticleCondition(String word) {
+		this("none", word);
+	}
+	
+	
+	
+	public SearchArticleCondition(String key, String word) {
+		this(key, word, "none");
+	}
+	
+	
+	
+	public SearchArticleCondition(String key, String word, String orderBy) {
+		this(key, word, orderBy, "asc");
+	}
+	
+	
+
+	public SearchArticleCondition(String key, String word, String orderBy, String orderByDir) {
+		this.key = key;
+		this.word = word;
+		this.orderBy = orderBy;
+		this.orderByDir = orderByDir;
+	}
+
+
+
 
 	public String getCategory() {
 		return category;
@@ -13,9 +46,6 @@ public class SearchArticleCondition {
 
 	public void setCategory(String category) {
 		this.category = category;
-	}
-
-	public SearchArticleCondition() {
 	}
 
 	public String getKey() {
