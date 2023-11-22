@@ -24,63 +24,61 @@
     </div>
   </template>
   
-  <script setup>
-  import { ref, watch, onMounted } from 'vue';
-  import axios from 'axios';
-  import { useArticleStore } from '@/stores/articleStore';
-  
-  const articleStore = useArticleStore();
-  
-  const currentPage = ref(1);
-  const totalItemCount = ref(0);
-  const countPerPage = 10; // Set a default value for countPerPage
-  
-  const category = ref('');
-  const word = ref('');
-  
-  const pagination = {
-    getFirstPageAvailable: () => currentPage.value > 1,
-    getPreviousPageAvailable: () => currentPage.value > 1,
-    getNextPageAvailable: () => currentPage.value < totalItemCount.value / countPerPage,
-    getLastPageAvailable: () => currentPage.value < totalItemCount.value / countPerPage,
-    getPages: () => {
-      const totalPages = Math.ceil(totalItemCount.value / countPerPage);
-      return Array.from({ length: totalPages }, (_, index) => index + 1);
-    },
-    getTotalPageCount: () => Math.ceil(totalItemCount.value / countPerPage),
-  };
-  
-  const getData = () => {
-  const offset = (currentPage.value - 1) * countPerPage;
-  axios.get('http://localhost:8080/articleapi/article', {
-    params: {
-      category: category.value,
-      word: word.value,
-      page: currentPage.value,
-    },
-  })
-  .then(response => {
-    totalItemCount.value = response.data.totalCount;
-    articleStore.articleList = response.data.articles;
-  })
-  .catch(error => {
-    console.error('Error fetching data:', error);
-  });
+<script setup>
+
+
+import { ref, onMounted, computed, watch } from 'vue'
+import { useArticleStore } from '@/stores/articleStore'
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const store = useArticleStore()
+
+const itemsPerPage = 10;
+const currentPage = ref(1);
+const totalPages = computed(() => Math.ceil(store.board.length / itemsPerPage));
+
+const computedArticle = computed(() => {
+  const startIndex = (currentPage.value - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const articles = store.articleList.slice(startIndex, endIndex)
+  return articles;
+})
+
+const pages = computed(()=>{
+  const startPage = Math.max(1, currentPage.value - 2);
+  const totalPages =  Math.ceil(store.board.length / itemsPerPage);
+  const endPage = Math.min(totalPages, startPage + 4);
+  return  Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+})
+
+onMounted(() => {
+  store.getArticleListByCategory();
+  updatePages();
+})
+
+watch(currentPage, () => {
+  updatePages();
+});
+
+const updatePages = () => {
+  const startPage = Math.max(1, currentPage.value - 2);
+  const endPage = Math.min(totalPages.value, startPage + 4);
+
+  pages.value = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
 };
-  
-  const pageChange = page => {
+
+const changePage = (page) => {
+  if (page >= 1 && page <= totalPages.value) {
     currentPage.value = page;
-    getData();
-  };
-  
-  watch(() => articleStore.articleList, (newArticleList) => {
-    totalItemCount.value = newArticleList.length; // Assuming the length of the articleList is the total count
-  });
-  
-  // Initial data fetch
-  onMounted(getData);
-  </script>
-  
+  }
+};
+
+
+</script>
+
+
+
   <style scoped>
   .pagination {
     display: flex;
