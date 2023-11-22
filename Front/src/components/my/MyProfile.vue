@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <h2 style="text-align: center;">My Profile</h2>
+    <br>
     <fieldset class="text-center">
       <label for="id">아이디</label>
       <input
@@ -41,13 +42,22 @@
         id="category"
         :value="userStore.user.category"
         class="view"
+      /><br>
+      <label for="role">권한</label>
+      <input
+        readonly
+        type="text"
+        id="role"
+        :value="roleName"
+        class="view"
       />
     </fieldset>
+    <br>
   </div>
 </template>
 
 <script setup>
-import { onBeforeMount, ref } from "vue";
+import { onBeforeMount, ref, computed } from "vue";
 import { useUserStore } from "@/stores/userStore";
 // import { useRoute } from "vue-router";
 // import { storeToRefs } from "pinia";
@@ -61,8 +71,14 @@ const user = ref({
        userName: "",
        email: "",
        nickname: "",
-       category: []
+       category: [],
+       role: 0
        });
+
+const roleName = computed(() => {
+  const roles = ['일반 회원', '기자', '관리자'];
+  return roles[userStore.loginUserRole];
+});
 
 onBeforeMount(async () => {
   // const userId = route.params.id;

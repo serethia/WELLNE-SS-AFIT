@@ -10,8 +10,9 @@
             <col style="width: 20%" />
             <col style="width: 20%" />
             <col style="width: 25%" />
+            <col style="width: 10%" />
             <col style="width: 15%" />
-            <col style="width: 15%" />
+            <col style="width: 5%"  />
           </colgroup>
           <thead>
             <tr>
@@ -21,6 +22,7 @@
               <th>이메일</th>
               <th>별명</th>
               <th>관심사</th>
+              <th>권한</th>
             </tr>
           </thead>
           <tbody>
@@ -35,6 +37,7 @@
               <td>{{ user.email }}</td>
               <td>{{ user.nickname }}</td>
               <td>{{ user.category }}</td>
+              <td>{{ changeRoleName(user.role) }}</td>
             </tr>
           </tbody>
         </table>
@@ -49,7 +52,12 @@
   import UserSearch from "@/components/user/UserSearch.vue";
   
   const userStore = useUserStore();
-  
+
+  const changeRoleName = (role) => {
+    const roles = ['일반 회원', '기자', '관리자'];
+    return roles[role];
+  }
+
   const usersList = computed(() => userStore.users);
   const userCount = computed(() => usersList.value.length);
   

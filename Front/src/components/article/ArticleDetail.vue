@@ -1,11 +1,15 @@
 <template>
     <div class="detail">
         <hr>
+        <br>
         <h1>{{ store.article.articleTitle }}</h1>
+        <br>
         <div v-if="isYouTubeVideo" v-html="renderYouTubeVideo(store.article.videoUrl)"></div>
         <div v-else>{{ store.article.videoUrl }}</div>
         <br>
-        <p>{{ store.article.articleContent }}</p>
+        <br>
+        <div style="display: inline-block; width:60%; text-align: justify; white-space: pre-wrap">{{ store.article.articleContent }}</div>
+       
         <br>
         <span>
           <h4>작성자 : {{ store.article.userName }} &nbsp;&nbsp;&nbsp;  
