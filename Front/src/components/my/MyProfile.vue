@@ -15,7 +15,7 @@
         readonly
         type="text"
         id="name"
-        v-model="user.userName"
+        v-model="userStore.user.userName"
         class="view"
       /><br />
       <label for="email">이메일</label>
@@ -23,7 +23,7 @@
         readonly
         type="email"
         id="email"
-        v-model="user.email"
+        v-model="userStore.user.email"
         class="view"
       /><br />
       <label for="nickname">별명</label>
@@ -39,10 +39,9 @@
         readonly
         type="text"
         id="category"
-        :value="user.category ? (user.category.length > 1 ? user.category.join(', ') : '') : ''"
+        :value="userStore.user.category"
         class="view"
       />
-      <!-- :value="user.category.join(', ')" -->
     </fieldset>
   </div>
 </template>

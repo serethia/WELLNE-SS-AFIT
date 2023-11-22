@@ -42,7 +42,7 @@
         <input
           type="text"
           id="category"
-          :value="user.category.join(', ')"
+          v-model="user.category"
           class="view"
         /><br />
         <button class="btn" @click="updateTheUser">수정</button>
