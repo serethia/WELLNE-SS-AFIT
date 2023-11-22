@@ -105,6 +105,11 @@ INSERT INTO user (user_id, user_pwd, user_name, nickname, email, category, role)
 ("doctor4", "pass16565", "이영수", "니", "john.dor@example.com", "전문가조언", 1),
 ("doctor5", "pass76761", "고아름", "니", "john.dot@example.com", "전문가조언", 1),
 ("doctor6", "pass8781", "한지인", "니", "john.doy@example.com", "전문가조언", 1);
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> eb963ba2fdd5e5bb50ad71d3d087b3ca92459e7f
 
 INSERT INTO article (article_title, article_content, user_id, video_url, media_name, category) VALUES 
 ("체지방 태우는 아침 공복운동, 간 건강엔 최악?", "출근 전 헬스장이나 수영장에 들려 공복 상태로 유산소 운동을 하는 일명 ‘갓생’. 갓생이란 ‘신’을 의미하는 ‘갓(God)’과 ‘삶’을 뜻하는 ‘생(生)’을 합친 합성어로, 부지런하고 타인에게 모범이 되는 삶을 뜻한다. 피로를 무릅쓰고 공복으로 강행하는 아침 운동이 건강상으로도 좋은 습관일까.
@@ -417,8 +422,11 @@ UDCA는 간에서 콜레스테롤이 담즙산으로 전환되는 것을 촉진�
 ③ 몸의 옆쪽이 늘어남을 인지해 주시고 엉덩이가 들리지 않도록 주의합니다.", "expert3", "https://youtu.be/S3HnGDE1_fs", "하이닥", "운동");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 INSERT INTO article (article_title, article_content, user_id, created_at, media_name, category) VALUES 
 =======
+=======
+>>>>>>> eb963ba2fdd5e5bb50ad71d3d087b3ca92459e7f
 
 INSERT INTO article (article_title, article_content, user_id, video_url, created_at, media_name, category) VALUES 
 ("
@@ -460,6 +468,9 @@ INSERT INTO article (article_title, article_content, user_id, video_url, created
 
 서민환 국립생물자원관장은 이번 연구는 자생생물 발굴을 통해 세계 최초로 찾아낸 신종 버섯에서 국내 생물산업에 도움을 줄 수 있는 유력한 신규 생물소재 후보를 찾았다는 의미가 있다라며, 이러한 연구들이 생물자원의 확보 경쟁이 점점 치열해지고 있는 시점에서 우리나라의 국가경쟁력을 높여 줄 것이라고 밝혔다.
 						", "iron1234", "http://www.hnews.kr/data/news/2311/200x154/05c95da44b2a219f826f2a5c9f97ed07_kPrB7hSj76kcxStyCRqbDosCAR9.gif", "2023-11-22", "현대건강신문", "다이어트"),
+<<<<<<< HEAD
+>>>>>>> eb963ba2fdd5e5bb50ad71d3d087b3ca92459e7f
+=======
 >>>>>>> eb963ba2fdd5e5bb50ad71d3d087b3ca92459e7f
 ("
 고혈압 환자 위한 최적의 잡곡 혼합 비율 찾았다							", "
@@ -1063,6 +1074,7 @@ https://www.medicaltimes.com/Main/News/NewsView.html?ID=1155347", "doctor2", "ht
 그게 가장 큰 문제다.                                         
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 천호엔케어는 공식몰에서 ‘명절임박 가심비 베스트 골든위크’를 연다. 26일까지 진행되는 해당 프로모션에서는 가심비 좋은 선물을 최대 86% 할인된 가격으로 제공하며, 전 고객을 대상으로 4만 6천원 상당의 쿠폰을 증정한다. 또, 구매 금액대별 사은품과 고급 쇼핑백을 100% 증정하고, 선물하기 이용 고객에게는 추첨을 통해 선물을 제공한다.
 
 
@@ -1095,6 +1107,8 @@ https://www.medicaltimes.com/Main/News/NewsView.html?ID=1155347", "doctor2", "ht
 
 INSERT INTO `comment` (`comment_content`, `user_id`, `article_id`)
 =======
+=======
+>>>>>>> eb963ba2fdd5e5bb50ad71d3d087b3ca92459e7f
 https://www.medicaltimes.com/Main/News/NewsView.html?ID=1155298", "doctor3", "https://pds.medicaltimes.com/Thumnail/20230907/1694047529.jpg", "2023-09-07 09:47:58", "MedicalTimes", "전문가조언"),
 ("법원은 무고한 의사를 전과자로 만들지 말라", "지난 8월 31일 대법원은 장유착을 늦게 수술했다는 이유로 외과의사에게 업무상과실치상 혐의를 적용하여 금고 6월에 집행유예 2년을 확정했다.사건은 이렇다.
 난소암을 치료하기 위해 수술 후 복통이 발생한 환자가 응급실을 경유하여 내과를 거쳐 외과로 전과 되었다.
