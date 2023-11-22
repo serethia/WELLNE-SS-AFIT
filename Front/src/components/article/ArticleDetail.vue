@@ -2,8 +2,12 @@
     <div>
         <hr>
         <h1>{{ store.article.articleTitle }}</h1>
-        <div v-if="isYouTubeVideo" v-html="renderYouTubeVideo(store.article.videoUrl)"></div>
-        <div v-else>{{ store.article.videoUrl }}</div>
+        <div v-if="isYouTubeVideo(store.article.videoUrl)" v-html="renderYouTubeVideo(store.article.videoUrl)"></div>
+        <div v-else>
+            <img :src="store.article.videoUrl" />
+        </div>
+        
+        
         <div>{{ store.article.articleContent }}</div>
         <div>{{ store.article.userName }}</div>
         <div>{{ store.article.viewCnt }}</div>
