@@ -20,6 +20,24 @@
 		FROM article a, user u
 		WHERE a.user_id = u.user_id
 	</select>
+	
+	
+	<select id="selectAllArticlesByCategory" parameterType="string" resultType="Article">
+		SELECT
+		a.article_id as articleId,
+		a.article_title as articleTitle,
+		a.article_content as articleContent,
+		a.view_cnt as viewCnt,
+		a.user_id as userId,
+		a.video_url as videoUrl,
+		a.created_at as createdAt,
+		a.modified_at as modifiedAt,
+		a.media_name as mediaName,
+		a.category,
+		u.user_name as userName
+		FROM article a, user u
+		WHERE a.user_id = u.user_id AND a.category = #{category}
+	</select>
 
 	<insert id="insertArticle" parameterType="Article">
 		INSERT INTO article

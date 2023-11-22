@@ -1,19 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import ArticleView from "@/views/ArticleView.vue";  // 기사 + 영상 + 댓글 view
+import CategoryView from "@/views/CategoryView.vue"  // 카테고리별 기사 목록 view
 import MyView from "@/views/MyView.vue";  // 마이페이지 view
 import UserView from "@/views/UserView.vue";  // 관리자만 보이도록 설정: 회원 정보 조회용 view
 
 // 카테고리별로 다르게 기사를 보여줄 때는 태그를 이용해 보여주고 숨기기
+// ArticleDetail 안에서 댓글 component 보여주기
 import ArticleCreate from "@/components/article/ArticleCreate.vue";
 import ArticleDetail from "@/components/article/ArticleDetail.vue";
 import ArticleList from "@/components/article/ArticleList.vue";
 import ArticleUpdate from "@/components/article/ArticleUpdate.vue";
 
+
 // ArticleView의 기사 component 하단에 댓글 component 추가
-import CommentCreate from "@/components/comment/CommentCreate.vue";
-import CommentDetail from "@/components/comment/CommentDetail.vue";
+// import CommentCreate from "@/components/comment/CommentCreate.vue";
+// import CommentDetail from "@/components/comment/CommentDetail.vue";
 import CommentList from "@/components/comment/CommentList.vue";
-import CommentUpdate from "@/components/comment/CommentUpdate.vue";
+// import CommentUpdate from "@/components/comment/CommentUpdate.vue";
 
 // 마이페이지
 import MyBookmarkList from "@/components/my/MyBookmarkList.vue";
@@ -29,91 +31,175 @@ import UserRegist from "@/components/user/UserRegist.vue";
 import UserDetail from "@/components/user/UserDetail.vue";
 
 
-import CategoryView from "@/views/CategoryView.vue"
-
 const routes = [
   {
     path: '/category/:category',
-    name: 'Category',
-    component: CategoryView
-  },
-  {
-    path: '/',
-    name: 'My',
-    component: MyView,
-    children: [
-      {
-        path: '',
-        name: 'MyBookmarkList',
-        component: MyBookmarkList,
-      },
-      {
-        path: '',
-        name: 'MyFollowingList',
-        component: MyFollowingList,
-      },
-      {
-        path: '',
-        name: 'MyProfile',
-        component: MyProfile,
-      },
-    ],
+    name: 'category',
+    component: CategoryView,
   },
   {
     path: '/article',
-    name: 'Article',
-    component: ArticleView,
-    children: [
-      {
-        path: '',
-        name: 'ArticleList',
-        component: ArticleList,
-      },
-      {
-        path: 'create',
-        name: 'ArticleCreate',
-        component: ArticleCreate,
-      },
-      {
-        path: ':id',
-        name: 'ArticleDetail',
-        component: ArticleDetail,
-      },
-      {
-        path: 'update',
-        name: 'ArticleUpdate',
-        component: ArticleUpdate,
-      },
-    ],
+    name: 'articleList',
+    component: ArticleList,
   },
   {
+    path: '/article-create',
+    name: 'articleCreate',
+    component: ArticleCreate,
+  },
+  {
+    path: '/article/:id',
+    name: 'articleDetail',
+    component: ArticleDetail,
+  },
+  {
+    path: '/article-update',
+    name: 'articleUpdate',
+    component: ArticleUpdate,
+  },
+  {
+    path: '/',
+    name: 'my',
+    component: MyView,
+  },
+  // {
+  //   path: '/MyBookmarkList',
+  //   name: 'MyBookmarkList',
+  //   component: MyBookmarkList,
+  // },
+  // {
+  //   path: '/MyFollowingList',
+  //   name: 'MyFollowingList',
+  //   component: MyFollowingList,
+  // },
+  // {
+  //   path: '/MyProfile',
+  //   name: 'MyProfile',
+  //   component: MyProfile,
+  // },
+  {
     path: "/login",
-    name: "Login",
+    name: "login",
     component: LoginForm,
+  },
+  
+  {
+    path: "/user/:id",
+    name: "userDetail",
+    component: UserDetail,
   },
   {
     path: "/user",
-    name: "User",
-    component: UserView,
-    children: [
-      {
-        path: ":id",
-        name: "UserDetail",
-        component: UserDetail,
-      },
-      {
-        path: "",
-        name: "UserList",
-        component: UserList,
-      },
-      {
-        path: "regist",
-        name: "UserRegist",
-        component: UserRegist,
-      },
-    ],
-  }
+    name: "userList",
+    component: UserList,
+  },
+  {
+    path: "/user/regist",
+    name: "userRegist",
+    component: UserRegist,
+  },
 ];
+
+// const routes = [
+//   {
+//     path: '/category/:category',
+//     name: 'Category',
+//     component: CategoryView,
+//     children: [
+//       {
+//         path: '',
+//         name: 'ArticleList',
+//         component: ArticleList,
+//       },
+//       {
+//         path: 'create',
+//         name: 'ArticleCreate',
+//         component: ArticleCreate,
+//       },
+//       {
+//         path: ':id',
+//         name: 'ArticleDetail',
+//         component: ArticleDetail,
+//         children: [
+//           {
+//             path: 'comments',
+//             name: 'CommentList',
+//             component: CommentList,
+//           },
+//           // {
+//           //   path: 'create',
+//           //   name: 'CommentCreate',
+//           //   component: CommentCreate,
+//           // },
+//           // {
+//           //   path: ':id',
+//           //   name: 'CommentDetail',
+//           //   component: CommentDetail,
+//           // },
+//           // {
+//           //   path: 'update',
+//           //   name: 'CommentUpdate',
+//           //   component: CommentUpdate,
+//           // },
+//         ]
+//       },
+//       {
+//         path: 'update',
+//         name: 'ArticleUpdate',
+//         component: ArticleUpdate,
+//       },
+//     ]
+//   },
+//   {
+//     path: '/',
+//     name: 'My',
+//     component: MyView,
+//     children: [
+//       {
+//         path: '',
+//         name: 'MyBookmarkList',
+//         component: MyBookmarkList,
+//       },
+//       {
+//         path: '',
+//         name: 'MyFollowingList',
+//         component: MyFollowingList,
+//       },
+//       {
+//         path: '',
+//         name: 'MyProfile',
+//         component: MyProfile,
+//       },
+//     ],
+//   },
+//   {
+//     path: "/login",
+//     name: "Login",
+//     component: LoginForm,
+//   },
+//   {
+//     path: "/user",
+//     name: "User",
+//     component: UserView,
+//     children: [
+//       {
+//         path: ":id",
+//         name: "UserDetail",
+//         component: UserDetail,
+//       },
+//       {
+//         path: "",
+//         name: "UserList",
+//         component: UserList,
+//       },
+//       {
+//         path: "regist",
+//         name: "UserRegist",
+//         component: UserRegist,
+//       },
+//     ],
+//   }
+// ];
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

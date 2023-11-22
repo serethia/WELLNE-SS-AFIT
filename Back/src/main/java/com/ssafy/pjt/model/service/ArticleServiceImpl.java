@@ -26,6 +26,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	public Article getArticle(int articleId) {
+		dao.updateViewCnt(articleId);
 		return dao.selectOne(articleId);
 	}
 
@@ -37,6 +38,11 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public int removeArticle(int articleId) {
 		return dao.deleteArticle(articleId);		
+	}
+
+	@Override
+	public List<Article> getArticlesByCategory(String category) {
+		return dao.selectAllArticlesByCategory(category);
 	}
 
 }
