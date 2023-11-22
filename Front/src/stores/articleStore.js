@@ -15,6 +15,7 @@ const categoryMap = {
 export const useArticleStore = defineStore('article', ()=>{
   const articleList = ref([])
   const accessToken = ref('')
+  const route = useRoute();
 
   // const getArticleList = function () {
   //   const storeObj = JSON.parse(sessionStorage.getItem('user'));

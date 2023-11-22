@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.pjt.model.dto.Article;
 import com.ssafy.pjt.model.dto.SearchArticleCondition;
-import com.ssafy.pjt.model.dto.User;
 import com.ssafy.pjt.model.service.ArticleService;
 
 import io.swagger.annotations.ApiOperation;

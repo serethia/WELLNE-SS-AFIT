@@ -10,7 +10,7 @@
         <br>
 
     <div class="search">
-            <form style="width: 100%">
+            <div style="width: 100%">
                 <label>검색 기준</label>
             <select v-model="searchInfo.key">
                 <option value='none'>없음</option>
@@ -44,7 +44,7 @@
             </select>
         </span>
         &nbsp;
-        </form>
+    </div>
     </div>
 </template>
   
