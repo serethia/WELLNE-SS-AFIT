@@ -21,10 +21,12 @@
           <table class="user-list">
             <colgroup>
               <col style="width: 5%" />
-              <col style="width: 40%" />
               <col style="width: 20%" />
               <col style="width: 20%" />
+              <col style="width: 25%" />
+              <col style="width: 10%" />
               <col style="width: 15%" />
+              <col style="width: 5%"  />
             </colgroup>
             <thead>
               <tr>
@@ -34,6 +36,7 @@
                 <th>이메일</th>
                 <th>별명</th>
                 <th>관심사</th>
+                <th>권한</th>
               </tr>
             </thead>
             <tbody>
@@ -48,6 +51,7 @@
                 <td>{{ user.email }}</td>
                 <td>{{ user.nickname }}</td>
                 <td>{{ user.category }}</td>
+                <td>{{ changeRoleName(user.role) }}</td>
               </tr>
             </tbody>
           </table>
@@ -67,6 +71,11 @@
   const searchResults = computed(() => userStore.searchUsers);
   const searchUserCount = computed(() => userStore.searchUserCnt);
   
+  const changeRoleName = (role) => {
+    const roles = ['일반 회원', '기자', '관리자'];
+    return roles[role];
+  }
+
   const searchForUser = () => {
     userStore.searchName(search.value);
   };

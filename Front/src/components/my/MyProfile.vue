@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2 style="text-align: center;">My Profile</h2>
+    <h2 style="text-align: center; color:darkolivegreen">My Profile</h2>
     <br>
     <fieldset class="text-center">
       <label for="id">아이디</label>
