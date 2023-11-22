@@ -11,8 +11,22 @@
 
         <td style="display: flex; align-items: center;">
         <div style="margin-right: 10px;">
-        <img :src="article.videoUrl" style="width: 130px; height: 150px; object-fit: cover;"/>
+          
+        <!-- <img :src="article.videoUrl" style="width: 130px; height: 150px; object-fit: cover;"/> -->
+        
+        <img
+          v-if="article.videoUrl"
+          :src="article.videoUrl"
+          style="width: 130px; height: 150px; object-fit: auto;"
+        />
+          <img
+            v-else
+            src="src\assets\logo1-1.png"
+            style="width: 130px; height: 150px; object-fit: auto;"
+          />
+
         </div>
+        
 
         <div>
         <RouterLink :to="`/article/${article.articleId}`" style="margin-left: auto; margin-right: auto; font-size: larger; font-weight: bold;">{{ article.articleTitle }}</RouterLink>
@@ -61,12 +75,6 @@ function truncateText(text, maxLength) {
   }
   return text;
 }
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> 8ea34151ccd9cae6f01e6c8d9f926bceabf9eb8f
 </script>
 
 
