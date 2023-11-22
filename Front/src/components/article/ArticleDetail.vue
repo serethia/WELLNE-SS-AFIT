@@ -6,7 +6,7 @@
         <br>        
         <div v-if="isYouTubeVideo(store.article.videoUrl)" v-html="renderYouTubeVideo(store.article.videoUrl)"></div>
         <div v-else>
-            <img :src="store.article.videoUrl" />
+            <img :src="store.article.videoUrl" style="max-width: 300px;"/>
         </div>
         <br>
         <br>

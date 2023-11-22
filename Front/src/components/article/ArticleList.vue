@@ -1,68 +1,52 @@
 <template>
-    
-    <div>
-        <div style=" display: flex; justify-content: center;">
-        <table style="table-layout: fixed; width: 100%; margin-left: auto; margin-right: auto;">
-            <colgroup>
-                <col style="width: 100%;" /> 
-                
-            </colgroup>
-
-        <tr style="background-color: whitesmoke;">
-          
-        </tr>
+  <div>
+    <div style=" display: flex; justify-content: center;">
+      <table style="table-layout: fixed; width: 100%; margin-left: auto; margin-right: auto;">
+        <colgroup>
+          <col style="width: 100%;" />
+        </colgroup>
+        
         <tr v-for="article in articleStore.articleList" :key="article.article_id" style="text-align: left;">
         <RouterLink :to="`/article/${article.articleId}`">
-            <td style="display: flex; align-items: center;">
-            <div style="margin-right: 10px;">
-              <img :src="article.videoUrl" style="max-width: 150px;"/>
-            </div>
-            <div>
-              <RouterLink :to="`/article/${article.articleId}`">{{ article.articleTitle }}</RouterLink>
-              <p style="font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ truncateText(article.articleContent, 100) }}</p>
-              <p style="font-size: 12px;">{{ article.userId }}, {{ article.viewCnt }}, {{ article.createdAt }}</p>
 
-            </div>
-          </td>
-        </RouterLink>
-        </tr>
-      </table>
-        </div>
-      <br>
-      <ArticleSearchInput />
+    <td style="display: flex; align-items: center;">
+    <div style="margin-right: 10px;">
+      <img
+        v-if="article.videoUrl"
+        :src="article.videoUrl"
+        style="width: 130px; height: 150px; object-fit: auto;"
+      />
+      <img
+        v-else
+        :src="imagePath"
+        style="width: 130px; height: 150px; object-fit: auto;"
+      />
     </div>
-  </template>
 
-<!-- <template>
     <div>
-        
-        <table>
-            <tr style="background-color: whitesmoke;">
-                <th>제목</th>
-                <th>작성자</th>
-                <th>조회수</th>
-                <th>작성 일자</th>
-            </tr>
-            <tr v-for="article in articleStore.articleList" :key="article.article_id" style="text-align: center;">
-                <td>
-                    <RouterLink :to="`/article/${article.articleId}`">{{ article.articleTitle }}</RouterLink>
-                </td>
-                <td>{{ article.userId }}</td>
-                <td>{{ article.viewCnt }}</td>
-                <td>{{ article.createdAt }}</td>
-            </tr>
-        </table>
-       
-        <br>
-        <ArticleSearchInput />
+    <RouterLink :to="`/article/${article.articleId}`" style="margin-left: auto; margin-right: auto; font-size: larger; font-weight: bold;">{{ article.articleTitle }}</RouterLink>
+    <br>
+    <br>
+    <p style="font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: normal; width: 97%; margin-left: auto; margin-right: auto;">{{ truncateText(article.articleContent, 100) }}</p>
+    <p style="font-size: 12px; float:inline-end">{{ article.userId }}, {{ article.viewCnt }}, {{ article.createdAt }}</p>
     </div>
-</template> -->
+    </td>
+
+    </RouterLink>
+    </tr>
+  </table>
+</div>
+<br>
+<ArticleSearchInput />
+  </div>
+</template>
 
 <script setup>
 import { useArticleStore } from "@/stores/articleStore";
 import { onMounted, watch, ref } from "vue";
 import { useRouter } from 'vue-router';
-import ArticleSearchInput from "./ArticleSearchInput.vue";
+import ArticleSearchInput from "@/components/article/ArticleSearchInput.vue";
+
 
 const articleStore = useArticleStore();
 const router = useRouter();
@@ -88,7 +72,9 @@ function truncateText(text, maxLength) {
 }
 
 
+
 </script>
+
 
 <style scoped>
 table {
@@ -101,4 +87,10 @@ table {
 th, td {
     border: 1px solid black;
 }
+
+/* 라우터 링크 밑줄 제거 */
+a {
+  text-decoration: none;
+}
+
 </style>
