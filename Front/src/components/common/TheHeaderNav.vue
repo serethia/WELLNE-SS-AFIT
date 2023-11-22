@@ -2,23 +2,30 @@
     <div id="container">
         <header>
             <nav>
-                <div class="nav-main">
-                <router-link :class="{ 'active-link': $route.name === 'category' && $route.params.category==='exercise' }" :to="{name: 'category', params: {category: 'exercise'}}">운동</router-link>&nbsp; &nbsp; &nbsp; &nbsp;
-                <router-link :class="{ 'active-link': $route.name === 'category' && $route.params.category==='diet' }" :to="{name: 'category', params: {category: 'diet'}}">건강식품</router-link>&nbsp; &nbsp; &nbsp; &nbsp;
-                <router-link :class="{ 'active-link': $route.name === 'category' && $route.params.category==='advice' }" :to="{name: 'category', params: {category: 'advice'}}">전문가칼럼</router-link>
-                </div>
-                <div class="nav-user">
-                    <a href="#" v-if="userStore.isLoggedIn" @click="logout">로그아웃</a>
-                    <router-link to="/login" v-else>로그인</router-link>
-                    <span class="nav-separator">|</span>
-                    <router-link to="/user/regist">회원가입</router-link>
-                    <span class="nav-separator">|</span>
-                    <router-link to="/">마이페이지</router-link>
-                    <!-- role이 2인 관리자만 볼 수 있도록 -->
-                    <span v-show="loginUserRole === 2 && userStore.isLoggedIn">
-                    <span class="nav-separator">|</span>
-                    <router-link to="/user">사용자목록</router-link>
-                    </span>
+                <div class="nav-container">
+                    <div class="nav-main">
+                    <router-link :class="{ 'active-link': $route.name === 'category' && $route.params.category==='exercise' }" :to="{name: 'category', params: {category: 'exercise'}}">운동</router-link>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <router-link :class="{ 'active-link': $route.name === 'category' && $route.params.category==='diet' }" :to="{name: 'category', params: {category: 'diet'}}">건강식품</router-link>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <router-link :class="{ 'active-link': $route.name === 'category' && $route.params.category==='advice' }" :to="{name: 'category', params: {category: 'advice'}}">전문가칼럼</router-link>
+                    </div>
+
+                    <div class="nav-logo">
+                    <img src="src\assets\logo1-1.png" style="width:80px;"/>
+                    </div>
+
+                    <div class="nav-user">
+                        <a href="#" v-if="userStore.isLoggedIn" @click="logout">로그아웃</a>
+                        <router-link to="/login" v-else>로그인</router-link>
+                        <span class="nav-separator">|</span>
+                        <router-link to="/user/regist">회원가입</router-link>
+                        <span class="nav-separator">|</span>
+                        <router-link to="/">마이페이지</router-link>
+                        <!-- role이 2인 관리자만 볼 수 있도록 -->
+                        <span v-show="loginUserRole === 2 && userStore.isLoggedIn">
+                        <span class="nav-separator">|</span>
+                        <router-link to="/user">사용자목록</router-link>
+                        </span>
+                    </div>
                 </div>
             </nav>
         </header>
@@ -36,9 +43,6 @@ const logout = () => {
   userStore.setLogout();
 };
 
-console.log(loginUserRole);
-// loginUserRole이 분명 2로 넘어오고 있는 걸 분명 확인했는데.... 콘솔에 갑자기 안 나온다??
-// const showUserList = ref(loginUserRole.value === 2);
 const showUserList = computed(() => loginUserRole.value === 2);
 watch(loginUserRole, (newValue) => {
   showUserList.value = newValue.value === 2;
@@ -54,10 +58,11 @@ console.log("showUserList 잘 나오나 확인:", showUserList);
     background-color: honeydew;
 }
 
-nav {
-    padding: 30px;
-    display: flex;
-    justify-content: space-between;
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px;
 }
 
 nav a {
@@ -67,12 +72,22 @@ nav a {
 }
 
 .nav-main {
-    flex-grow: 1;
+   
     text-align: left;
+    white-space: nowrap;
+    margin-right: 10px;
+}
+
+.nav-logo {
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: center;
 }
 
 .nav-user {
     text-align: right;
+    white-space: nowrap;
+    margin-left: 10px;
 }
 
 .nav-separator {
@@ -83,7 +98,6 @@ nav a.router-link-exact-active {
     color: #42b983
 }
 
-/* 카테고리 버튼 색이 개별적으로 변하지 않는 건 아직 파라미터가 store의 메소드로 전달되지 않아서이기도 한 듯 */
 nav a.active-link {
   color: #42b983; 
 }

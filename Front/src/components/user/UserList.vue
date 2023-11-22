@@ -15,7 +15,7 @@
             <col style="width: 5%"  />
           </colgroup>
           <thead>
-            <tr>
+            <tr style="background-color: honeydew;">
               <th>번호</th>
               <th>아이디</th>
               <th>이름</th>
@@ -41,6 +41,7 @@
             </tr>
           </tbody>
         </table>
+        <br>
       </div>
       <div v-else>등록된 사용자가 없습니다.</div>
     </div>
@@ -65,3 +66,10 @@
     userStore.setUsers();
   });
   </script>
+
+  <style scoped>
+
+td {
+  height: 40px;
+}
+</style>

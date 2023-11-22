@@ -4,9 +4,13 @@
     <div class="text-center">
       <br>
       <br>
+      <img src="src\assets\logo1-2.png" style="width: 50%"/>
+      <br>
+      <br>
       <h1>{{ message }}</h1>
     </div>
-    <br />
+    <br>
+    <br>
     <MyProfile v-if="userStore.isLoggedIn" />
   </div>
   <br>

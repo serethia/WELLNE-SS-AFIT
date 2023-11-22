@@ -9,35 +9,26 @@
         <tr v-for="article in articleStore.articleList" :key="article.article_id" style="text-align: left;">
         <RouterLink :to="`/article/${article.articleId}`">
 
-    <td style="display: flex; align-items: center;">
-    <div style="margin-right: 10px;">
-      <img
-        v-if="article.videoUrl"
-        :src="article.videoUrl"
-        style="width: 130px; height: 150px; object-fit: auto;"
-      />
-      <img
-        v-else
-        :src="imagePath"
-        style="width: 130px; height: 150px; object-fit: auto;"
-      />
-    </div>
+        <td style="display: flex; align-items: center;">
+        <div style="margin-right: 10px;">
+        <img :src="article.videoUrl" style="width: 130px; height: 150px; object-fit: cover;"/>
+        </div>
 
-    <div>
-    <RouterLink :to="`/article/${article.articleId}`" style="margin-left: auto; margin-right: auto; font-size: larger; font-weight: bold;">{{ article.articleTitle }}</RouterLink>
-    <br>
-    <br>
-    <p style="font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: normal; width: 97%; margin-left: auto; margin-right: auto;">{{ truncateText(article.articleContent, 100) }}</p>
-    <p style="font-size: 12px; float:inline-end">{{ article.userId }}, {{ article.viewCnt }}, {{ article.createdAt }}</p>
-    </div>
-    </td>
+        <div>
+        <RouterLink :to="`/article/${article.articleId}`" style="margin-left: auto; margin-right: auto; font-size: larger; font-weight: bold;">{{ article.articleTitle }}</RouterLink>
+        <br>
+        <br>
+        <p style="font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: normal; width: 97%; margin-left: auto; margin-right: auto;">{{ truncateText(article.articleContent, 100) }}</p>
+        <p style="font-size: 12px; float:inline-end">{{ article.userId }}, {{ article.viewCnt }}, {{ article.createdAt }}</p>
+        </div>
+        </td>
 
-    </RouterLink>
-    </tr>
-  </table>
-</div>
-<br>
-<ArticleSearchInput />
+        </RouterLink>
+        </tr>
+      </table>
+    </div>
+    <br>
+    <ArticleSearchInput />
   </div>
 </template>
 
@@ -70,9 +61,12 @@ function truncateText(text, maxLength) {
   }
   return text;
 }
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 8ea34151ccd9cae6f01e6c8d9f926bceabf9eb8f
 </script>
 
 
