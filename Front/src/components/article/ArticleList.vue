@@ -1,4 +1,39 @@
 <template>
+    
+    <div>
+        <div style=" display: flex; justify-content: center;">
+        <table style="table-layout: fixed; width: 100%; margin-left: auto; margin-right: auto;">
+            <colgroup>
+                <col style="width: 100%;" /> 
+                
+            </colgroup>
+
+        <tr style="background-color: whitesmoke;">
+          
+        </tr>
+        <tr v-for="article in articleStore.articleList" :key="article.article_id" style="text-align: left;">
+        <RouterLink :to="`/article/${article.articleId}`">
+            <td style="display: flex; align-items: center;">
+            <div style="margin-right: 10px;">
+              <img :src="article.videoUrl" style="max-width: 150px;"/>
+            </div>
+            <div>
+              <RouterLink :to="`/article/${article.articleId}`">{{ article.articleTitle }}</RouterLink>
+              <p style="font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ truncateText(article.articleContent, 100) }}</p>
+              <p style="font-size: 12px;">{{ article.userId }}, {{ article.viewCnt }}, {{ article.createdAt }}</p>
+
+            </div>
+          </td>
+        </RouterLink>
+        </tr>
+      </table>
+        </div>
+      <br>
+      <ArticleSearchInput />
+    </div>
+  </template>
+
+<!-- <template>
     <div>
         
         <table>
@@ -21,7 +56,7 @@
         <br>
         <ArticleSearchInput />
     </div>
-</template>
+</template> -->
 
 <script setup>
 import { useArticleStore } from "@/stores/articleStore";
@@ -43,6 +78,16 @@ onMounted(() => {
     category.value = initialCategory;
     articleStore.getArticleListByCategory(initialCategory);
 });
+
+//미리보기 글자수 제한
+function truncateText(text, maxLength) {
+  if (text.length > maxLength) {
+    return `${text.slice(0, maxLength)}...`;
+  }
+  return text;
+}
+
+
 </script>
 
 <style scoped>
