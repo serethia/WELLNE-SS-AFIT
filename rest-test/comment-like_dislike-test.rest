@@ -1,0 +1,24 @@
+POST http://localhost:8080/userapi/login
+Content-Type: application/json
+
+{"userId": "admin", "userPwd": "admin1"}
+
+###
+
+PUT http://localhost:8080/commentapi/article/1/comments/1/pluslike
+access-token: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6ImFkbWluIiwiZXhwIjoxNzAwMzk0MDQ5fQ.T-_soLh76z_BJAjdoTBYiFm3SOVzicKZ4FXDoI4Nb2s
+
+###
+
+PUT http://localhost:8080/commentapi/article/1/comments/1/minuslike
+access-token: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6ImFkbWluIiwiZXhwIjoxNzAwMzk0MDQ5fQ.T-_soLh76z_BJAjdoTBYiFm3SOVzicKZ4FXDoI4Nb2s
+
+###
+
+PUT http://localhost:8080/commentapi/article/1/comments/1/plusdislike
+access-token: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6ImFkbWluIiwiZXhwIjoxNzAwMzk0MDQ5fQ.T-_soLh76z_BJAjdoTBYiFm3SOVzicKZ4FXDoI4Nb2s
+
+###
+
+PUT http://localhost:8080/commentapi/article/1/comments/1/minusdislike
+access-token: eyJhbGciOiJIUzI1NiJ9.eyJpZCI6ImFkbWluIiwiZXhwIjoxNzAwMzk0MDQ5fQ.T-_soLh76z_BJAjdoTBYiFm3SOVzicKZ4FXDoI4Nb2s

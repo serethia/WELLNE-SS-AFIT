@@ -38,14 +38,29 @@
           v-model="user.nickname"
           class="view"
         /><br />
-        <button class="btn" @click="updateTheUser">수정</button>
-        <button class="btn" @click="removeUser">삭제</button>
+        <label for="category">관심사</label>
+        <input
+          type="text"
+          id="category"
+          v-model="user.category"
+          class="view"
+        /><br />
+        <label for="role">권한</label>
+        <input
+          readonly
+          type="text"
+          id="role"
+          v-model="roleName"
+          class="view"
+        /><br><br>
+        <button class="btn" @click="updateTheUser"><span>수정</span></button>&nbsp;&nbsp;&nbsp;
+        <button class="btn" @click="removeUser"><span>삭제</span></button>
       </fieldset>
     </div>
   </template>
   
   <script setup>
-  import { ref, onBeforeMount } from "vue";
+  import { onBeforeMount, computed } from "vue";
   import { useUserStore } from "@/stores/userStore";
   import { useRoute } from "vue-router";
   import { storeToRefs } from "pinia";
@@ -53,18 +68,63 @@
   const { user } = storeToRefs(useUserStore());
   const userStore = useUserStore();
   const route = useRoute();
+  const roleName = computed(() => {
+  const roles = ['일반 회원', '기자', '관리자'];
+  return roles[userStore.user.role];
+  });
   
   const updateTheUser = () => {
-    userStore.updateUser();
+    userStore.updateUser(user.value);
   };
   
   const removeUser = () => {
     userStore.deleteUser(user.value.userId);
   };
-  
+
   onBeforeMount(() => {
     const userId = route.params.id;
     userStore.setUser(userId);
   });
-  </script>
-  
+  </script> 
+
+<style scoped>
+.btn {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 20px;
+  padding: 15px;
+  width: 120px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.btn span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.btn span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.btn:hover span {
+  padding-right: 25px;
+}
+
+.btn:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+</style>

@@ -2,23 +2,29 @@
   <div class="container">
     <br />
     <div class="text-center">
+      <br>
+      <br>
       <h1>{{ message }}</h1>
     </div>
     <br />
-    <UserSearch />
-    <RouterView />
+    <MyProfile v-if="userStore.isLoggedIn" />
   </div>
+  <br>
+  <br>
 </template>
 
 <script setup>
-import UserSearch from "@/components/user/UserSearch.vue";
+import MyProfile from '@/components/my/MyProfile.vue';
+import { useUserStore } from "@/stores/userStore";
+const userStore = useUserStore();
 
-const message = "건강 뉴스 사이트에 오신것을 환영합니다.";
+const message = "건강 뉴스 사이트에 오신것을 환영합니다!";
 </script>
 
 <style>
 .text-center {
   text-align: center;
 }
+
 </style>
 

@@ -24,7 +24,7 @@ public class SwaggerConfig {
 	
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
-				.title("SSAFY 관통 PJT")
+				.title("SSAFY 최종 팀 프로젝트")
 				.description("엄세원과 안수진이 작성한 서버입니다.")
 				.version("0.1")
 				.build();

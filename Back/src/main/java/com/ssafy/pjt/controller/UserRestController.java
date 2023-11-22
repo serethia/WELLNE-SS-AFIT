@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.pjt.model.dto.SearchCondition;
 import com.ssafy.pjt.model.dto.User;
 import com.ssafy.pjt.model.service.UserService;
-import com.ssafy.pjt.util.JwtUtil;
+//import com.ssafy.pjt.util.JwtUtil;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -36,18 +36,17 @@ import io.swagger.annotations.ApiOperation;
 public class UserRestController {
 	
 	private static final String SUCCESS = "success";
-	private static final String FAIL = "fail";
+//	private static final String FAIL = "fail";
 
 	@Autowired
 	private UserService uService;
 	
-	@Autowired
-	private JwtUtil jwtUtil;
+//	@Autowired
+//	private JwtUtil jwtUtil;
 	
 	@GetMapping("/user")
 	@ApiOperation(value = "등록된 모든 사용자 정보를 반환한다.", response = User.class)
 	public ResponseEntity<?> selectAllUsers(HttpServletRequest request)  {
-		
 		try {
 			List<User> users = uService.getAllUsers();
 			if (users != null && users.size() > 0) {
@@ -63,7 +62,6 @@ public class UserRestController {
 	@GetMapping("/user/{id}")
 	@ApiOperation(value = "{id}에 해당하는 사용자 정보를 반환한다.", response = User.class)
 	public ResponseEntity<?> selectById(@PathVariable String id) {
-
 		try {
 			User user = uService.getUserById(id);
 
@@ -80,7 +78,6 @@ public class UserRestController {
 	@GetMapping("/user/search")
 	@ApiOperation(value = "SearchCondition 에 부합하는 조건을 가진 사용자 목록을 반환한다.", response = User.class)
 	public ResponseEntity<?> searchByconditon(SearchCondition con) {
-		
 		try {
 			List<User> users = uService.getByCondition(con);
 			if (users != null && users.size() > 0) {
@@ -100,19 +97,17 @@ public class UserRestController {
 		User dbUser = uService.getUserById(user.getUserId());
 		
 		if(dbUser != null && dbUser.getUserPwd().equals(user.getUserPwd())) {
-			// DB에 일치하는 유저가 있다면 유저 객체 자체를 보낸다. => 토큰을 만들어서 보낸다.
-			
+			// DB에 일치하는 유저가 있다면 유저 객체 자체를 보낸다. => 토큰을 만들어서 보낸다.		
 			String token = Jwts.builder()
 					.claim("id", dbUser.getUserId())
+					.claim("nickname", dbUser.getNickname())
+					.claim("role", dbUser.getRole())
 					.setExpiration(new Date(System.currentTimeMillis() + 1000*60*60))
 					.signWith(SignatureAlgorithm.HS256, "SERVER_SECRET_KEY".getBytes("UTF-8"))
 					.compact();
-			
 			return new ResponseEntity<String>(token, HttpStatus.OK);
 		} 
-		
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-
 	}
 	
 	@PostMapping("/logout")
@@ -120,10 +115,8 @@ public class UserRestController {
 	public ResponseEntity<Map<String, Object>> logout() {
 	    Map<String, Object> result = new HashMap<>();
 	    HttpStatus status;
-
 	    result.put("message", SUCCESS);
 	    status = HttpStatus.OK;
-
 	    return new ResponseEntity<>(result, status);
 	}
 	
@@ -167,6 +160,5 @@ public class UserRestController {
 		e.printStackTrace();
 		return new ResponseEntity<String>("Sorry: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
-	
+
 }

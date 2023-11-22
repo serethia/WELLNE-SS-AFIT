@@ -1,0 +1,86 @@
+GET http://localhost:8080/userapi/user
+
+###
+# Form Data를 보내는 것
+POST http://localhost:8080/userapi/user
+Content-Type: application/x-www-form-urlencoded
+
+userId=c
+&userPwd=c
+&userName=c
+&nickname=c
+&email=c
+&preferrence=exercise
+&articleWriter=1
+
+
+###
+# json 형식으로 보내기
+POST http://localhost:8080/userapi/user
+Content-Type: application/json
+
+{
+    "userId": "d",
+    "userPwd": "d",
+    "userName": "d",
+    "nickname": "d",
+    "email": "d",
+    "preferrence": "exercise",
+    "articleWriter": 0
+}
+
+###
+
+POST http://localhost:8080/userapi/login
+Content-Type: application/json
+
+{
+    "userId": "c",
+    "userPwd": "c"
+}
+
+# userId=c
+# &userPwd=c
+
+
+
+
+
+###
+
+GET http://localhost:8080/articleapi/article
+
+
+###
+
+POST http://localhost:8080/articleapi/article
+Content-Type: application/json
+
+{
+    "articleTitle": "a",
+    "articleContent": "b",
+    "boardId": 1,
+    "theme": "exercise",
+    "mediaName": "a",
+    "userSeq": 2,
+    "premium": 1
+}
+
+###
+
+PUT http://localhost:8080/articleapi/article/2
+Content-Type: application/json
+
+{
+    "articleTitle": "modified",
+    "articleContent": "c",
+    "boardId": 1,
+    "theme": "exer",
+    "mediaName": "d",
+    "userSeq": 2,
+    "premium": 1
+}
+
+###
+
+DELETE http://localhost:8080/articleapi/article/1

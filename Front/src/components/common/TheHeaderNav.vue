@@ -14,8 +14,11 @@
                     <router-link to="/user/regist">회원가입</router-link>
                     <span class="nav-separator">|</span>
                     <router-link to="/">마이페이지</router-link>
+                    <!-- role이 2인 관리자만 볼 수 있도록 -->
+                    <span v-show="loginUserRole === 2 && userStore.isLoggedIn">
                     <span class="nav-separator">|</span>
                     <router-link to="/user">사용자목록</router-link>
+                    </span>
                 </div>
             </nav>
         </header>
@@ -24,17 +27,31 @@
 
 <script setup>
 import { useUserStore } from "@/stores/userStore";
+import { ref, watch, computed } from "vue";
 
 const userStore = useUserStore();
+const loginUserRole = computed(() => userStore.loginUserRole);
 
 const logout = () => {
   userStore.setLogout();
 };
+
+console.log(loginUserRole);
+// loginUserRole이 분명 2로 넘어오고 있는 걸 분명 확인했는데.... 콘솔에 갑자기 안 나온다??
+// const showUserList = ref(loginUserRole.value === 2);
+const showUserList = computed(() => loginUserRole.value === 2);
+watch(loginUserRole, (newValue) => {
+  showUserList.value = newValue.value === 2;
+  console.log("showUserList 잘 나오나 확인:", showUserList.value);
+});
+console.log("loginUserRole 잘 나오나 확인:", loginUserRole);
+console.log("showUserList 잘 나오나 확인:", showUserList);
 </script>
 
 <style  scoped>
 #container {
     text-align: center;
+    background-color: honeydew;
 }
 
 nav {
@@ -46,7 +63,7 @@ nav {
 nav a {
     font-weight: bold;
     text-decoration: none;
-    color: black;
+    color:navy;
 }
 
 .nav-main {
