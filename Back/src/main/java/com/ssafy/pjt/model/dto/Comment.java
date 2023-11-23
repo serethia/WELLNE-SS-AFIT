@@ -11,16 +11,15 @@ public class Comment {
 	private int commentDislikeCnt; // 전체 싫어요 수
 	private int userCommentLikeCnt; // 현재 로그인한 유저가 좋아요 클릭 수 : 0- 클릭 아직 안함 => 활성화, 1- 클릭함 => 비활성화 
 	private int userCommentDislikeCnt; // 현재 로그인한 유저가 싫어요 수
-	// lft, rgt, depth 필요한가?? 대댓글.. 일단 보류!
-	private int lft;
-	private int rgt;
-	private int depth;
+//	lft, rgt, depth는 대댓글 구현에 필요
+//	private int lft;
+//	private int rgt;
+//	private int depth;
 	private String nickname;  // userId를 이용해 nickname 값을 불러와 vue.js에서 화면에 나타낸다.
 	
 	public Comment() {		
 	}
 
-	// lft, rgt, depth 필요한가??
 	public Comment(String commentContent, String userId, int articleId) {
 		this.commentContent = commentContent;
 		this.userId = userId;
@@ -139,15 +138,21 @@ public class Comment {
 		this.nickname = nickname;
 	}
 
+//	@Override
+//	public String toString() {
+//		return "Comment [commentId=" + commentId + ", commentContent=" + commentContent + ", userId=" + userId
+//				+ ", articleId=" + articleId + ", createdAt=" + createdAt + ", modifiedAt=" + modifiedAt
+//				+ ", commentLikeCnt=" + commentLikeCnt + ", commentDislikeCnt=" + commentDislikeCnt
+//				+ ", userCommentLikeCnt=" + userCommentLikeCnt + ", userCommentDislikeCnt=" + userCommentDislikeCnt
+//				+ ", lft=" + lft + ", rgt=" + rgt + ", depth=" + depth + ", nickname=" + nickname + "]";
+//	}
+	
 	@Override
 	public String toString() {
 		return "Comment [commentId=" + commentId + ", commentContent=" + commentContent + ", userId=" + userId
 				+ ", articleId=" + articleId + ", createdAt=" + createdAt + ", modifiedAt=" + modifiedAt
 				+ ", commentLikeCnt=" + commentLikeCnt + ", commentDislikeCnt=" + commentDislikeCnt
 				+ ", userCommentLikeCnt=" + userCommentLikeCnt + ", userCommentDislikeCnt=" + userCommentDislikeCnt
-				+ ", lft=" + lft + ", rgt=" + rgt + ", depth=" + depth + ", nickname=" + nickname + "]";
+				+ ", nickname=" + nickname + "]";
 	}
-
-
-
 }

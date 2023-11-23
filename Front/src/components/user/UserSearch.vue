@@ -21,15 +21,15 @@
           <table class="user-list">
             <colgroup>
               <col style="width: 5%" />
-              <col style="width: 20%" />
-              <col style="width: 20%" />
+              <col style="width: 15%" />
+              <col style="width: 10%" />
               <col style="width: 25%" />
               <col style="width: 10%" />
-              <col style="width: 15%" />
-              <col style="width: 5%"  />
+              <col style="width: 25%" />
+              <col style="width: 10%" />
             </colgroup>
             <thead>
-              <tr>
+              <tr style="background-color: honeydew;">
                 <th>번호</th>
                 <th>아이디</th>
                 <th>이름</th>
@@ -82,6 +82,10 @@
   </script>
 
 <style scoped>
+td {
+  height: 40px;
+}
+
 .search {
     display: flex;
     text-align: center; 

@@ -1,5 +1,5 @@
 <template>
-        <div style="float:right">
+        <div style="float:right; margin-right: 100px">
             <router-link to="/article-create">
             <span v-show="loginUserRole !== 0 && userStore.isLoggedIn">
             <button class="button">작성</button>
@@ -46,6 +46,8 @@
         &nbsp;
     </div>
     </div>
+    <br>
+    <br>
 </template>
   
 <script setup>

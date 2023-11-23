@@ -77,7 +77,4 @@
 			ORDER BY ${orderBy} ${orderByDir}
 		</if>    
 	</select>
-	
-	
-
 </mapper>

@@ -49,7 +49,6 @@ export const useCommentStore = defineStore("comment", () => {
             }
           }
         );
-        alert("댓글이 등록되었습니다.");
         showComments(articleId);
       } catch (error) {
         console.error("Error writing comment:", error);

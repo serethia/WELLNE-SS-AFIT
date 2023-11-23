@@ -28,7 +28,7 @@ import io.jsonwebtoken.Jwts;
 @RestController
 @CrossOrigin("*")
 public class CommentRestController {
-	// 추가 수정
+	// 추가함
 	private static final String SALT = "SSAFIT";
 	@Autowired
 	private JwtUtil jwtUtil; 
@@ -50,19 +50,10 @@ public class CommentRestController {
 		map.put("articleId", articleId);
 		map.put("userId", userId);
 		List<Comment> list = cService.showAllComments(map);
-		
-	// 옛날 페이지네이션 코드...	
-//		int currentPage = 1;
-//		int totalItemCount = 23;
-//		Pagination pn = new Pagination();
-//		pn.setCurrentPage(currentPage); // 현재 페이지 번호
-//		pn.setTotalItemCount(totalItemCount); // 총 아이템(글) 갯수
-//		model.addAttribute("pn", pn);
-		
 		return list;
 	}
 		
-	// Httpservletrequest 추가 수정해 userid 가져오기
+	// Httpservletrequest 추가해 userid 가져오기
 	@PostMapping("/article/{articleId}/comments")
 	public int write(@RequestBody Comment comment, @PathVariable int articleId, HttpServletRequest request) {
 		comment.setArticleId(articleId);
@@ -135,5 +126,4 @@ public class CommentRestController {
 		int result = cService.decreaseCommentDislikes(map);
 		return result;
 	}
-	
 }

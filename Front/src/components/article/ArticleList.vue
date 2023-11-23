@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style=" display: flex; justify-content: center;">
-      <table style="table-layout: fixed; width: 100%; margin-left: auto; margin-right: auto;">
+      <table style="table-layout: fixed; width: 90%; margin-left: auto; margin-right: auto;">
         <colgroup>
           <col style="width: 100%;" />
         </colgroup>
@@ -11,19 +11,17 @@
 
         <td style="display: flex; align-items: center;">
         <div style="margin-right: 10px;">
-          
-        <img :src="article.videoUrl" style="width: 130px; height: 150px; object-fit: cover;"/>
-        
-
+        <img v-if="!isYouTubeVideo(article.videoUrl)" :src="article.videoUrl" alt="이미지" style="width: 130px; height: 150px; object-fit: cover; margin-left: 5px"/>
+        <!-- 이미지를 대체할 로고 이미지 -->
+        <img v-else src="@/assets/logo1-1.png" alt="로고" style="width: 130px; height: auto; object-fit: cover; margin-left: 5px"/>
         </div>
-        
 
-        <div>
-        <RouterLink :to="`/article/${article.articleId}`" style="margin-left: auto; margin-right: auto; font-size: larger; font-weight: bold;">{{ article.articleTitle }}</RouterLink>
+        <div style="flex: 1">
+        <RouterLink :to="`/article/${article.articleId}`" style="font-size: larger; font-weight: bold; margin-left: 20px;">{{ article.articleTitle }}</RouterLink>
         <br>
         <br>
-        <p style="font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: normal; width: 97%; margin-left: auto; margin-right: auto;">{{ truncateText(article.articleContent, 100) }}</p>
-        <p style="font-size: 12px; float:inline-end">{{ article.userId }}, {{ article.viewCnt }}, {{ article.createdAt }}</p>
+        <p style="font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: normal; margin-left: 20px; margin-right: 10px">{{ truncateText(article.articleContent, 300) }}</p>
+        <p style="font-size: 12px; float:inline-end; margin-right: 5px">{{ article.userId }}, {{ article.viewCnt }}, {{ article.createdAt }}</p>
         </div>
         </td>
 

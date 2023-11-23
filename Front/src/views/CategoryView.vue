@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>{{ routeName }}</h2>
+        <h2 style="margin-left: 100px; font-size: 30px; color: darkolivegreen">{{ routeName }}</h2>
         <br>
         <ArticleList :category="routeName"/>        
     </div>

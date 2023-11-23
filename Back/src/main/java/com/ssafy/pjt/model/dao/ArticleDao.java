@@ -12,11 +12,13 @@ public interface ArticleDao {
 	//기사 목록 보기
 	List<Article> selectAllArticles();
 	
+
 	List<Article> selectAllArticlesByCategory(PageNavigation pn);
 	
 	// 페이지네이션
 	// 1. 페이지네이션 정보 가져오기
 	int selectTotalArticleCountByCategory(String category);
+
 	
 	//기사 등록
 	int insertArticle(Article article);
@@ -33,6 +35,6 @@ public interface ArticleDao {
 	//조회수 증가
 	void updateViewCnt(int articleId);
 	
-	// 기사 검색
+	//기사 검색
 	List<Article> search(SearchArticleCondition condition);
 }
