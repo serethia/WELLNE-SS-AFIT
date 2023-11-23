@@ -192,6 +192,14 @@ function truncateText(text, maxLength) {
   }
   return text;
 }
+
+const isYouTubeVideo = function (url) {
+    // YouTube URL 판별
+    const regExp = /^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
+    return regExp.test(url);
+};
+
+
 </script>
 
 
