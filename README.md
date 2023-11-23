@@ -72,11 +72,10 @@ lft, rgt, depth 요소를 이용해 페이지네이션 구현 예정. 페이지�
 ✅ Java: 
 DB를 기반으로 config, controller, application, model.dao, model.dto, model.service, mappers, application.properties, pom.xml 작성 완료.
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/24ac52a9-4e10-46b3-97eb-9853811b23cc/9175b6d2-fcf4-4a4b-bcd0-eb0c34de3221/Untitled.png)
-
 </aside>
 
 <aside>
+
 ✅ Swagger-ui 및 VS-code로 REST-API 메소드 작동 여부 테스트:
 
 실행 확인 완료.
@@ -687,16 +686,6 @@ pagination 구현은 시도 중이고, 본격적인 디자인을 시작했다.
 
 제작한 로고의 출처 사이트:
 https://www.shopify.com/tools/logo-maker/onboarding/customize-logo
-
-채택된 원본 로고와, 편집을 거친 추가 로고들:
-
-![로고1.PNG](https://prod-files-secure.s3.us-west-2.amazonaws.com/24ac52a9-4e10-46b3-97eb-9853811b23cc/21b2f023-ba6b-41ac-bd07-21d85c0fc2b5/%EB%A1%9C%EA%B3%A01.png)
-
-![로고1-1.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/24ac52a9-4e10-46b3-97eb-9853811b23cc/bf9ce457-8698-48bc-b858-d988d7bb8a69/%EB%A1%9C%EA%B3%A01-1.png)
-
-![로고1-2.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/24ac52a9-4e10-46b3-97eb-9853811b23cc/aaa2c846-1953-4cda-ba38-fa78ade4cfb8/%EB%A1%9C%EA%B3%A01-2.png)
-
-![로고2.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/24ac52a9-4e10-46b3-97eb-9853811b23cc/f027af3d-ec0c-41cd-9408-65eca8ea976a/%EB%A1%9C%EA%B3%A02.png)
 
 </aside>
 
