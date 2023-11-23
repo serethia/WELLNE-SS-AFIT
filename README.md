@@ -1,3 +1,12 @@
+# WELLNE'SS'AFIT
+뉴스 형태의 게시판 사이트
+* 동영상이나 이미지 첨부가 가능한 건강 관련 뉴스 사이트
+* 카테고리별 분류를 통해 관심사별 기사 읽고 쓰기
+* 기사마다 댓글 기능을 활용하여 소통 가능
+
+
+
+
 # newsapp
 
 
@@ -72,9 +81,9 @@ lft, rgt, depth 요소를 이용해 페이지네이션 구현 예정. 페이지�
 ✅ Java: 
 DB를 기반으로 config, controller, application, model.dao, model.dto, model.service, mappers, application.properties, pom.xml 작성 완료.
 
-</aside>
-
-<aside>
+</aside>  
+  
+<aside>  
 
 ✅ Swagger-ui 및 VS-code로 REST-API 메소드 작동 여부 테스트:
 
