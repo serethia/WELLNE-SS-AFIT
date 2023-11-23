@@ -1,12 +1,14 @@
 package com.ssafy.pjt.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.pjt.model.dao.ArticleDao;
 import com.ssafy.pjt.model.dto.Article;
+import com.ssafy.pjt.model.dto.PageNavigation;
 import com.ssafy.pjt.model.dto.SearchArticleCondition;
 
 @Service
@@ -42,13 +44,18 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<Article> getArticlesByCategory(String category) {
-		return dao.selectAllArticlesByCategory(category);
+	public List<Article> getArticlesByCategory(PageNavigation pn) {
+		return dao.selectAllArticlesByCategory(pn);
 	}
 
 	@Override
 	public List<Article> search(SearchArticleCondition condition) {
 		return dao.search(condition);
+	}
+
+	@Override
+	public int getTotalArticleCountByCategory(String category) {
+		return dao.selectTotalArticleCountByCategory(category);
 	}
 
 }

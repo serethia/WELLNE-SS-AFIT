@@ -22,7 +22,7 @@
 	</select>
 	
 	
-	<select id="selectAllArticlesByCategory" parameterType="string" resultType="Article">
+	<select id="selectAllArticlesByCategory" parameterType="PageNavigation" resultType="Article">
 		SELECT
 		a.article_id as articleId,
 		a.article_title as articleTitle,
@@ -36,7 +36,13 @@
 		a.category,
 		u.user_name as userName
 		FROM article a, user u
-		WHERE a.user_id = u.user_id AND a.category = #{category}
+		WHERE a.user_id = u.user_id AND a.category = #{category} LIMIT 5 OFFSET #{currentPage}
+	</select>
+	
+	<select id="selectTotalArticleCountByCategory" parameterType="string" resultType="int">
+		SELECT COUNT(*)
+		FROM article
+		WHERE category = #{category}
 	</select>
 
 	<insert id="insertArticle" parameterType="Article">

@@ -1,6 +1,8 @@
 package com.ssafy.pjt.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.pjt.model.dto.Article;
+import com.ssafy.pjt.model.dto.PageNavigation;
 import com.ssafy.pjt.model.dto.SearchArticleCondition;
 import com.ssafy.pjt.model.service.ArticleService;
-
 import io.swagger.annotations.ApiOperation;
 
 @RequestMapping("/articleapi")
@@ -28,6 +30,63 @@ public class ArticleRestController {
 	@Autowired
 	private ArticleService aService;
 	
+	
+	// 페이지네이션 관련 로직
+	
+	// 1. 게시글 전체 개수만 가져오기
+	
+	@GetMapping("/total-article-count")
+	@ApiOperation(value= "카테고리별 아이템 갯수 정보를 반환한다.", response = Integer.class)
+	public int getTotalArticleCountByCategory(@RequestParam String category, @RequestParam int currentPage) {
+		
+		String categoryStr ="";
+		
+		if (category.equals("exercise")) {
+			categoryStr="운동";
+		} else if (category.equals("diet")) {
+			categoryStr="다이어트";
+		} else if (category.equals("advice")) {
+			categoryStr="전문가조언";
+		}
+		
+		
+		
+		int totalItemCount = aService.getTotalArticleCountByCategory(categoryStr);
+		
+		
+		return totalItemCount;
+	}
+	
+	
+	// 2. 페이지네이션 정보 가져오기
+	
+	@GetMapping("/pagination")
+	@ApiOperation(value= "페이지네이션 정보를 반환한다.", response = PageNavigation.class)
+	public PageNavigation getPaginationInform(@RequestParam String category, @RequestParam int currentPage) {
+		
+		String categoryStr ="";
+		
+		if (category.equals("exercise")) {
+			categoryStr="운동";
+		} else if (category.equals("diet")) {
+			categoryStr="다이어트";
+		} else if (category.equals("advice")) {
+			categoryStr="전문가조언";
+		}
+		
+		int totalItemCount = aService.getTotalArticleCountByCategory(categoryStr);
+		
+		PageNavigation pn = new PageNavigation(currentPage, totalItemCount);
+		
+		pn.setCategory(categoryStr);
+		
+		
+		return pn;
+	}
+	
+	
+	// 페이지네이션이 고려 안된 버전
+	/*
 	@GetMapping("/article")
 	@ApiOperation(value = "등록된 모든 기사 정보를 반환한다.", response = Article.class)
 	public List<Article> getArticlesByCategory(@RequestParam String category){
@@ -45,6 +104,44 @@ public class ArticleRestController {
 		
 		System.out.println("등록된 모든 기사 정보 반환");
 		List<Article> list = aService.getArticlesByCategory(categoryStr);
+		
+		return list;
+	}*/
+	
+	
+	@GetMapping("/article")
+	@ApiOperation(value = "등록된 모든 기사 정보를 반환한다.", response = Article.class)
+	public List<Article> getArticlesByCategory(@RequestParam String category, @RequestParam int currentPage){
+		
+		
+		
+		String categoryStr ="";
+		
+		if (category.equals("exercise")) {
+			categoryStr="운동";
+		} else if (category.equals("diet")) {
+			categoryStr="다이어트";
+		} else if (category.equals("advice")) {
+			categoryStr="전문가조언";
+		}
+		
+		
+		System.out.println(currentPage+"페이지의 모든 기사 정보 반환");
+		int totalItemCount =  aService.getTotalArticleCountByCategory(categoryStr);
+		
+		PageNavigation pn = new PageNavigation(currentPage, totalItemCount);
+		
+		System.out.println(pn.getStartPage());
+		System.out.println(pn.getEndPage());
+		
+		pn.setCategory(categoryStr);
+		
+		
+		pn.setCurrentPage(currentPage-1);
+		
+		List<Article> list = aService.getArticlesByCategory(pn);
+		pn.setCurrentPage(currentPage);
+		
 		
 		return list;
 	}

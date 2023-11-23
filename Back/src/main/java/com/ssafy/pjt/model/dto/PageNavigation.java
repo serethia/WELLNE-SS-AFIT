@@ -1,4 +1,4 @@
-package com.ssafy.pjt.util;
+package com.ssafy.pjt.model.dto;
 
 public class PageNavigation {
 	/** PageNation에서 보여줄 페이지 목록의 시작 번호 */
@@ -18,9 +18,36 @@ public class PageNavigation {
 	/** 한 페이지에 보여줄 데이터의 개수 */
 	private int countPerPage;
 	/** 한 페이지에 보여줄 아이템의 개수이다. */
-	int itemPerPage = 10;
+	int itemPerPage = 5;
 	/** 한 화면에 만들 navigation link의 최대 개수를 설정한다. */
-	int maxDisplayNavCnt = 10;
+	int maxDisplayNavCnt = 5;
+	
+	private String category;
+	
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	
+
+	public int getItemPerPage() {
+		return itemPerPage;
+	}
+
+	public void setItemPerPage(int itemPerPage) {
+		this.itemPerPage = itemPerPage;
+	}
+
+	public int getMaxDisplayNavCnt() {
+		return maxDisplayNavCnt;
+	}
+
+	public void setMaxDisplayNavCnt(int maxDisplayNavCnt) {
+		this.maxDisplayNavCnt = maxDisplayNavCnt;
+	}
 
 	public PageNavigation(int currentPage, int totalCount) {
 		makePageNavigation(currentPage, totalCount);
