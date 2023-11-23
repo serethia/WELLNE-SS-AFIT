@@ -9,7 +9,6 @@ public class SearchCondition {
 	private String orderBy = "none";
 	// 정렬 방향으로 기본은 asc
 	private String orderByDir = "asc";
-	
 	// 한 페이지에 몇개나 보여줄 것인지 결정한다.
 	public final int countPerPage = 10;
 	// 현재 페이지 번호로 offset을 계산할 때 사용된다. 기본 페이지는 1이다.

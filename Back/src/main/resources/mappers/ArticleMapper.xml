@@ -3,7 +3,6 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.pjt.model.dao.ArticleDao">
-
 	<select id="selectAllArticles" resultType="Article">
 		SELECT
 		a.article_id as articleId,
@@ -19,8 +18,7 @@
 		u.user_name as userName
 		FROM article a, user u
 		WHERE a.user_id = u.user_id AND a.category = #{category}
-	</select>
-	
+	</select>	
 	
 	<select id="selectAllArticlesByCategory" parameterType="string" resultType="Article">
 		SELECT
@@ -85,8 +83,6 @@
 		WHERE article_id = #{articleId}
 	</delete>
 
-
-
 	<select id="search" resultType="Article" parameterType="SearchArticleCondition">
 		SELECT
 		a.article_id as articleId,
@@ -119,12 +115,8 @@
             OR u.user_id LIKE concat('%', #{word}, '%')
         	)
 		</if>
-		
-		<!-- 어떤 기준으로 어떤 방향으로 정렬 -->
 		<if test="orderBy != 'none'">
 			ORDER BY ${orderBy} ${orderByDir}
 		</if>
 	</select>
-
-
 </mapper>

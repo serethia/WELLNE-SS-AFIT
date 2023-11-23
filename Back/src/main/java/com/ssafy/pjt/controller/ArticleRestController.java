@@ -31,34 +31,7 @@ public class ArticleRestController {
 	@GetMapping("/article")
 	@ApiOperation(value = "등록된 모든 기사 정보를 반환한다.", response = Article.class)
 	public List<Article> getArticlesByCategory(@RequestParam String category){
-		
 		String categoryStr ="";
-		
-		if (category.equals("exercise")) {
-			categoryStr="운동";
-		} else if (category.equals("diet")) {
-			categoryStr="다이어트";
-		} else if (category.equals("advice")) {
-			categoryStr="전문가조언";
-		}
-		
-		
-		System.out.println("등록된 모든 기사 정보 반환");
-		List<Article> list = aService.getArticlesByCategory(categoryStr);
-		
-		return list;
-	}
-	
-	@GetMapping("/search")
-	@ApiOperation(value = "등록된 모든 기사 정보를 반환한다.", response = Article.class)
-	public List<Article> getArticlesByCategorySearch(SearchArticleCondition searchCondition){
-		
-		System.out.println(searchCondition);
-		
-		String category = searchCondition.getCategory();
-		
-		String categoryStr ="";
-		
 		if (category.equals("exercise")) {
 			categoryStr="운동";
 		} else if (category.equals("diet")) {
@@ -67,14 +40,27 @@ public class ArticleRestController {
 			categoryStr="전문가조언";
 		}
 
-		searchCondition.setCategory(categoryStr);
-		
-		List<Article> list = aService.search(searchCondition);
-		
+		List<Article> list = aService.getArticlesByCategory(categoryStr);
 		return list;
 	}
 	
-	
+	@GetMapping("/search")
+	@ApiOperation(value = "등록된 모든 기사 정보를 반환한다.", response = Article.class)
+	public List<Article> getArticlesByCategorySearch(SearchArticleCondition searchCondition){		
+		String category = searchCondition.getCategory();
+		String categoryStr ="";
+		if (category.equals("exercise")) {
+			categoryStr="운동";
+		} else if (category.equals("diet")) {
+			categoryStr="다이어트";
+		} else if (category.equals("advice")) {
+			categoryStr="전문가조언";
+		}
+		searchCondition.setCategory(categoryStr);
+		
+		List<Article> list = aService.search(searchCondition);
+		return list;
+	}	
 	
 	@PostMapping("/article")
 	@ApiOperation(value = "기사 정보를 작성한다.", response = Integer.class)
@@ -102,7 +88,5 @@ public class ArticleRestController {
 	public int delete(@PathVariable int articleId) {
 		int result = aService.removeArticle(articleId);
 		return result;
-	}
-	
-	
+	}	
 }

@@ -34,15 +34,10 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @CrossOrigin("*")
 public class UserRestController {
-	
 	private static final String SUCCESS = "success";
-//	private static final String FAIL = "fail";
 
 	@Autowired
 	private UserService uService;
-	
-//	@Autowired
-//	private JwtUtil jwtUtil;
 	
 	@GetMapping("/user")
 	@ApiOperation(value = "등록된 모든 사용자 정보를 반환한다.", response = User.class)
@@ -160,5 +155,4 @@ public class UserRestController {
 		e.printStackTrace();
 		return new ResponseEntity<String>("Sorry: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-
 }

@@ -10,6 +10,7 @@ public interface ArticleDao {
 	//기사 목록 보기
 	List<Article> selectAllArticles();
 	
+	//기사 카테고리별 목록 보기
 	List<Article> selectAllArticlesByCategory(String category);
 	
 	//기사 등록
@@ -27,6 +28,6 @@ public interface ArticleDao {
 	//조회수 증가
 	void updateViewCnt(int articleId);
 	
-	// 기사 검색
+	//기사 검색
 	List<Article> search(SearchArticleCondition condition);
 }
