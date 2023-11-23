@@ -1,7 +1,8 @@
 <template>
     <div class="container">
       <h2>회원 가입</h2>
-      <fieldset class="text-center">
+      <br>
+      <fieldset class="text-center" style="width: 90%; margin-left: auto; margin-right: auto">
         <label for="id">아이디</label>
         <input type="text" id="id" v-model="id" class="view" /><br />
         <label for="password">비밀번호</label>
@@ -41,7 +42,9 @@
         </fieldset>
         <br>
         <button class="btn" @click="regist"><span>등록</span></button>
+        <br>
       </fieldset>
+      <br>
     </div>
   </template>
   

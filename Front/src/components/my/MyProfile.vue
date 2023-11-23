@@ -2,7 +2,7 @@
   <div class="container">
     <h2 style="text-align: center; color:darkolivegreen">My Profile</h2>
     <br>
-    <fieldset class="text-center">
+    <fieldset class="text-center" style="width: 90%; margin-left: auto; margin-right: auto">
       <label for="id">아이디</label>
       <input
         readonly

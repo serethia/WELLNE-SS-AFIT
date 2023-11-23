@@ -1,16 +1,19 @@
 <template>
     <div class="detail">
-        <hr>
+        <br>
         <br>
         <h1>{{ store.article.articleTitle }}</h1>
-        <br>        
+        <br>  
+        <br>      
         <div v-if="isYouTubeVideo(store.article.videoUrl)" v-html="renderYouTubeVideo(store.article.videoUrl)"></div>
         <div v-else>
-            <img :src="store.article.videoUrl" />
+            <img style="height: 300px; width: auto" :src="store.article.videoUrl" />
         </div>
         <br>
         <br>
         <div style="display: inline-block; width:60%; text-align: justify; white-space: pre-wrap">{{ store.article.articleContent }}</div>
+        <br>
+        <br>
         <h4>작성자 : {{ store.article.userName }} &nbsp;&nbsp;&nbsp;  
             조회수 : {{ store.article.viewCnt }} &nbsp;&nbsp;&nbsp;  
             작성 일자 : {{ store.article.createdAt }} &nbsp;</h4> 
@@ -20,7 +23,9 @@
         <button @click="deleteArticle" class="button2" style="vertical-align:middle"><span>삭제</span></button></span>   
     </div>
     <br>
+    <br>
     <CommentList/>
+    <br>
 </template>
 
 <script setup>

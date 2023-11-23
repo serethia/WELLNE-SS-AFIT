@@ -4,7 +4,7 @@
     <div class="text-center">
       <br>
       <br>
-      <img src="src\assets\logo1-2.png" style="width: 50%"/>
+      <img src="@/assets/logo1-2.png" style="width: 40%"/>
       <br>
       <br>
       <h1>{{ message }}</h1>

@@ -10,7 +10,7 @@
                     </div>
 
                     <div class="nav-logo">
-                    <img src="src\assets\logo1-1.png" style="width:80px;"/>
+                    <img @click="gotoMyView" src="@/assets/logo1-1.png" style="width:100px;"/>
                     </div>
 
                     <div class="nav-user">
@@ -35,6 +35,7 @@
 <script setup>
 import { useUserStore } from "@/stores/userStore";
 import { ref, watch, computed } from "vue";
+import { useRouter } from 'vue-router';
 
 const userStore = useUserStore();
 const loginUserRole = computed(() => userStore.loginUserRole);
@@ -50,6 +51,11 @@ watch(loginUserRole, (newValue) => {
 });
 console.log("loginUserRole 잘 나오나 확인:", loginUserRole);
 console.log("showUserList 잘 나오나 확인:", showUserList);
+
+const router = useRouter();
+const gotoMyView = function(){
+    router.push("/");
+}
 </script>
 
 <style  scoped>
