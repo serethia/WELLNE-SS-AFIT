@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.pjt.model.dao.ArticleDao">
+
+	<select id="selectAllArticles" resultType="Article">
+		SELECT
+		a.article_id as articleId,
+		a.article_title as articleTitle,
+		a.article_content as articleContent,
+		a.view_cnt as viewCnt,
+		a.user_id as userId,
+		a.video_url as videoUrl,
+		a.created_at as createdAt,
+		a.modified_at as modifiedAt,
+		a.media_name as mediaName,
+		a.category,
+		u.user_name as userName
+		FROM article a, user u
+		WHERE a.user_id = u.user_id AND a.category = #{category}
+	</select>
+	
+	
+	<select id="selectAllArticlesByCategory" parameterType="string" resultType="Article">
+		SELECT
+		a.article_id as articleId,
+		a.article_title as articleTitle,
+		a.article_content as articleContent,
+		a.view_cnt as viewCnt,
+		a.user_id as userId,
+		a.video_url as videoUrl,
+		a.created_at as createdAt,
+		a.modified_at as modifiedAt,
+		a.media_name as mediaName,
+		a.category,
+		u.user_name as userName
+		FROM article a, user u
+		WHERE a.user_id = u.user_id AND a.category = #{category}
+	</select>
+
+	<insert id="insertArticle" parameterType="Article">
+		INSERT INTO article
+		(article_title, article_content, user_id, video_url, created_at, media_name, category)
+		VALUES (#{articleTitle}, #{articleContent}, #{userId}, #{videoUrl}, now(), #{mediaName}, #{category})
+	</insert>
+
+	<select id="selectOne" resultType="Article" parameterType="int">
+		SELECT
+		a.article_id as articleId,
+		a.article_title as articleTitle,
+		a.article_content as articleContent,
+		a.view_cnt as viewCnt,
+		a.user_id as userId,
+		a.video_url as videoUrl,
+		a.created_at as createdAt,
+		a.modified_at as modifiedAt,
+		a.media_name as mediaName,
+		a.category,
+		u.user_name as userName
+		FROM article a, user u
+		WHERE a.article_id = #{articleId} AND a.user_id = u.user_id
+	</select>
+
+	<update id="updateViewCnt" parameterType="int">
+		UPDATE article
+		SET view_cnt = view_cnt+1
+		WHERE article_id = #{articleId}
+	</update>
+
+	<update id="updateArticle" parameterType="Article">
+		UPDATE article
+		SET
+		article_title = #{articleTitle},
+		article_content = #{articleContent},
+		video_url = #{videoUrl},
+		modified_at = now(),
+		media_name = #{mediaName},
+		category = #{category}
+		WHERE article_id = #{articleId}
+	</update>
+
+	<delete id="deleteArticle" parameterType="int">
+		DELETE FROM article
+		WHERE article_id = #{articleId}
+	</delete>
+
+
+
+	<select id="search" resultType="Article" parameterType="SearchArticleCondition">
+		SELECT
+		a.article_id as articleId,
+		a.article_title as articleTitle,
+		a.article_content as articleContent,
+		a.view_cnt as viewCnt,
+		a.user_id as userId,
+		a.video_url as videoUrl,
+		a.created_at as createdAt,
+		a.modified_at as modifiedAt,
+		a.media_name as mediaName,
+		a.category,
+		u.user_name as userName
+		FROM article a, user u
+		WHERE a.user_id = u.user_id and a.category = #{category}
+		<!-- 검색 조건 (동적쿼리)-->
+		<if test="key == 'user_id'">
+			AND u.${key} LIKE concat('%', #{word}, '%')
+		</if>
+		<if test="key == 'title'">
+			AND a.article_${key} LIKE concat('%', #{word}, '%')
+		</if>
+		<if test="key == 'content'">
+			AND a.article_${key} LIKE concat('%', #{word}, '%')
+		</if>
+		<if test="key == 'none'">
+			AND (
+            a.article_title LIKE concat('%', #{word}, '%')
+            OR a.article_content LIKE concat('%', #{word}, '%')
+            OR u.user_id LIKE concat('%', #{word}, '%')
+        	)
+		</if>
+		
+		<!-- 어떤 기준으로 어떤 방향으로 정렬 -->
+		<if test="orderBy != 'none'">
+			ORDER BY ${orderBy} ${orderByDir}
+		</if>
+	</select>
+
+
+</mapper>

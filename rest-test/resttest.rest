@@ -1,0 +1,11 @@
+POST http://localhost:8080/userapi/signup
+Content-Type: application/json
+
+{
+    "userId": "aa",
+    "userPwd": "11111111!",
+    "userName": "에이",
+    "nickname": "테스트",
+    "email": "aa@aa.com",
+    "category": "운동,다이어트"
+}
