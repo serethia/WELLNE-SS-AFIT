@@ -22,11 +22,27 @@ public class PageNavigation {
 	/** 한 화면에 만들 navigation link의 최대 개수를 설정한다. */
 	int maxDisplayNavCnt = 5;
 	
+	int offset;
+	
 	private String category;
 	
 	public String getCategory() {
 		return category;
 	}
+	
+	
+
+	public int getOffset() {
+		return offset;
+	}
+
+
+
+	public void setOffset(int offset) {
+		this.offset = offset;
+	}
+
+
 
 	public void setCategory(String category) {
 		this.category = category;

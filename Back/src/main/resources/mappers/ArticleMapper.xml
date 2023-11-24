@@ -34,7 +34,7 @@
 		a.category,
 		u.user_name as userName
 		FROM article a, user u
-		WHERE a.user_id = u.user_id AND a.category = #{category} LIMIT 5 OFFSET #{currentPage}
+		WHERE a.user_id = u.user_id AND a.category = #{category} LIMIT 5 OFFSET #{offset}
 	</select>
 	
 	<select id="selectTotalArticleCountByCategory" parameterType="string" resultType="int">

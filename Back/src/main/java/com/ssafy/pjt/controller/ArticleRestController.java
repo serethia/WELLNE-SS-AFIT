@@ -137,10 +137,11 @@ public class ArticleRestController {
 		pn.setCategory(categoryStr);
 		
 		
-		pn.setCurrentPage(currentPage-1);
+
+		pn.setOffset((currentPage-1)*5);
 		
 		List<Article> list = aService.getArticlesByCategory(pn);
-		pn.setCurrentPage(currentPage);
+
 		
 		
 		return list;
